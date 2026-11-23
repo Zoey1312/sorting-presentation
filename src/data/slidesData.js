@@ -3,7 +3,7 @@ export const CHAPTERS = [
   { id: 'timsort', label: 'Timsort', range: [3, 7], firstSlide: 3, theme: 'timsort' },
   { id: 'introsort', label: 'Introsort', range: [8, 13], firstSlide: 8, theme: 'introsort' },
   { id: 'heapsort', label: 'Heap Sort', range: [14, 18], firstSlide: 14, theme: 'heapsort' },
-  { id: 'summary', label: 'So sánh & Q&A', range: [19, 19], firstSlide: 19, theme: 'summary' },
+  { id: 'summary', label: 'Tổng hợp', range: [19, 19], firstSlide: 19, theme: 'summary' },
 ];
 
 export const TIMSORT_JAVA_TABS = [
@@ -169,223 +169,6 @@ private static void merge(int[] a, int left, int mid, int right) {
   },
 ];
 
-export const TIMSORT_SIM_STEPS = [
-  {
-    step: 0,
-    title: 'Bước 0: Mảng đầu vào (Input)',
-    badge: 'Khởi tạo',
-    description: 'Mảng 10 phần tử A = [3, 5, 7, 2, 4, 6, 9, 1, 8, 10] với tham số sư phạm minrun = 4.',
-    groups: [
-      { label: 'Mảng A[0..9]', items: [3, 5, 7, 2, 4, 6, 9, 1, 8, 10], tone: 'neutral' },
-    ],
-    highlightText: 'Dãy có sẵn một số đoạn tăng cục bộ nhưng bị ngắt tại các vị trí giảm (7 -> 2, 9 -> 1).',
-  },
-  {
-    step: 1,
-    title: 'Bước 1: Phát hiện các Run tự nhiên (Natural Runs)',
-    badge: 'Quét tuyến tính',
-    description: 'Quét từ trái sang phải tìm các đoạn liên tiếp đã tăng dần tự nhiên.',
-    groups: [
-      { label: 'Run tự nhiên 1 (len = 3 < 4)', items: [3, 5, 7], tone: 'warn' },
-      { label: 'Run tự nhiên 2 (len = 4)', items: [2, 4, 6, 9], tone: 'emerald' },
-      { label: 'Run tự nhiên 3 (len = 3 < 4)', items: [1, 8, 10], tone: 'cyan' },
-    ],
-    highlightText: 'Run 1 = [3, 5, 7] có độ dài 3 < minrun (4) nên cần mở rộng thêm phần tử kế tiếp.',
-  },
-  {
-    step: 2,
-    title: 'Bước 2: Mở rộng Run ngắn (minrun = 4) & Insertion Sort',
-    badge: 'Hoàn thiện Run',
-    description: 'Kéo dài run ngắn đến minrun = 4 rồi sắp xếp từng đoạn bằng Insertion Sort.',
-    groups: [
-      { label: 'Run 1 (0..3): [3,5,7,2] → Sorted', items: [2, 3, 5, 7], tone: 'emerald' },
-      { label: 'Run 2 (4..7): [4,6,9,1] → Sorted', items: [1, 4, 6, 9], tone: 'cyan' },
-      { label: 'Run 3 (8..9): Giữ nguyên', items: [8, 10], tone: 'teal' },
-    ],
-    highlightText: 'Trạng thái toàn mảng sau hoàn thiện run: [2, 3, 5, 7 | 1, 4, 6, 9 | 8, 10].',
-  },
-  {
-    step: 3,
-    title: 'Bước 3: Merge Run 1 + Run 2',
-    badge: 'Gộp lượt 1',
-    description: 'Trộn [2, 3, 5, 7] và [1, 4, 6, 9] bằng hai con trỏ -> chỉ so sánh đầu 2 đoạn đã sắp xếp.',
-    groups: [
-      { label: 'Run 1+2 đã trộn (0..7)', items: [1, 2, 3, 4, 5, 6, 7, 9], tone: 'emerald' },
-      { label: 'Run 3 chờ gộp (8..9)', items: [8, 10], tone: 'teal' },
-    ],
-    highlightText: 'Lấy lần lượt 1, 2, 3, 4, 5, 6, 7, 9 -> Thu được [1, 2, 3, 4, 5, 6, 7, 9 | 8, 10].',
-  },
-  {
-    step: 4,
-    title: 'Bước 4: Merge lần cuối với Run 3 -> Hoàn tất',
-    badge: 'Kết quả',
-    description: 'Trộn [1, 2, 3, 4, 5, 6, 7, 9] với [8, 10]. Phần tử 8 được chèn trước 9, sau đó lấy 9 và 10.',
-    groups: [
-      { label: 'Output hoàn chỉnh A[0..9]', items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], tone: 'done' },
-    ],
-    highlightText: 'Kết quả: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] — Bảo toàn thứ tự ổn định (Stable Sort).',
-  },
-];
-
-export const INTROSORT_SCENARIOS = {
-  standard: {
-    id: 'standard',
-    label: 'Tab 1: Trường hợp chuẩn (threshold=3, depth=6)',
-    subtitle: 'Minh họa 7 bước trên A = [19, 7, 15, 12, 16, 18, 4, 11, 13] với n = 9, size_threshold = 3, depth_limit = 6.',
-    steps: [
-      {
-        step: 1,
-        range: '[0..8] (9)',
-        depth: 6,
-        algo: 'Quicksort',
-        tone: 'quicksort',
-        action: 'Trung vị (19, 16, 13) -> Pivot = 16 định vị tại p = 6. Đệ quy phải [7..8], lặp trái [0..5].',
-        segments: [
-          { values: [13, 7, 15, 12, 4, 11], role: 'active', label: 'Nửa trái [0..5]' },
-          { values: [16], role: 'pivot', label: 'Pivot p=6' },
-          { values: [19, 18], role: 'sub', label: 'Nửa phải [7..8]' },
-        ],
-      },
-      {
-        step: 2,
-        range: '[7..8] (2)',
-        depth: 5,
-        algo: 'Insertion Sort',
-        tone: 'insertion',
-        action: 'Đệ quy nửa phải [7..8]: Size = 2 <= 3 -> Chạy Insertion Sort đổi (19, 18) thành (18, 19).',
-        segments: [
-          { values: [13, 7, 15, 12, 4, 11], role: 'sub', label: 'Chờ [0..5]' },
-          { values: [16], role: 'pivot', label: 'p=6' },
-          { values: [18, 19], role: 'insertion', label: 'Sorted [7..8]' },
-        ],
-      },
-      {
-        step: 3,
-        range: '[0..5] (6)',
-        depth: 5,
-        algo: 'Quicksort',
-        tone: 'quicksort',
-        action: 'Lặp trái high=5: Trung vị (13, 15, 11) -> Pivot = 13 về p = 4. Đệ quy [5..5], lặp [0..3].',
-        segments: [
-          { values: [11, 7, 12, 4], role: 'active', label: 'Nửa trái [0..3]' },
-          { values: [13], role: 'pivot', label: 'Pivot p=4' },
-          { values: [15], role: 'sub', label: '[5..5]' },
-          { values: [16, 18, 19], role: 'done', label: 'Đã cố định' },
-        ],
-      },
-      {
-        step: 4,
-        range: '[5..5] (1)',
-        depth: 4,
-        algo: 'Insertion Sort',
-        tone: 'insertion',
-        action: 'Đệ quy nửa phải [5..5]: Size = 1 <= 3 -> Giữ nguyên [15].',
-        segments: [
-          { values: [11, 7, 12, 4], role: 'sub', label: 'Chờ [0..3]' },
-          { values: [13], role: 'pivot', label: 'p=4' },
-          { values: [15], role: 'insertion', label: 'Sorted [5..5]' },
-          { values: [16, 18, 19], role: 'done', label: 'Đã cố định' },
-        ],
-      },
-      {
-        step: 5,
-        range: '[0..3] (4)',
-        depth: 4,
-        algo: 'Quicksort',
-        tone: 'quicksort',
-        action: 'Lặp trái high=3: Trung vị (11, 7, 4) -> Pivot = 7 về p = 1. Chia thành [2..3] và [0..0].',
-        segments: [
-          { values: [4], role: 'sub', label: '[0..0]' },
-          { values: [7], role: 'pivot', label: 'Pivot p=1' },
-          { values: [12, 11], role: 'active', label: '[2..3]' },
-          { values: [13, 15, 16, 18, 19], role: 'done', label: 'Đã cố định' },
-        ],
-      },
-      {
-        step: 6,
-        range: '[2..3] (2)',
-        depth: 3,
-        algo: 'Insertion Sort',
-        tone: 'insertion',
-        action: 'Đệ quy nửa phải [2..3]: Size = 2 <= 3 -> Đổi (12, 11) thành (11, 12).',
-        segments: [
-          { values: [4], role: 'sub', label: '[0..0]' },
-          { values: [7], role: 'done', label: 'p=1' },
-          { values: [11, 12], role: 'insertion', label: 'Sorted [2..3]' },
-          { values: [13, 15, 16, 18, 19], role: 'done', label: 'Đã cố định' },
-        ],
-      },
-      {
-        step: 7,
-        range: '[0..0] (1)',
-        depth: 3,
-        algo: 'Insertion Sort',
-        tone: 'insertion',
-        action: 'Lặp trái high=0: Size = 1 <= 3 -> Giữ nguyên [4]. Hoàn tất toàn mảng: 4 7 11 12 13 15 16 18 19.',
-        segments: [
-          { values: [4, 7, 11, 12, 13, 15, 16, 18, 19], role: 'done', label: 'Hoàn tất' },
-        ],
-      },
-    ],
-  },
-  heapsortFallback: {
-    id: 'heapsortFallback',
-    label: 'Tab 2: Kịch bản kích hoạt Heapsort (threshold=2, depth=1)',
-    subtitle: 'Đặt size_threshold = 2, depth_limit = 1 để quan sát đủ cả 3 thuật toán phối hợp trong 4 Frame.',
-    steps: [
-      {
-        step: 1,
-        range: '[0..8] (9)',
-        depth: 1,
-        algo: 'Frame 1 — Quicksort',
-        tone: 'quicksort',
-        action: 'Đoạn [0..8], Pivot = 16 về p = 6 (depth_limit giảm từ 1 xuống 0). Mảng: 13 7 15 12 4 11 | 16 | 19 18.',
-        segments: [
-          { values: [13, 7, 15, 12, 4, 11], role: 'active', label: 'Nửa trái [0..5] (depth=0)' },
-          { values: [16], role: 'pivot', label: 'Pivot p=6' },
-          { values: [19, 18], role: 'sub', label: 'Nửa phải [7..8]' },
-        ],
-      },
-      {
-        step: 2,
-        range: '[7..8] (2)',
-        depth: 0,
-        algo: 'Frame 2 — Insertion Sort',
-        tone: 'insertion',
-        action: 'Đệ quy nửa phải [7..8] có size = 2 <= 2 -> Chèn trực tiếp hoán đổi 19 và 18 thành [18, 19].',
-        segments: [
-          { values: [13, 7, 15, 12, 4, 11], role: 'sub', label: 'Chờ [0..5]' },
-          { values: [16], role: 'pivot', label: 'p=6' },
-          { values: [18, 19], role: 'insertion', label: 'Insertion [7..8]' },
-        ],
-      },
-      {
-        step: 3,
-        range: '[0..5] (6)',
-        depth: 0,
-        algo: 'Frame 3 — Heapsort (Max-Heap)',
-        tone: 'heapsort',
-        action: 'Nửa trái [0..5] chạm ngưỡng depth_limit == 0 -> Kích hoạt Heapsort tại chỗ! Build Max-Heap: 15 12 13 7 4 11 | 16 | 18 19.',
-        segments: [
-          { values: [15, 12, 13, 7, 4, 11], role: 'heapsort', label: 'Max-Heap [0..5]' },
-          { values: [16, 18, 19], role: 'done', label: 'Đã cố định' },
-        ],
-      },
-      {
-        step: 4,
-        range: '[0..5] (6)',
-        depth: 0,
-        algo: 'Frame 4 — Hoàn tất',
-        tone: 'done',
-        action: 'Trích xuất gốc Max-Heap lần lượt trên đoạn [0..5], thu được mảng tăng dần hoàn chỉnh: 4 7 11 12 13 15 16 18 19.',
-        segments: [
-          { values: [4, 7, 11, 12, 13, 15, 16, 18, 19], role: 'done', label: 'Output hoàn chỉnh' },
-        ],
-      },
-    ],
-  },
-};
-
 export const INTROSORT_PYTHON_CODE = `import math
 
 def introsort(arr, size_threshold=16, max_depth=None, key=lambda x: x):
@@ -434,69 +217,6 @@ def heapsort_subarray(arr, low, high, key):
     for end in range(n - 1, 0, -1):
         arr[low], arr[low + end] = arr[low + end], arr[low]
         _sift_down(arr, low, end, 0, key)`;
-
-export const HEAPSORT_SIM_STEPS = [
-  {
-    step: 0,
-    phase: 'Trạng thái 1: Mảng ban đầu',
-    action: 'Khởi tạo mảng arr = [4, 10, 3, 5]',
-    array: [4, 10, 3, 5],
-    heapSize: 4,
-    activeIndices: [0, 1, 2, 3],
-    swapIndices: [],
-    note: 'Cây ban đầu: Gốc (4), con trái (10), con phải (3), con trái của 10 là (5). Chưa thỏa mãn Max-Heap vì 4 < 10.',
-  },
-  {
-    step: 1,
-    phase: 'Trạng thái 2: Sau Build Max-Heap',
-    action: 'Vun từ nút cha cuối (idx=1 -> idx=0)',
-    array: [10, 5, 3, 4],
-    heapSize: 4,
-    activeIndices: [0],
-    swapIndices: [0, 1, 3],
-    note: 'Nút cha 4 đổi chỗ cho 10, sau đó đổi tiếp với 5. Đỉnh gốc arr[0] = 10 là phần tử lớn nhất.',
-  },
-  {
-    step: 2,
-    phase: 'Vòng 1 (Bước 1/2): Rút gốc arr[0] <-> arr[3]',
-    action: 'Hoán đổi 10 <-> 4 và khóa vị trí 3',
-    array: [4, 5, 3, 10],
-    heapSize: 3,
-    activeIndices: [0, 1],
-    swapIndices: [0, 3],
-    note: 'Đưa 10 về cuối mảng [4, 5, 3 | 10]. Vùng Heap thu hẹp còn 3 phần tử; đỉnh 4 nhỏ hơn con 5.',
-  },
-  {
-    step: 3,
-    phase: 'Vòng 1 (Bước 2/2): Sift-down vùng [0..2]',
-    action: 'Vun lại [4, 5, 3] đẩy 5 lên gốc',
-    array: [5, 4, 3, 10],
-    heapSize: 3,
-    activeIndices: [0],
-    swapIndices: [0, 1],
-    note: 'Đổi 4 và 5 -> Thu được Max-Heap [5, 4, 3 | 10].',
-  },
-  {
-    step: 4,
-    phase: 'Vòng 2: Rút gốc arr[0] <-> arr[2] & Sift-down',
-    action: 'Chốt 5 ở idx=2, vun [3, 4] -> [4, 3 | 5, 10]',
-    array: [4, 3, 5, 10],
-    heapSize: 2,
-    activeIndices: [0],
-    swapIndices: [0, 1],
-    note: 'Đổi 5 <-> 3 tạo [3, 4 | 5, 10], sau đó vun lại 2 phần tử đầu đẩy 4 lên gốc -> [4, 3 | 5, 10].',
-  },
-  {
-    step: 5,
-    phase: 'Vòng 3: Rút gốc arr[0] <-> arr[1] -> Hoàn tất!',
-    action: 'Chốt 4 ở idx=1 -> Cây chỉ còn 3',
-    array: [3, 4, 5, 10],
-    heapSize: 0,
-    activeIndices: [],
-    swapIndices: [0, 1],
-    note: 'Đổi đỉnh 4 với 3 -> Thu được mảng tăng dần hoàn chỉnh [3, 4, 5, 10] với O(1) RAM phụ!',
-  },
-];
 
 export const HEAPSORT_PYTHON_CODE = `def sift_down(arr, n, i):
     # Dùng vòng lặp while thay vì đệ quy -> Đạt chuẩn O(1) RAM, không bao giờ lỗi Stack Overflow!
@@ -587,73 +307,62 @@ export const COMPARISON_ROWS = [
   {
     name: 'Timsort',
     theme: 'timsort',
+    mechanism: 'Lai: Merge + Insertion',
     best: 'Θ(n)',
     average: 'Θ(n log n)',
     worst: 'Θ(n log n)',
     space: 'O(n)',
     stable: 'Có',
+    tradeoff: 'Tận dụng natural runs cực nhanh; cần O(n) RAM phụ',
     apps: 'Python, Java Objects, V8 JS, Android',
   },
   {
     name: 'Introsort',
     theme: 'introsort',
+    mechanism: 'Lai: Quick + Heap + Insertion',
     best: 'Θ(n log n)',
     average: 'Θ(n log n)',
     worst: 'Θ(n log n)',
     space: 'Θ(log n)',
     stable: 'Không',
+    tradeoff: 'Thân thiện CPU Cache, khóa O(n log n); không ổn định',
     apps: 'C++ std::sort, .NET, Go',
   },
   {
     name: 'Heap Sort',
     theme: 'heapsort',
+    mechanism: 'Cây nhị phân (Max-Heap)',
     best: 'Θ(n log n) / Θ(n)*',
     average: 'Θ(n log n)',
     worst: 'Θ(n log n)',
     space: 'O(1)',
     stable: 'Không',
+    tradeoff: 'O(1) RAM tuyệt đối, không dùng Stack; Cache Miss cao',
     apps: 'Linux Kernel (lib/sort.c), Embedded',
   },
   {
     name: 'Quick Sort',
     theme: 'neutral',
+    mechanism: 'Chia để trị (Phân hoạch)',
     best: 'Θ(n log n)',
     average: 'Θ(n log n)',
     worst: 'Θ(n²)',
     space: 'Θ(log n)..O(n)',
     stable: 'Không',
+    tradeoff: 'Nhanh trung bình trên RAM; rủi ro O(n²) & tràn Stack',
     apps: 'Sắp xếp mảng nguyên thủy trong RAM',
   },
   {
     name: 'Merge Sort',
     theme: 'neutral',
+    mechanism: 'Chia để trị (Gộp mảng)',
     best: 'Θ(n log n)',
     average: 'Θ(n log n)',
     worst: 'Θ(n log n)',
     space: 'O(n)',
     stable: 'Có',
+    tradeoff: 'Ổn định, khóa O(n log n); tốn O(n) bộ nhớ phụ',
     apps: 'Sắp xếp ngoại (External Sort), Linked List',
-  },
-];
-
-export const QA_FLASHCARDS = [
-  {
-    id: 'qa1',
-    tag: 'Câu hỏi Giảng viên #1 • Toán học Build Heap',
-    question:
-      'Tại sao bước Build Max-Heap có vòng lặp n/2 lần, bên trong gọi sift_down tốn O(log n), nhưng tổng độ phức tạp lại là O(n) chứ không phải O(n log n)?',
-    answer:
-      'Vì hầu hết các nút nằm ở tầng đáy! Một nửa số nút (n/2) là lá nên trượt 0 bước, n/4 nút tầng sát đáy trượt tối đa 1 bước, n/8 nút trượt tối đa 2 bước... Tổng số bước là chuỗi hội tụ ∑ (n / 2^(h+1)) · h ≤ n, nên độ phức tạp chính xác là O(n).',
-    formula: '∑_{h=0}^{⌊log₂n⌋} (n / 2^{h+1}) · h ≤ n  ⇒  O(n)',
-  },
-  {
-    id: 'qa2',
-    tag: 'Câu hỏi Giảng viên #2 • Kiến trúc Phần cứng & Cache',
-    question:
-      'Nếu Heap Sort vừa O(n log n) mọi trường hợp, vừa tốn O(1) RAM, tại sao trên RAM thông thường người ta vẫn thích dùng QuickSort / Introsort hơn?',
-    answer:
-      'Do CPU Cache Miss (Trượt bộ nhớ đệm). QuickSort duyệt các phần tử liền kề trong RAM nên tận dụng tối đa L1/L2 Cache (Spatial Locality). Ngược lại, Heap Sort liên tục nhảy từ vị trí i đến 2i + 1 cách xa nhau khi mảng lớn, gây Cache Miss liên tục nên thực tế chậm hơn QuickSort 1.5–3 lần.',
-    formula: 'QuickSort: Tuần tự [i, i+1] (Cache Hit)  vs  HeapSort: Nhảy xa [i → 2i+1] (Cache Miss)',
   },
 ];
 
@@ -692,11 +401,11 @@ export const SLIDES_DATA = [
     id: 4,
     chapter: 'timsort',
     theme: 'timsort',
-    title: 'Timsort — Minh họa bằng tay & Mô phỏng tương tác',
-    subtitle: 'Trace từng bước mảng A = [3, 5, 7, 2, 4, 6, 9, 1, 8, 10] với minrun = 4',
+    title: 'Timsort — Mô phỏng Biểu đồ Cột Trực Quan',
+    subtitle: 'Mảng đầu vào A = [3, 5, 7, 2, 4, 6, 9, 1, 8, 10] với tham số minrun = 4',
     duration: '1.5 phút',
     speakerNotes:
-      'Hãy bấm nút "Bước tiếp" để quan sát mảng 10 phần tử A = [3, 5, 7, 2, 4, 6, 9, 1, 8, 10] với minrun = 4. Bước 1: Quét phát hiện run tự nhiên [3, 5, 7], [2, 4, 6, 9], [1, 8, 10]. Vì [3, 5, 7] dài 3 < 4, ta kéo phần tử 2 vào thành Run 1 (0..3) = [3, 5, 7, 2] rồi chạy Insertion Sort được [2, 3, 5, 7]. Tương tự Run 2 (4..7) = [4, 6, 9, 1] -> [1, 4, 6, 9]; Run 3 (8..9) = [8, 10]. Tiếp theo gộp Run 1 + Run 2 bằng hai con trỏ được [1, 2, 3, 4, 5, 6, 7, 9], rồi gộp lần cuối với [8, 10] thu được mảng hoàn chỉnh [1..10]. Có thể hỏi người nghe dự đoán phần tử kế tiếp khi merge để tăng tương tác.',
+      'Hãy bấm nút "Tự động chạy" hoặc "Bước tiếp" để quan sát trực quan thuật toán Timsort trên biểu đồ cột với tham số minrun = 4. Trình mô phỏng tái hiện chi tiết từng khung hình: (1) Phát hiện Natural Runs tăng/giảm tự nhiên (nếu giảm thì đảo ngược tại chỗ); (2) Mở rộng các run ngắn hơn minrun = 4 bằng Insertion Sort từng bước chèn/dịch; (3) Trộn các run theo bất biến Run Stack (mergeCollapse) bằng hai con trỏ. Bạn cũng có thể kéo thanh tốc độ hoặc bấm "Mảng ngẫu nhiên" để thử nghiệm dữ liệu mới.',
   },
   {
     id: 5,
@@ -752,11 +461,11 @@ export const SLIDES_DATA = [
     id: 10,
     chapter: 'introsort',
     theme: 'introsort',
-    title: 'Introsort — Minh họa bằng tay & Trace 2 kịch bản',
-    subtitle: 'Interactive 2-Tab Trace trên A = [19, 7, 15, 12, 16, 18, 4, 11, 13] (n = 9)',
+    title: 'Introsort — Cây đệ quy & Thước đo Depth',
+    subtitle: 'Interactive 2-Tab Trace trên mảng A = [19, 7, 15, 12, 16, 18, 4, 11, 13] (n = 9)',
     duration: '1.5 phút',
     speakerNotes:
-      'Ở Slide này có 2 Tab tương tác. Tab 1 minh họa Trường hợp chuẩn (size_threshold = 3, depth_limit = 6): Bước 1 chọn chốt Median-of-Three (19, 16, 13) -> Pivot = 16 về p=6; Bước 2 đệ quy phải [7..8] dùng Insertion Sort; Bước 3-5 phân hoạch nửa trái với Pivot = 13 và 7; Bước 6-7 hoàn tất các đoạn <= 3. Tab 2 chủ động đặt size_threshold = 2 và depth_limit = 1 để kích hoạt nhánh Heapsort ngay trên đoạn con [0..5] khi chạm depth_limit == 0, quan sát đủ 4 màu tách biệt của Quicksort, Insertion Sort và Heapsort.',
+      'Ở Slide này có 2 Tab tương tác kèm Cây đệ quy và Thước đo Depth trực quan. Tab 1 minh họa Trường hợp chuẩn (threshold = 3, depth = 6): mảng lướt qua các lần phân hoạch Pivot và Insertion Sort ở các nhánh nhỏ mà chưa chạm ngưỡng depth = 0. Tab 2 chủ động đặt threshold = 2 và depth = 1: khi nửa trái [0..5] chạm vạch đỏ depth = 0, Introsort lập tức kích hoạt Heapsort kèm mô phỏng cây nhị phân Max-Heap bên phải để chặn nguy cơ O(n²). Bạn có thể bấm "Tự động chạy", kéo thanh tốc độ 0.5x–2.5x hoặc bấm trực tiếp vào bất kỳ node nào trên cây đệ quy để nhảy tới bước đó.',
   },
   {
     id: 11,
@@ -802,11 +511,11 @@ export const SLIDES_DATA = [
     id: 15,
     chapter: 'heapsort',
     theme: 'heapsort',
-    title: 'Heap Sort — Minh họa bằng tay & Cây Nhị Phân',
-    subtitle: 'Trực quan hóa song song Sơ đồ Cây nhị phân + Mảng 1 chiều cho arr = [4, 10, 3, 5]',
+    title: "Heap Sort — Cây nhị phân 'co lại' & Vách ngăn mảng động",
+    subtitle: 'Trực quan hóa đồng bộ Cây Heap thu gọn + Mảng 1 chiều có vách ngăn trượt cho arr = [4, 10, 3, 5]',
     duration: '1.1 phút (Phút 2)',
     speakerNotes:
-      'Hãy cùng trace tay trên mảng 4 phần tử [4, 10, 3, 5]. Ban đầu gốc là 4, con trái 10, con phải 3, con của 10 là 5. Sau bước Build Max-Heap, số 10 được đẩy lên làm gốc, số 5 đẩy lên kế tiếp, thu được Max-Heap [10, 5, 3, 4]. Vòng 1: Đổi gốc 10 với phần tử cuối là 4, chốt 10 ở cuối mảng. Lúc này 4 ở trên đỉnh nhỏ hơn con là 5, vun đống đẩy 5 lên đỉnh được [5, 4, 3 | 10]. Vòng 2: Đổi đỉnh 5 với 3, chốt 5, vun lại 2 phần tử đầu để 4 lên đỉnh được [4, 3 | 5, 10]. Vòng 3: Đổi đỉnh 4 với 3, thu được mảng hoàn chỉnh [3, 4, 5, 10] mà không tốn bất kỳ mảng phụ nào!',
+      'Hãy bấm "Tự động chạy" hoặc "Bước tiếp" để theo dõi đồng bộ Cây nhị phân co lại và Mảng 1 chiều có vách ngăn trượt! Pha 1 (Build Max-Heap) liên kết nút cha i với con 2i+1 / 2i+2 bằng vòng cung công thức, đẩy giá trị lớn nhất lên gốc arr[0]. Pha 2 (Rút gốc & Vun lại) liên tục đổi gốc về cuối vùng Heap, khóa nút (thu nhỏ trên cây + ngắt nét đứt cạnh nối), đồng thời trượt vách ngăn xanh-vàng lùi sang trái. Bạn có thể chuyển sang "Ngẫu nhiên (7 phần tử)" để quan sát cây 3 tầng đầy đủ, kéo thanh tốc độ hoặc rê chuột lên từng nút để soi đồng bộ trên mảng.',
   },
   {
     id: 16,
@@ -842,10 +551,11 @@ export const SLIDES_DATA = [
     id: 19,
     chapter: 'summary',
     theme: 'summary',
-    title: 'Bảng Tổng hợp So sánh & Góc Q&A Chuyên sâu',
-    subtitle: 'Đối chiếu 5 thuật toán cốt lõi & Flashcards giải đáp câu hỏi Giảng viên',
+    title: 'Bảng Tổng hợp So sánh Toàn diện',
+    subtitle:
+      'Đối chiếu 5 thuật toán sắp xếp cốt lõi theo Thời gian, Bộ nhớ, Tính ổn định, Đặc tính & Ứng dụng Production',
     duration: '1.5 phút',
     speakerNotes:
-      'Tổng kết lại: Không có một thuật toán sắp xếp "vạn năng" cho mọi bối cảnh — Production lựa chọn dựa trên sự đánh đổi: cần Stable và khai thác dữ liệu gần sắp xếp trên Object Arrays thì chọn Timsort (Python, Java Objects, V8 JS); cần tốc độ RAM nhanh nhất nhưng vẫn an toàn cận trên O(n log n) thì chọn Introsort (C++ std::sort, .NET, Go); còn khi tài nguyên RAM và Stack bị siết chặt tuyệt đối như nhân Linux Kernel hay Hệ thống nhúng thì Heap Sort là chốt chặn an toàn duy nhất. Mời thầy/cô và các bạn bấm vào 2 Flashcards bên dưới để xem giải đáp chuyên sâu về toán học Build Heap O(n) và CPU Cache Miss.',
+      'Tổng kết lại: Không có một thuật toán sắp xếp "vạn năng" cho mọi bối cảnh — hệ thống Production lựa chọn dựa trên sự đánh đổi giữa thời gian, bộ nhớ phụ, tính ổn định và mức độ thân thiện CPU Cache. Cần Stable và khai thác dữ liệu gần sắp xếp trên Object Arrays thì chọn Timsort (Python, Java Objects, V8 JS); cần tốc độ RAM nhanh nhất nhưng vẫn khóa chặt cận trên O(n log n) thì chọn Introsort (C++ std::sort, .NET, Go); còn khi tài nguyên RAM và Stack bị siết chặt tuyệt đối như nhân Linux Kernel hay Hệ thống nhúng thì Heap Sort là chốt chặn an toàn duy nhất.',
   },
 ];

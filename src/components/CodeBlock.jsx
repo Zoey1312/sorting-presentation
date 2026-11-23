@@ -11,17 +11,17 @@ export default function CodeBlock({ title, lang = 'python', code }) {
   );
 
   return (
-    <div className="code-window">
+    <div className="code-window bg-[#0D0D0F] border border-white/10 rounded-3xl overflow-hidden flex flex-col flex-1 min-h-0">
       <div className="code-header">
         <div className="code-dots">
-          <span style={{ background: '#ef4444' }} />
-          <span style={{ background: '#f59e0b' }} />
-          <span style={{ background: '#10b981' }} />
+          <span style={{ background: '#FF5F57' }} />
+          <span style={{ background: '#FEBC2E' }} />
+          <span style={{ background: '#28C840' }} />
         </div>
-        <span className="text-xs text-muted mono">{title}</span>
-        <span className="badge-pill badge-cyan">{lang.toUpperCase()}</span>
+        <span className="code-filename">{title}</span>
+        <span className="badge-pill badge-accent">{lang.toUpperCase()}</span>
       </div>
-      <pre className="code-pre">
+      <pre className="code-pre text-sm xl:text-base font-mono leading-relaxed">
         <code dangerouslySetInnerHTML={{ __html: highlighted }} />
       </pre>
     </div>

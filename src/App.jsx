@@ -10,6 +10,8 @@ import {
 import { CHAPTERS, SLIDES_DATA } from './data/slidesData';
 import SlideRenderer from './components/SlideRenderer.jsx';
 
+const APPLE_EASE = [0.16, 1, 0.3, 1];
+
 export default function App() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
@@ -60,61 +62,79 @@ export default function App() {
   const progress = ((slideIndex + 1) / totalSlides) * 100;
 
   return (
-    <div className={`app-shell theme-${currentSlide.theme}`}>
-      <div className="ambient-orb orb-1" style={{ background: 'var(--accent)' }} />
-      <div className="ambient-orb orb-2" style={{ background: 'var(--accent-2)' }} />
-      <div className="grid-backdrop" />
+    <div className={`app-shell theme-${currentSlide.theme} h-screen w-screen overflow-hidden flex flex-col bg-black`}>
+      <div className="ambient-glow" />
 
-      <header className="top-nav">
-        <div className="brand-badge">
-          <span className="brand-dot" />
-          <span>DSA Production Sorting</span>
-        </div>
+      <div className="top-island-wrap">
+        <header className="dynamic-island">
+          <div className="brand-badge">
+            <span className="brand-dot" />
+            <span>DSA Sorting</span>
+          </div>
 
-        <nav className="chapter-nav" aria-label="Chapters">
-          {CHAPTERS.map((ch) => {
-            const active = currentSlide.chapter === ch.id;
-            return (
-              <button
-                key={ch.id}
-                type="button"
-                className={`chapter-btn ${active ? 'active' : ''}`}
-                onClick={() => setSlideIndex(ch.firstSlide - 1)}
-              >
-                <span>{ch.label}</span>
-                <span className="text-xs text-muted">
-                  ({ch.range[0] === ch.range[1] ? ch.range[0] : `${ch.range[0]}-${ch.range[1]}`})
-                </span>
-              </button>
-            );
-          })}
-        </nav>
+          <nav className="chapter-nav" aria-label="Chapters">
+            {CHAPTERS.map((ch) => {
+              const active = currentSlide.chapter === ch.id;
+              const rangeText =
+                ch.range[0] === ch.range[1] ? ch.range[0] : `${ch.range[0]}–${ch.range[1]}`;
+              return (
+                <button
+                  key={ch.id}
+                  type="button"
+                  className={`chapter-btn ${active ? 'active' : ''}`}
+                  onClick={() => setSlideIndex(ch.firstSlide - 1)}
+                >
+                  <span>{ch.label}</span>
+                  <span className="chapter-range">{rangeText}</span>
+                </button>
+              );
+            })}
+          </nav>
 
-        <div className="nav-actions">
-          <span className="slide-counter">
-            Slide {slideIndex + 1} / {totalSlides}
-          </span>
-          <button
-            type="button"
-            className={`icon-btn ${showNotes ? 'active' : ''}`}
-            onClick={() => setShowNotes((v) => !v)}
-            title="Speaker Notes (Phím S)"
-          >
-            <MessageSquareText size={15} />
-            <span>Speaker Notes (S)</span>
-          </button>
-          <button
-            type="button"
-            className="icon-btn"
-            onClick={toggleFullscreen}
-            title="Toàn màn hình (Phím F)"
-          >
-            {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
-          </button>
-        </div>
-      </header>
+          <div className="nav-actions">
+            <button
+              type="button"
+              className="nav-pill-btn icon-only"
+              disabled={slideIndex === 0}
+              onClick={goPrev}
+              title="Slide trước (←)"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <span className="slide-counter">
+              {String(slideIndex + 1).padStart(2, '0')} / {totalSlides}
+            </span>
+            <button
+              type="button"
+              className="nav-pill-btn icon-only"
+              disabled={slideIndex === totalSlides - 1}
+              onClick={goNext}
+              title="Slide tiếp (→)"
+            >
+              <ChevronRight size={16} />
+            </button>
+            <button
+              type="button"
+              className={`nav-pill-btn ${showNotes ? 'active' : ''}`}
+              onClick={() => setShowNotes((v) => !v)}
+              title="Speaker Notes (Phím S)"
+            >
+              <MessageSquareText size={15} />
+              <span>Notes (S)</span>
+            </button>
+            <button
+              type="button"
+              className="nav-pill-btn icon-only"
+              onClick={toggleFullscreen}
+              title="Toàn màn hình (Phím F)"
+            >
+              {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+            </button>
+          </div>
+        </header>
+      </div>
 
-      <main className="stage-wrapper">
+      <main className="stage-shell w-full max-w-[92vw] mx-auto px-6 py-5 flex-1 flex flex-col justify-between">
         <AnimatePresence mode="wait">
           <motion.section
             key={currentSlide.id}
@@ -122,9 +142,9 @@ export default function App() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.45, ease: APPLE_EASE }}
           >
-            <SlideRenderer slide={currentSlide} />
+            <SlideRenderer slide={currentSlide} onNextSlide={goNext} />
           </motion.section>
         </AnimatePresence>
       </main>
@@ -134,8 +154,8 @@ export default function App() {
           <div className="speaker-drawer-header">
             <div className="flex-row gap-2">
               <MessageSquareText size={16} />
-              <strong className="text-sm">Speaker Notes — Slide {currentSlide.id}</strong>
-              <span className="badge-pill badge-cyan">{currentSlide.duration}</span>
+              <strong style={{ fontSize: '0.95rem' }}>Speaker Notes — Slide {currentSlide.id}</strong>
+              <span className="badge-pill badge-accent">{currentSlide.duration}</span>
             </div>
             <button type="button" className="sim-btn" onClick={() => setShowNotes(false)}>
               Đóng (S)
@@ -145,27 +165,9 @@ export default function App() {
         </aside>
       )}
 
-      <footer className="bottom-bar">
-        <div className="progress-track">
-          <div className="progress-fill" style={{ width: `${progress}%` }} />
-        </div>
-        <div className="text-xs text-muted">
-          Điều hướng: ← / → / Space / PageUp / PageDown • Bật ghi chú: Phím S
-        </div>
-        <div className="flex-row gap-2">
-          <button type="button" className="sim-btn" disabled={slideIndex === 0} onClick={goPrev}>
-            <ChevronLeft size={15} /> Trước
-          </button>
-          <button
-            type="button"
-            className="sim-btn primary"
-            disabled={slideIndex === totalSlides - 1}
-            onClick={goNext}
-          >
-            Tiếp <ChevronRight size={15} />
-          </button>
-        </div>
-      </footer>
+      <div className="bottom-progress-track" aria-hidden="true">
+        <div className="bottom-progress-fill" style={{ width: `${progress}%` }} />
+      </div>
     </div>
   );
 }
