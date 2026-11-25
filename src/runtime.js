@@ -89,6 +89,13 @@ const state = {
   heapTreeEdgeEls: [],
   heapTreeCoords: [],
   heapPrevPosById: new Map(),
+  hs16FocusGroup: null,
+  hs16StepIdx: 0,
+  hs17PyramidLvl: 3,
+  hs17BestCase: 'distinct',
+  hs17RamScale: 2,
+  hs17IsDos: false,
+  hs17LcIdx: 0,
 };
 
 function esc(str) {
@@ -3190,113 +3197,474 @@ function loadHeapArray(arr, isSample) {
   renderHeapFrame(false);
 }
 
+const HS16_STEPS = [
+  { label: 'Mảng gốc', heap: [4, 10, 3, 5, 1], sorted: [], rootHighlight: false, focus: null },
+  { label: 'Build Max-Heap', heap: [10, 5, 3, 4, 1], sorted: [], rootHighlight: true, focus: 'build' },
+  { label: 'Extract lần 1', heap: [5, 4, 3, 1], sorted: [10], rootHighlight: true, focus: 'extract' },
+  { label: 'Extract lần 2', heap: [4, 1, 3], sorted: [5, 10], rootHighlight: true, focus: 'extract' },
+  { label: 'Hoàn tất', heap: [], sorted: [1, 3, 4, 5, 10], rootHighlight: false, focus: null },
+];
+
+function renderHs16CellsHtml(s) {
+  const heapHtml = s.heap
+    .map((val, idx) => `<span class="hs16-cell${idx === 0 && s.rootHighlight ? ' root' : ''}">${val}</span>`)
+    .join('');
+  const divHtml = s.heap.length && s.sorted.length ? '<span class="hs16-divider">|</span>' : '';
+  const sortedHtml = s.sorted.map((val) => `<span class="hs16-cell sorted">${val}</span>`).join('');
+  return `${heapHtml}${divHtml}${sortedHtml}`;
+}
+
+function updateHs16DOM() {
+  const codeBody = document.getElementById('hs16-code-body');
+  if (!codeBody) return;
+
+  const fg = state.hs16FocusGroup;
+  codeBody.className = `hs16-code-body${fg ? ` has-focus focus-${fg}` : ''}`;
+
+  document.querySelectorAll('.hs16-card').forEach((card) => {
+    card.classList.toggle('active', card.dataset.target === fg);
+  });
+
+  const s = HS16_STEPS[state.hs16StepIdx] || HS16_STEPS[0];
+  const stepLabel = document.getElementById('hs16-step-label');
+  const arrWrap = document.getElementById('hs16-arr-wrap');
+  const nextStepBtn = document.getElementById('hs16-next-step-btn');
+
+  if (stepLabel) stepLabel.textContent = s.label;
+  if (arrWrap) arrWrap.innerHTML = renderHs16CellsHtml(s);
+  if (nextStepBtn) {
+    nextStepBtn.textContent =
+      state.hs16StepIdx === HS16_STEPS.length - 1 ? 'Chạy lại ↺' : 'Bước tiếp theo ▸';
+  }
+}
+
+function setHs16Focus(group) {
+  state.hs16FocusGroup = state.hs16FocusGroup === group ? null : group;
+  updateHs16DOM();
+}
+
+function clearHs16Focus() {
+  state.hs16FocusGroup = null;
+  updateHs16DOM();
+}
+
+function nextHs16Step() {
+  state.hs16StepIdx = (state.hs16StepIdx + 1) % HS16_STEPS.length;
+  const target = HS16_STEPS[state.hs16StepIdx].focus;
+  state.hs16FocusGroup = target || null;
+  updateHs16DOM();
+}
+
 function renderSlide16() {
+  const fg = state.hs16FocusGroup;
+  const s = HS16_STEPS[state.hs16StepIdx] || HS16_STEPS[0];
+  const bodyFocusClass = fg ? ` has-focus focus-${fg}` : '';
+  const btnText =
+    state.hs16StepIdx === HS16_STEPS.length - 1 ? 'Chạy lại ↺' : 'Bước tiếp theo ▸';
+
   return `
-    <div class="bento-grid flex-1 min-h-0">
-      <div class="bento-col col-7">
-        ${renderCodeWindow('heapsort_iterative.py', 'python', HEAPSORT_PYTHON_CODE, 0)}
-        <div class="bento-card bento-card-auto bento-item" style="--stagger:1">
-          <div class="flex-row justify-between items-center flex-wrap gap-2">
-            <span class="badge-pill badge-mint">Kết quả Console</span>
-            <code class="mono" style="font-size:var(--fs-code); color:#FFD60A;">heap_sort([4, 10, 3, 5, 1]) → Output: [1, 3, 4, 5, 10]</code>
+    <div class="hs16-grid">
+      <div class="hs16-code-window bento-item" style="--stagger:0">
+        <div class="hs16-code-topbar">
+          <div class="hs16-dots">
+            <span class="hs16-dot r"></span>
+            <span class="hs16-dot y"></span>
+            <span class="hs16-dot g"></span>
           </div>
+          <span>heapsort_iterative.py</span>
+          <span class="hs16-lang-badge">PYTHON</span>
+        </div>
+
+        <div class="hs16-code-body${bodyFocusClass}" id="hs16-code-body">
+          <div class="hs16-code-line"><span class="hs16-kw">def</span> <span class="hs16-fn">sift_down</span>(arr, n, i):</div>
+          <div class="hs16-code-line" data-group="iter">    <span class="hs16-kw">while True</span>:  <span class="hs16-cm"># Khử đệ quy -&gt; O(1) RAM</span></div>
+          <div class="hs16-code-line" data-group="iter">        largest = i</div>
+          <div class="hs16-code-line" data-group="iter">        left, right = <span class="hs16-num">2</span> * i + <span class="hs16-num">1</span>, <span class="hs16-num">2</span> * i + <span class="hs16-num">2</span></div>
+          <div class="hs16-code-line" data-group="iter">        <span class="hs16-kw">if</span> left &lt; n <span class="hs16-kw">and</span> arr[left] &gt; arr[largest]: largest = left</div>
+          <div class="hs16-code-line" data-group="iter">        <span class="hs16-kw">if</span> right &lt; n <span class="hs16-kw">and</span> arr[right] &gt; arr[largest]: largest = right</div>
+          <div class="hs16-code-line" data-group="iter">        <span class="hs16-kw">if</span> largest == i: <span class="hs16-kw">break</span></div>
+          <div class="hs16-code-line" data-group="iter">        arr[i], arr[largest] = arr[largest], arr[i]</div>
+          <div class="hs16-code-line" data-group="iter">        i = largest  <span class="hs16-cm"># Trượt trực tiếp xuống nút con</span></div>
+          <div class="hs16-code-line"> </div>
+          <div class="hs16-code-line"><span class="hs16-kw">def</span> <span class="hs16-fn">heap_sort</span>(arr):</div>
+          <div class="hs16-code-line">    n = <span class="hs16-fn">len</span>(arr)</div>
+          <div class="hs16-code-line" data-group="build">    <span class="hs16-kw">for</span> i <span class="hs16-kw">in</span> <span class="hs16-fn">range</span>(n // <span class="hs16-num">2</span> - <span class="hs16-num">1</span>, -<span class="hs16-num">1</span>, -<span class="hs16-num">1</span>):</div>
+          <div class="hs16-code-line" data-group="build">        <span class="hs16-fn">sift_down</span>(arr, n, i)</div>
+          <div class="hs16-code-line"> </div>
+          <div class="hs16-code-line" data-group="extract">    <span class="hs16-kw">for</span> i <span class="hs16-kw">in</span> <span class="hs16-fn">range</span>(n - <span class="hs16-num">1</span>, <span class="hs16-num">0</span>, -<span class="hs16-num">1</span>):</div>
+          <div class="hs16-code-line" data-group="extract">        arr[<span class="hs16-num">0</span>], arr[i] = arr[i], arr[<span class="hs16-num">0</span>]</div>
+          <div class="hs16-code-line" data-group="extract">        <span class="hs16-fn">sift_down</span>(arr, i, <span class="hs16-num">0</span>)</div>
+        </div>
+
+        <div class="hs16-console-bar">
+          <div class="hs16-console-left">
+            <span class="hs16-step-label" id="hs16-step-label">${esc(s.label)}</span>
+            <div class="hs16-arr-wrap" id="hs16-arr-wrap">${renderHs16CellsHtml(s)}</div>
+          </div>
+          <button type="button" class="hs16-step-btn" id="hs16-next-step-btn" data-action="hs16-next-step">${btnText}</button>
         </div>
       </div>
 
-      <div class="bento-col col-5">
-        <div class="bento-card bento-card-accent flex-1 bento-item justify-between" style="--stagger:2">
-          <div>
-            <span class="badge-pill badge-amber">Điểm nhấn kỹ thuật: while True</span>
-            <h3 class="bento-title mt-2">Khử đệ quy triệt tiêu Stack Overflow</h3>
-          </div>
-          <p class="bento-body mt-2">
-            Thay vì gọi đệ quy <code>sift_down</code> tốn khung hàm trên Call Stack, vòng lặp <code>while True</code>
-            trượt trực tiếp từ nút cha <code>i</code> xuống con <code>largest</code>, đạt chuẩn <strong>O(1) RAM phụ tuyệt đối</strong>.
-          </p>
+      <div class="hs16-cards bento-item" style="--stagger:1">
+        <div class="hs16-card${fg === 'iter' ? ' active' : ''}" data-action="hs16-focus" data-target="iter">
+          <span class="hs16-hotkey-hint">Phím 1</span>
+          <span class="hs16-badge gold">Điểm nhấn kỹ thuật: while True</span>
+          <h3>Khử đệ quy triệt tiêu Stack Overflow</h3>
+          <p>Thay vì gọi đệ quy <code>sift_down</code> tốn Call Stack, vòng lặp trượt trực tiếp <code>i = largest</code> xuống nút con, đạt chuẩn <strong>O(1) RAM phụ</strong> tuyệt đối.</p>
         </div>
 
-        <div class="bento-card flex-1 bento-item justify-between" style="--stagger:3">
-          <h3 class="bento-title">Cấu trúc 2 vòng lặp trong <code>heap_sort()</code></h3>
-          <p class="bento-body mt-2">
-            • <strong>Vòng 1 (Build Max-Heap):</strong> Duyệt ngược từ nút cha cuối <code>n // 2 - 1</code> về <code>0</code> (các nút từ <code>n // 2</code> trở đi là lá).<br/>
-            • <strong>Vòng 2 (Extract):</strong> Đổi đỉnh <code>arr[0]</code> với cuối Heap <code>arr[i]</code> và gọi <code>sift_down(arr, i, 0)</code>.
-          </p>
+        <div class="hs16-card${fg === 'build' ? ' active' : ''}" data-action="hs16-focus" data-target="build">
+          <span class="hs16-hotkey-hint">Phím 2</span>
+          <span class="hs16-badge blue">Vòng lặp 1 — O(n)</span>
+          <h3>Build Max-Heap từ dưới lên</h3>
+          <p>Chỉ duyệt ngược từ nút cha cuối cùng <code>n // 2 - 1</code> về <code>0</code> (bỏ qua toàn bộ nút lá từ <code>n // 2</code> trở đi).</p>
+        </div>
+
+        <div class="hs16-card${fg === 'extract' ? ' active' : ''}" data-action="hs16-focus" data-target="extract">
+          <span class="hs16-hotkey-hint">Phím 3</span>
+          <span class="hs16-badge green">Vòng lặp 2 — O(n log n)</span>
+          <h3>Rút đỉnh (Extract) &amp; Thu hẹp Heap</h3>
+          <p>Hoán đổi đỉnh lớn nhất <code>arr[0]</code> về cuối mảng <code>arr[i]</code>, sau đó gọi <code>sift_down(arr, i, 0)</code> để khôi phục Heap trên phần còn lại.</p>
         </div>
       </div>
     </div>
   `;
 }
 
+const HS17_NUMS = [3, 2, 1, 5, 6, 4];
+
+const HS17_LC_STEPS = [
+  {
+    currIdx: -1,
+    skipped: [],
+    doneIn: [0, 1],
+    heap: [2, 3],
+    line: 'init',
+    kicked: 'Khởi tạo 2 số đầu',
+    msg: 'Lấy <strong>[3, 2]</strong> và <code>heapify</code> → đỉnh gác cổng <code>min_heap[0] = 2</code>.',
+  },
+  {
+    currIdx: 2,
+    skipped: [2],
+    doneIn: [0, 1],
+    heap: [2, 3],
+    line: 'check',
+    kicked: '<span class="out">Bỏ qua 1</span> (1 ≤ 2)',
+    msg: 'Xét <strong>1</strong>: Nhỏ hơn gác cổng <strong>2</strong> → Bỏ qua, không cần đụng vào Heap.',
+  },
+  {
+    currIdx: 3,
+    skipped: [2],
+    doneIn: [0, 1, 3],
+    heap: [3, 5],
+    line: 'replace',
+    kicked: 'Đá <span class="out">2</span> • Nạp <span class="in">5</span>',
+    msg: 'Xét <strong>5</strong>: Lớn hơn <strong>2</strong> → <code>heapreplace</code> đá 2 ra, nạp 5 vào.',
+  },
+  {
+    currIdx: 4,
+    skipped: [2],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'replace',
+    kicked: 'Đá <span class="out">3</span> • Nạp <span class="in">6</span>',
+    msg: 'Xét <strong>6</strong>: Lớn hơn <strong>3</strong> → <code>heapreplace</code> đá 3 ra, nạp 6 vào.',
+  },
+  {
+    currIdx: 5,
+    skipped: [2, 5],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'check',
+    kicked: '<span class="out">Bỏ qua 4</span> (4 ≤ 5)',
+    msg: 'Xét <strong>4</strong>: Nhỏ hơn gác cổng <strong>5</strong> → Bỏ qua.',
+  },
+  {
+    currIdx: -1,
+    skipped: [2, 5],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'return',
+    winner: true,
+    kicked: 'Đáp án: <span class="in">5</span>',
+    msg: 'Hoàn tất! Trả về <code>min_heap[0] = 5</code> chính là <strong>số lớn thứ 2</strong>.',
+  },
+];
+
+function renderHs17StreamHtml(s) {
+  return HS17_NUMS.map((n, i) => {
+    let cls = 'hs17-num-cell';
+    if (i === s.currIdx) cls += ' current';
+    else if (s.skipped.includes(i)) cls += ' skipped';
+    else if (s.doneIn.includes(i)) cls += ' done-in';
+    return `<div class="${cls}">${n}</div>`;
+  }).join('');
+}
+
+function renderHs17HeapSlotsHtml(s) {
+  return s.heap
+    .map((val, idx) => {
+      let cls = 'hs17-heap-slot';
+      let tag = `min_heap[${idx}]`;
+      if (idx === 0) {
+        cls += s.winner ? ' winner' : ' gatekeeper';
+        tag = s.winner ? '★ Đáp án (Top-2)' : 'Gác cổng [0]';
+      }
+      return `<div class="${cls}"><div class="hs17-slot-val">${val}</div><span class="hs17-slot-tag">${tag}</span></div>`;
+    })
+    .join('');
+}
+
+function updateHs17DosDOM() {
+  const isDos = state.hs17IsDos;
+  const dosBtn = document.getElementById('hs17-dos-btn');
+  const qsBar = document.getElementById('hs17-qs-bar');
+  const qsStatus = document.getElementById('hs17-qs-status');
+  const hsStatus = document.getElementById('hs17-hs-status');
+  const dosNote = document.getElementById('hs17-dos-note');
+  if (!dosBtn || !qsBar || !qsStatus || !hsStatus || !dosNote) return;
+
+  dosBtn.classList.toggle('active', isDos);
+  qsBar.classList.toggle('overflow', isDos);
+
+  if (isDos) {
+    qsStatus.className = 'hs17-status-pill panic';
+    qsStatus.textContent = '> 16 KB — KERNEL PANIC!';
+    hsStatus.textContent = 'O(1) RAM — Miễn nhiễm';
+    dosNote.textContent = 'Đầu vào xấu: QuickSort đệ quy làm sập hệ thống!';
+    dosBtn.textContent = '↺ Khôi phục trạng thái [D]';
+  } else {
+    qsStatus.className = 'hs17-status-pill warn';
+    qsStatus.textContent = '~4 KB (Bình thường)';
+    hsStatus.textContent = 'O(1) RAM — An toàn';
+    dosNote.textContent = 'Trạng thái: Đầu vào ngẫu nhiên';
+    dosBtn.textContent = '⚡ Mô phỏng DoS O(n²) [D]';
+  }
+}
+
+function updateHs17LcDOM() {
+  const s = HS17_LC_STEPS[state.hs17LcIdx] || HS17_LC_STEPS[0];
+  const stepCounter = document.getElementById('hs17-step-counter');
+  const streamWrap = document.getElementById('hs17-stream-wrap');
+  const heapSlots = document.getElementById('hs17-heap-slots');
+  const kickedInfo = document.getElementById('hs17-kicked-info');
+  const simMsg = document.getElementById('hs17-sim-msg');
+  const nextLcBtn = document.getElementById('hs17-next-lc-btn');
+
+  if (stepCounter) stepCounter.textContent = `Bước ${state.hs17LcIdx + 1} / ${HS17_LC_STEPS.length}`;
+  document.querySelectorAll('#hs17-lc-code .hs17-code-line').forEach((el) => {
+    el.classList.toggle('hl', el.dataset.line === s.line);
+  });
+  if (streamWrap) streamWrap.innerHTML = renderHs17StreamHtml(s);
+  if (heapSlots) heapSlots.innerHTML = renderHs17HeapSlotsHtml(s);
+  if (kickedInfo) kickedInfo.innerHTML = s.kicked;
+  if (simMsg) simMsg.innerHTML = s.msg;
+  if (nextLcBtn) {
+    nextLcBtn.textContent =
+      state.hs17LcIdx === HS17_LC_STEPS.length - 1 ? 'Chạy lại ↺ [K]' : 'Bước tiếp theo ▸ [K]';
+  }
+}
+
+function toggleHs17Dos() {
+  state.hs17IsDos = !state.hs17IsDos;
+  updateHs17DosDOM();
+}
+
+function nextHs17LcStep() {
+  state.hs17LcIdx = (state.hs17LcIdx + 1) % HS17_LC_STEPS.length;
+  updateHs17LcDOM();
+}
+
+const HS17C_PYRAMID_LEVELS = [
+  {
+    cls: 'l0',
+    label: 'Đỉnh (1 nút)',
+    steps: '≤ log n bước',
+    note: '<strong>Đỉnh (1 nút):</strong> Chỉ có duy nhất 1 nút phải trượt hết chiều cao log₂n.',
+  },
+  {
+    cls: 'l1',
+    label: '12.5% số nút',
+    steps: '≤ 2 bước',
+    note: '<strong>Tầng trên (12.5% số nút):</strong> Số lượng ít, chỉ trượt tối đa 2 tầng.',
+  },
+  {
+    cls: 'l2',
+    label: '25% số nút',
+    steps: '≤ 1 bước',
+    note: '<strong>Tầng áp đáy (25% số nút):</strong> Nhiều nút hơn nhưng chỉ trượt tối đa 1 bước.',
+  },
+  {
+    cls: 'l3',
+    label: '50% số nút (Nút lá)',
+    steps: '0 bước',
+    note: '<strong>Tầng đáy (50% số nút là lá):</strong> Không cần sift_down → 0 bước. Tổng chuỗi hội tụ = O(n)!',
+  },
+];
+
+const HS17C_CASE_TEXTS = {
+  distinct:
+    'Với mảng phân biệt (kể cả đã sắp xếp sẵn), Heap Sort vẫn mất <code>Θ(n log n)</code> vì luôn phải rút đỉnh và đẩy phần tử nhỏ từ đáy lên để <code>sift_down</code> lại.',
+  equal:
+    'Khi mọi phần tử bằng nhau (VD: <code>[5, 5, 5, 5]</code>), <code>sift_down</code> thoát ngay ở lệnh <code>break</code> đầu tiên (O(1)/lần) → tổng thời gian giảm xuống <code>Θ(n)</code>.',
+};
+
+const HS17C_RAM_SCALES = {
+  1: { n: '100', mW: '18%', mV: '~800 Bytes', qW: '10%', qV: '~500 Bytes' },
+  2: { n: '10,000', mW: '48%', mV: '~80 KB', qW: '22%', qV: '~1.2 KB' },
+  3: { n: '100,000', mW: '75%', mV: '~800 KB', qW: '34%', qV: '~1.6 KB (Worst: 800 KB)' },
+  4: { n: '1,000,000', mW: '100%', mV: '~8 MB', qW: '46%', qV: '~2 KB (Worst: 8 MB)' },
+};
+
+function setHs17PyramidLevel(lvlIdx) {
+  state.hs17PyramidLvl = lvlIdx;
+  document.querySelectorAll('#hs17c-pyramid .hs17c-p-level').forEach((el, idx) => {
+    el.classList.toggle('active', idx === lvlIdx);
+  });
+  const noteEl = document.getElementById('hs17c-p-note');
+  if (noteEl && HS17C_PYRAMID_LEVELS[lvlIdx]) {
+    noteEl.innerHTML = HS17C_PYRAMID_LEVELS[lvlIdx].note;
+  }
+}
+
+function setHs17BestCase(caseKey) {
+  state.hs17BestCase = caseKey;
+  document.querySelectorAll('.hs17c-tab-btn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.case === caseKey);
+  });
+  const detailEl = document.getElementById('hs17c-case-detail');
+  if (detailEl && HS17C_CASE_TEXTS[caseKey]) {
+    detailEl.innerHTML = HS17C_CASE_TEXTS[caseKey];
+  }
+}
+
+function updateHs17RamDOM() {
+  const s = HS17C_RAM_SCALES[state.hs17RamScale] || HS17C_RAM_SCALES[2];
+  const nDisplay = document.getElementById('hs17c-n-display');
+  const mergeBar = document.getElementById('hs17c-merge-bar');
+  const quickBar = document.getElementById('hs17c-quick-bar');
+  const mergeVal = document.getElementById('hs17c-merge-val');
+  const quickVal = document.getElementById('hs17c-quick-val');
+
+  if (nDisplay) nDisplay.textContent = s.n;
+  if (mergeBar) mergeBar.style.width = s.mW;
+  if (quickBar) quickBar.style.width = s.qW;
+  if (mergeVal) mergeVal.textContent = s.mV;
+  if (quickVal) quickVal.textContent = s.qV;
+}
+
 function renderSlide17() {
+  const activeLvl = state.hs17PyramidLvl;
+  const activeNote =
+    (HS17C_PYRAMID_LEVELS[activeLvl] || HS17C_PYRAMID_LEVELS[3]).note;
+  const activeCase = state.hs17BestCase || 'distinct';
+  const ramScale = HS17C_RAM_SCALES[state.hs17RamScale] || HS17C_RAM_SCALES[2];
+
   return `
-    <div class="bento-grid bento-grid-auto">
-      <div class="bento-card col-4 bento-item" style="--stagger:0">
-        <span class="badge-pill badge-mint">Build Max-Heap</span>
-        <div class="hero-stat mt-2">O(n)</div>
-        <p class="bento-body mt-1">Một nửa số nút là lá có chiều cao 0.</p>
-      </div>
-
-      <div class="bento-card col-4 bento-item" style="--stagger:1">
-        <span class="badge-pill badge-amber">Worst &amp; Average</span>
-        <div class="hero-stat mt-2">O(n log n)</div>
-        <p class="bento-body mt-1">Rút gốc lặp <code>n - 1</code> lần × <code>O(log n)</code>.</p>
-      </div>
-
-      <div class="bento-card bento-card-accent col-4 bento-item" style="--stagger:2">
-        <span class="badge-pill badge-amber">Không gian Tuyệt đối</span>
-        <div class="hero-stat-accent mt-2">O(1) RAM</div>
-        <p class="bento-body mt-1">Không mảng phụ, không Call Stack.</p>
-      </div>
-    </div>
-
-    <div class="bento-grid flex-1 min-h-0">
-      <div class="bento-card col-8 bento-item" style="--stagger:3">
-        <h3 class="bento-title">Độ phức tạp Thời gian (Time Complexity)</h3>
-        <table class="data-table data-table-compact mt-1">
-          <thead>
-            <tr>
-              <th>Thành phần / Trường hợp</th>
-              <th>Độ phức tạp</th>
-              <th>Phân tích chi tiết</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="font-bold cell-nowrap">Build Max-Heap</td>
-              <td class="mono font-bold cell-nowrap" style="color:#30D158">O(n)</td>
-              <td>Nhờ chuỗi hội tụ chiều cao cây: một nửa số nút là lá có chiều cao 0.</td>
-            </tr>
-            <tr>
-              <td class="font-bold cell-nowrap">Rút gốc (Extract)</td>
-              <td class="mono font-bold cell-nowrap" style="color:#FFD60A">O(n log n)</td>
-              <td>Lặp <code>n - 1</code> lần, mỗi lần <code>sift_down</code> tối đa hết chiều cao cây <code>O(log n)</code>.</td>
-            </tr>
-            <tr class="row-highlight">
-              <td class="font-bold cell-nowrap">Worst &amp; Average</td>
-              <td class="mono font-bold cell-nowrap" style="color:#FF9F0A">O(n log n)</td>
-              <td>Xấu nhất khi phần tử nhỏ ở đáy đưa lên đỉnh phải trượt hết chiều cao <code>log₂ n</code>.</td>
-            </tr>
-            <tr>
-              <td class="font-bold cell-nowrap">Best Case</td>
-              <td class="mono font-bold cell-nowrap" style="color:#64D2FF">Θ(n log n) / Θ(n)*</td>
-              <td><code>Θ(n log n)</code> với phần tử phân biệt; đạt <code>Θ(n)</code> khi <strong>mọi phần tử bằng nhau</strong> (VD: <code>[5, 5, 5, 5]</code>) vì <code>sift_down</code> thoát ngay ở <code>break</code> đầu tiên.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="bento-card bento-card-accent col-4 bento-item justify-between" style="--stagger:4">
-        <div>
-          <span class="badge-pill badge-amber">Nhà vô địch tiết kiệm RAM</span>
-          <h3 class="bento-title mt-2">Sắp xếp tại chỗ thuần túy</h3>
-          <p class="bento-body mt-2">
-            Sắp xếp hoàn toàn tại chỗ (<em>In-place</em>) trên mảng gốc, chỉ dùng vài biến chỉ số cục bộ (<code>i, left, right, largest</code>).
-          </p>
+    <div class="hs17c-wrap">
+      <div class="hs17c-kpi-grid bento-item" style="--stagger:0">
+        <div class="hs17c-kpi-card">
+          <span class="hs17c-badge green">Build Max-Heap</span>
+          <div class="hs17c-kpi-val">O(n)</div>
+          <div class="hs17c-kpi-sub">Một nửa số nút là lá có chiều cao 0.</div>
         </div>
-        <div class="bento-subtile mt-3">
-          <p class="bento-body">
-            Không tốn <code>O(n)</code> RAM như Merge Sort, cũng không tốn <code>O(log n)</code> hay <code>O(n)</code> Call Stack như QuickSort.
-          </p>
+        <div class="hs17c-kpi-card">
+          <span class="hs17c-badge gold">Worst &amp; Average</span>
+          <div class="hs17c-kpi-val">O(n log n)</div>
+          <div class="hs17c-kpi-sub">Rút gốc lặp <code>n - 1</code> lần × <code>O(log n)</code>.</div>
+        </div>
+        <div class="hs17c-kpi-card">
+          <span class="hs17c-badge gold">Không gian Tuyệt đối</span>
+          <div class="hs17c-kpi-val gold">O(1) RAM</div>
+          <div class="hs17c-kpi-sub">Không mảng phụ, không Call Stack.</div>
+        </div>
+      </div>
+
+      <div class="hs17c-main-grid">
+        <div class="hs17c-panel bento-item" style="--stagger:1">
+          <div class="hs17c-panel-title">
+            <span>Tại sao Build Max-Heap chỉ tốn O(n)?</span>
+            <span class="hs17c-badge green" style="margin:0">Di chuột vào từng tầng</span>
+          </div>
+
+          <div class="hs17c-pyramid-box">
+            <div class="hs17c-pyramid-head">
+              <span>Số lượng nút ở mỗi tầng</span>
+              <span>Số bước trượt tối đa</span>
+            </div>
+            <div class="hs17c-pyramid" id="hs17c-pyramid">
+              ${HS17C_PYRAMID_LEVELS.map(
+                (lvl, idx) => `
+                <div class="hs17c-p-level ${lvl.cls}${idx === activeLvl ? ' active' : ''}" data-action="hs17c-pyramid" data-level="${idx}">
+                  <span>${lvl.label}</span>
+                  <span class="hs17c-p-steps">${lvl.steps}</span>
+                </div>
+              `
+              ).join('')}
+            </div>
+            <div class="hs17c-p-note" id="hs17c-p-note">${activeNote}</div>
+          </div>
+
+          <div class="hs17c-case-box">
+            <div class="hs17c-case-top">
+              <span style="font-size:13px; font-weight:700;">Trường hợp tốt nhất (Best Case):</span>
+              <div class="hs17c-case-tabs">
+                <button type="button" class="hs17c-tab-btn${activeCase === 'distinct' ? ' active' : ''}" data-action="hs17c-case" data-case="distinct">Phần tử phân biệt</button>
+                <button type="button" class="hs17c-tab-btn${activeCase === 'equal' ? ' active' : ''}" data-action="hs17c-case" data-case="equal">Bằng nhau [5,5,5,5]</button>
+              </div>
+            </div>
+            <div class="hs17c-case-detail" id="hs17c-case-detail">${HS17C_CASE_TEXTS[activeCase]}</div>
+          </div>
+        </div>
+
+        <div class="hs17c-panel bento-item" style="--stagger:2">
+          <div>
+            <div class="hs17c-panel-title">
+              <span>So sánh RAM phụ (In-place)</span>
+              <span class="hs17c-badge gold" style="margin:0">Nhà vô địch RAM</span>
+            </div>
+
+            <div class="hs17c-slider-row">
+              <label>Kích thước mảng: <strong id="hs17c-n-display">${ramScale.n}</strong> phần tử</label>
+              <input type="range" id="hs17c-n-slider" min="1" max="4" step="1" value="${state.hs17RamScale}" aria-label="Kích thước mảng so sánh RAM" />
+            </div>
+
+            <div class="hs17c-ram-bars">
+              <div>
+                <div class="hs17c-ram-item-head">
+                  <span><strong>Merge Sort</strong> — Mảng phụ O(n)</span>
+                  <span class="hs17c-ram-val" style="color:#fca5a5" id="hs17c-merge-val">${ramScale.mV}</span>
+                </div>
+                <div class="hs17c-track"><div class="hs17c-fill merge" id="hs17c-merge-bar" style="width:${ramScale.mW}"></div></div>
+              </div>
+
+              <div>
+                <div class="hs17c-ram-item-head">
+                  <span><strong>QuickSort</strong> — Call Stack O(log n) → O(n)</span>
+                  <span class="hs17c-ram-val" style="color:#f5c542" id="hs17c-quick-val">${ramScale.qV}</span>
+                </div>
+                <div class="hs17c-track"><div class="hs17c-fill quick" id="hs17c-quick-bar" style="width:${ramScale.qW}"></div></div>
+              </div>
+
+              <div>
+                <div class="hs17c-ram-item-head">
+                  <span><strong>Heap Sort</strong> — Khử đệ quy O(1)</span>
+                  <span class="hs17c-ram-val" style="color:#4ade80" id="hs17c-heap-val">32 Bytes (Cố định)</span>
+                </div>
+                <div class="hs17c-track"><div class="hs17c-fill heap" id="hs17c-heap-bar" style="width:4%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hs17c-vars-box">
+            <div><strong>Sắp xếp tại chỗ thuần túy:</strong> Dù mảng tăng lên hàng triệu phần tử, RAM phụ vẫn chỉ đúng 4 biến cục bộ:</div>
+            <div class="hs17c-vars-pills">
+              <span class="hs17c-vpill">i</span>
+              <span class="hs17c-vpill">left</span>
+              <span class="hs17c-vpill">right</span>
+              <span class="hs17c-vpill">largest</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3304,38 +3672,122 @@ function renderSlide17() {
 }
 
 function renderSlide18() {
+  const isDos = state.hs17IsDos;
+  const s = HS17_LC_STEPS[state.hs17LcIdx] || HS17_LC_STEPS[0];
+  const qsStatusClass = isDos ? 'hs17-status-pill panic' : 'hs17-status-pill warn';
+  const qsStatusText = isDos ? '> 16 KB — KERNEL PANIC!' : '~4 KB (Bình thường)';
+  const hsStatusText = isDos ? 'O(1) RAM — Miễn nhiễm' : 'O(1) RAM — An toàn';
+  const dosNoteText = isDos
+    ? 'Đầu vào xấu: QuickSort đệ quy làm sập hệ thống!'
+    : 'Trạng thái: Đầu vào ngẫu nhiên';
+  const dosBtnText = isDos ? '↺ Khôi phục trạng thái [D]' : '⚡ Mô phỏng DoS O(n²) [D]';
+  const nextBtnText =
+    state.hs17LcIdx === HS17_LC_STEPS.length - 1 ? 'Chạy lại ↺ [K]' : 'Bước tiếp theo ▸ [K]';
+
   return `
-    <div class="bento-grid flex-1 min-h-0">
-      <div class="bento-col col-6">
-        <div class="bento-card bento-card-accent flex-1 bento-item" style="--stagger:0">
-          <div class="flex-row justify-between items-center gap-2">
-            <span class="badge-pill badge-amber">1. Linux Kernel &amp; Hệ thống nhúng</span>
-            <span class="mono bento-caption" style="color:#FFD60A">lib/sort.c</span>
+    <div class="hs17-grid">
+      <div class="hs17-left-col bento-item" style="--stagger:0">
+        <div class="hs17-card">
+          <div>
+            <div class="hs17-card-top">
+              <span class="hs17-badge gold">1. Linux Kernel &amp; Hệ thống nhúng</span>
+              <span class="hs17-meta-tag">lib/sort.c</span>
+            </div>
+            <div class="hs17-big-stat">8–16 KB Stack</div>
+            <div class="hs17-sub-title">Tại sao <code>linux/lib/sort.c</code> chọn Heap Sort?</div>
           </div>
-          <div class="hero-stat-accent mt-2">8–16 KB Stack</div>
-          <h3 class="bento-title mt-2"><code>linux/lib/sort.c</code> chọn Heap Sort</h3>
-          <p class="bento-body mt-2">
-            • <strong>Kernel Stack cực nhỏ:</strong> Chỉ vỏn vẹn <strong>8 KB – 16 KB</strong>.<br/>
-            • <strong>An toàn tuyệt đối:</strong> QuickSort đệ quy dễ gây tràn Stack dẫn tới <strong>Kernel Panic</strong> hoặc bị tấn công DoS <code>O(n²)</code>.<br/>
-            • Heap Sort với <strong>O(1) RAM</strong> và cam kết <strong>O(n log n)</strong> là chốt chặn an toàn tuyệt đối.
-          </p>
+
+          <div class="hs17-meter-box">
+            <div class="hs17-meter-row">
+              <div class="hs17-meter-label">
+                <span><strong>QuickSort</strong> (Đệ quy)</span>
+                <span class="${qsStatusClass}" id="hs17-qs-status">${qsStatusText}</span>
+              </div>
+              <div class="hs17-track">
+                <div class="hs17-limit-tag">Giới hạn 16 KB</div>
+                <div class="hs17-limit-line"></div>
+                <div class="hs17-bar qs${isDos ? ' overflow' : ''}" id="hs17-qs-bar"></div>
+              </div>
+            </div>
+
+            <div class="hs17-meter-row">
+              <div class="hs17-meter-label">
+                <span><strong>Heap Sort</strong> (Khử đệ quy)</span>
+                <span class="hs17-status-pill safe" id="hs17-hs-status">${hsStatusText}</span>
+              </div>
+              <div class="hs17-track">
+                <div class="hs17-limit-line"></div>
+                <div class="hs17-bar hs" id="hs17-hs-bar"></div>
+              </div>
+            </div>
+
+            <div class="hs17-dos-controls">
+              <span class="hs17-dos-note" id="hs17-dos-note">${dosNoteText}</span>
+              <button type="button" class="hs17-btn danger${isDos ? ' active' : ''}" id="hs17-dos-btn" data-action="hs17-toggle-dos">${dosBtnText}</button>
+            </div>
+          </div>
         </div>
 
-        <div class="bento-card flex-1 bento-item" style="--stagger:1">
-          <div class="flex-row justify-between items-center gap-2">
-            <span class="badge-pill badge-blue">2. Priority Queue • LeetCode 215</span>
-            <span class="mono font-bold" style="color:#5AC8FA; font-size:1.15rem;">O(n log k)</span>
+        <div class="hs17-card hs17-lc-summary">
+          <div>
+            <div class="hs17-card-top">
+              <span class="hs17-badge blue">2. Priority Queue • LeetCode 215</span>
+              <span class="hs17-meta-tag">O(n log k)</span>
+            </div>
+            <h3>Kth Largest Element in an Array</h3>
+            <p>Giữ một <strong>Hộp Min-Heap cố định k phần tử</strong>. Đỉnh <code>min_heap[0]</code> đóng vai trò <strong>"người gác cổng"</strong> — chỉ số nào lớn hơn nó mới được đá nó ra để vào Top-K.</p>
           </div>
-          <h3 class="bento-title mt-2">Kth Largest Element in an Array</h3>
-          <p class="bento-body mt-2">
-            Duy trì một <strong>Min-Heap kích thước k</strong> để lọc ra <code>k</code> phần tử lớn nhất trong thời gian
-            <strong>O(n log k)</strong> thay vì phải sort toàn bộ mảng <code>O(n log n)</code>.
-          </p>
+          <div class="hs17-compare-pills">
+            <span class="hs17-cpill bad">Sort cả mảng: O(n log n)</span>
+            <span class="hs17-cpill good">Min-Heap k phần tử: O(n log k)</span>
+          </div>
         </div>
       </div>
 
-      <div class="col-6 h-full min-h-0">
-        ${renderCodeWindow('leetcode_215_kth_largest.py', 'python', LEETCODE_215_CODE, 2)}
+      <div class="hs17-right-panel bento-item" style="--stagger:1">
+        <div class="hs16-code-topbar">
+          <div class="hs16-dots">
+            <span class="hs16-dot r"></span>
+            <span class="hs16-dot y"></span>
+            <span class="hs16-dot g"></span>
+          </div>
+          <span>leetcode_215_kth_largest.py</span>
+          <span class="hs16-lang-badge">PYTHON</span>
+        </div>
+
+        <div class="hs17-code-body" id="hs17-lc-code">
+          <div class="hs17-code-line"><span class="hs16-kw">import</span> heapq</div>
+          <div class="hs17-code-line"><span class="hs16-kw">def</span> <span class="hs16-fn">findKthLargest</span>(nums: list[int], k: int) -&gt; int:</div>
+          <div class="hs17-code-line${s.line === 'init' ? ' hl' : ''}" data-line="init">    min_heap = nums[:k]</div>
+          <div class="hs17-code-line${s.line === 'init' ? ' hl' : ''}" data-line="init">    heapq.<span class="hs16-fn">heapify</span>(min_heap)            <span class="hs16-cm"># Build Heap O(k)</span></div>
+          <div class="hs17-code-line${s.line === 'check' ? ' hl' : ''}" data-line="check">    <span class="hs16-kw">for</span> num <span class="hs16-kw">in</span> nums[k:]:</div>
+          <div class="hs17-code-line${s.line === 'check' ? ' hl' : ''}" data-line="check">        <span class="hs16-kw">if</span> num &gt; min_heap[0]:          <span class="hs16-cm"># So với "gác cổng"</span></div>
+          <div class="hs17-code-line${s.line === 'replace' ? ' hl' : ''}" data-line="replace">            heapq.<span class="hs16-fn">heapreplace</span>(min_heap, num)  <span class="hs16-cm"># Đá đỉnh &amp; nạp mới</span></div>
+          <div class="hs17-code-line${s.line === 'return' ? ' hl' : ''}" data-line="return">    <span class="hs16-kw">return</span> min_heap[0]</div>
+        </div>
+
+        <div class="hs17-sim-area">
+          <div class="hs17-sim-header">
+            <span class="hs17-sim-title">Mô phỏng trực quan: k = 2 (Tìm số lớn thứ 2)</span>
+            <span class="hs17-meta-tag" id="hs17-step-counter">Bước ${state.hs17LcIdx + 1} / ${HS17_LC_STEPS.length}</span>
+          </div>
+
+          <div class="hs17-stream-row">
+            <span class="hs17-row-label">Mảng nums:</span>
+            <div id="hs17-stream-wrap" style="display:flex; gap:6px;">${renderHs17StreamHtml(s)}</div>
+          </div>
+
+          <div class="hs17-heap-stage">
+            <span class="hs17-row-label" style="min-width:78px;">Min-Heap<br><small style="color:#38bdf8">(size = 2)</small></span>
+            <div class="hs17-heap-slots" id="hs17-heap-slots">${renderHs17HeapSlotsHtml(s)}</div>
+            <div class="hs17-kicked-info" id="hs17-kicked-info">${s.kicked}</div>
+          </div>
+
+          <div class="hs17-sim-footer">
+            <div class="hs17-sim-msg" id="hs17-sim-msg">${s.msg}</div>
+            <button type="button" class="hs17-btn" id="hs17-next-lc-btn" data-action="hs17-next-lc">${nextBtnText}</button>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -3720,8 +4172,33 @@ document.addEventListener('click', (e) => {
     case 'heap-auto':
       toggleHeapPlay();
       break;
+    case 'hs16-focus':
+      setHs16Focus(target.dataset.target);
+      break;
+    case 'hs16-next-step':
+      nextHs16Step();
+      break;
+    case 'hs17-toggle-dos':
+      toggleHs17Dos();
+      break;
+    case 'hs17-next-lc':
+      nextHs17LcStep();
+      break;
+    case 'hs17c-pyramid':
+      setHs17PyramidLevel(Number(target.dataset.level));
+      break;
+    case 'hs17c-case':
+      setHs17BestCase(target.dataset.case);
+      break;
     default:
       break;
+  }
+});
+
+document.addEventListener('mouseover', (e) => {
+  const pyramidEl = e.target.closest('[data-action="hs17c-pyramid"]');
+  if (pyramidEl) {
+    setHs17PyramidLevel(Number(pyramidEl.dataset.level));
   }
 });
 
@@ -3738,6 +4215,9 @@ document.addEventListener('input', (e) => {
   } else if (e.target?.id === 'heap-speed-slider') {
     state.heapSpeed = Number(e.target.value);
     syncHeapSpeedTiming();
+  } else if (e.target?.id === 'hs17c-n-slider') {
+    state.hs17RamScale = Number(e.target.value);
+    updateHs17RamDOM();
   }
 });
 
@@ -3805,6 +4285,38 @@ document.addEventListener('keydown', (e) => {
     if (e.key === 'r' || e.key === 'R') {
       e.preventDefault();
       jumpHeapStep(0);
+      return;
+    }
+  } else if (SLIDES_DATA[state.slideIndex]?.id === 16) {
+    if (e.key === '1') {
+      e.preventDefault();
+      setHs16Focus('iter');
+      return;
+    }
+    if (e.key === '2') {
+      e.preventDefault();
+      setHs16Focus('build');
+      return;
+    }
+    if (e.key === '3') {
+      e.preventDefault();
+      setHs16Focus('extract');
+      return;
+    }
+    if (e.key === '0' || e.key === 'Escape') {
+      e.preventDefault();
+      clearHs16Focus();
+      return;
+    }
+  } else if (SLIDES_DATA[state.slideIndex]?.id === 18) {
+    if (e.key === 'd' || e.key === 'D') {
+      e.preventDefault();
+      toggleHs17Dos();
+      return;
+    }
+    if (e.key === 'k' || e.key === 'K') {
+      e.preventDefault();
+      nextHs17LcStep();
       return;
     }
   }

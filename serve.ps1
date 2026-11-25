@@ -1,7 +1,8 @@
 param(
     [int[]]$Ports = @(8080, 5173),
     [int]$Port = 0,
-    [string]$Root = $PSScriptRoot
+    [string]$Root = $PSScriptRoot,
+    [switch]$OpenBrowser
 )
 
 if ($Port -gt 0) {
@@ -38,6 +39,11 @@ foreach ($p in $Ports) {
 
 if ($listeners.Count -eq 0) {
     throw "No ports could be bound."
+}
+
+if ($OpenBrowser) {
+    $firstPort = $listeners[0].Port
+    Start-Process "http://localhost:$firstPort"
 }
 
 function Handle-Client {

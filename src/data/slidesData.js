@@ -522,10 +522,10 @@ export const SLIDES_DATA = [
     chapter: 'heapsort',
     theme: 'heapsort',
     title: 'Heap Sort — Cài đặt Python (Khử Đệ Quy Chuẩn O(1) RAM)',
-    subtitle: 'Sử dụng vòng lặp while True trong sift_down để triệt tiêu nguy cơ Stack Overflow',
+    subtitle: 'Bấm vào từng thẻ bên phải (hoặc phím 1, 2, 3, 0) để Spotlight từng khối logic',
     duration: '1.0 phút (Phút 3)',
     speakerNotes:
-      'Đây là mã nguồn cài đặt bằng Python. Điểm ăn tiền nhất trong đoạn code này nằm ở hàm sift_down (vun đống): thay vì gọi đệ quy như nhiều tài liệu cơ bản, nhóm sử dụng vòng lặp while True để trượt từ nút cha xuống nút con. Điều này giúp thuật toán đạt đúng chuẩn O(1) bộ nhớ phụ tuyệt đối và triệt tiêu hoàn toàn nguy cơ lỗi tràn bộ nhớ Stack Overflow. Trong hàm heap_sort, vòng for đầu tiên chạy ngược từ n // 2 - 1 về 0 để xây dựng Max-Heap (vì các nút từ n // 2 trở đi là nút lá). Vòng for thứ hai liên tục hoán đổi đỉnh arr[0] với arr[i] ở cuối mảng và gọi sift_down để khôi phục Max-Heap.',
+      'Đây là mã nguồn cài đặt bằng Python. Bạn có thể bấm vào từng thẻ bên phải hoặc bấm phím 1, 2, 3 để spotlight từng khối logic và bấm "Bước tiếp theo" ở thanh Console dưới cùng. Điểm ăn tiền nhất nằm ở hàm sift_down (Phím 1): thay vì gọi đệ quy, vòng lặp while True trượt trực tiếp từ nút cha xuống nút con, đạt chuẩn O(1) RAM phụ tuyệt đối và triệt tiêu hoàn toàn nguy cơ Stack Overflow. Vòng lặp 1 (Phím 2) chạy ngược từ n // 2 - 1 về 0 để Build Max-Heap trong O(n). Vòng lặp 2 (Phím 3) liên tục hoán đổi đỉnh arr[0] về cuối mảng arr[i] và gọi sift_down để khôi phục Max-Heap.',
   },
   {
     id: 17,
@@ -542,10 +542,10 @@ export const SLIDES_DATA = [
     chapter: 'heapsort',
     theme: 'heapsort',
     title: 'Heap Sort — Ứng dụng Thực tế (Linux Kernel) & LeetCode 215',
-    subtitle: 'Bảo vệ Kernel Stack 8–16 KB chống Kernel Panic & Priority Queue Top-K',
+    subtitle: 'Phím D: Mô phỏng tấn công tràn Stack Kernel  |  Phím K: Chạy từng bước Hộp Min-Heap Top-K',
     duration: '1.0 phút (Phút 5)',
     speakerNotes:
-      'Vậy tại sao Heap Sort lại sống khỏe trong các hệ thống lõi? Thứ nhất là trong Hệ thống nhúng và nhân Linux Kernel (file lib/sort.c): Kernel Stack chỉ vỏn vẹn 8 KB – 16 KB. Nếu dùng QuickSort đệ quy sâu hoặc dính kịch bản tấn công DoS O(n²) sẽ gây Kernel Panic ngay lập tức, nên Linux Kernel chọn biến thể Heap Sort nhờ O(1) RAM và cam kết O(n log n). Thứ hai là nền tảng cho Hàng đợi ưu tiên (Priority Queue) giải quyết bài toán Top-K như LeetCode 215 (Kth Largest Element): chỉ cần duy trì Min-Heap kích thước k để đạt thời gian O(n log k) thay vì sort cả mảng O(n log n).',
+      'Vậy tại sao Heap Sort lại sống khỏe trong các hệ thống lõi? Thứ nhất là trong Hệ thống nhúng và nhân Linux Kernel (file lib/sort.c): Kernel Stack chỉ vỏn vẹn 8 KB – 16 KB. Bấm phím D để mô phỏng kịch bản DoS O(n²): nếu dùng QuickSort đệ quy sâu sẽ vượt ngưỡng 16 KB gây Kernel Panic ngay lập tức, trong khi Heap Sort dùng O(1) RAM nên hoàn toàn miễn nhiễm. Thứ hai là nền tảng cho Hàng đợi ưu tiên (Priority Queue) giải quyết bài toán Top-K như LeetCode 215: bấm phím K để chạy từng bước Hộp Min-Heap k = 2 phần tử với đỉnh min_heap[0] đóng vai trò "người gác cổng", giúp đạt thời gian O(n log k) thay vì sort cả mảng O(n log n).',
   },
   {
     id: 19,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import {
@@ -69,8 +69,144 @@ static int[] mergeSortedArrays(int[] a, int[] b) {
     return out;
 }`;
 
+const HS16_STEPS = [
+  { label: 'Mảng gốc', heap: [4, 10, 3, 5, 1], sorted: [], rootHighlight: false, focus: null },
+  { label: 'Build Max-Heap', heap: [10, 5, 3, 4, 1], sorted: [], rootHighlight: true, focus: 'build' },
+  { label: 'Extract lần 1', heap: [5, 4, 3, 1], sorted: [10], rootHighlight: true, focus: 'extract' },
+  { label: 'Extract lần 2', heap: [4, 1, 3], sorted: [5, 10], rootHighlight: true, focus: 'extract' },
+  { label: 'Hoàn tất', heap: [], sorted: [1, 3, 4, 5, 10], rootHighlight: false, focus: null },
+];
+
+const HS17C_PYRAMID_LEVELS = [
+  {
+    cls: 'l0',
+    label: 'Đỉnh (1 nút)',
+    steps: '≤ log n bước',
+    note: '<strong>Đỉnh (1 nút):</strong> Chỉ có duy nhất 1 nút phải trượt hết chiều cao log₂n.',
+  },
+  {
+    cls: 'l1',
+    label: '12.5% số nút',
+    steps: '≤ 2 bước',
+    note: '<strong>Tầng trên (12.5% số nút):</strong> Số lượng ít, chỉ trượt tối đa 2 tầng.',
+  },
+  {
+    cls: 'l2',
+    label: '25% số nút',
+    steps: '≤ 1 bước',
+    note: '<strong>Tầng áp đáy (25% số nút):</strong> Nhiều nút hơn nhưng chỉ trượt tối đa 1 bước.',
+  },
+  {
+    cls: 'l3',
+    label: '50% số nút (Nút lá)',
+    steps: '0 bước',
+    note: '<strong>Tầng đáy (50% số nút là lá):</strong> Không cần sift_down → 0 bước. Tổng chuỗi hội tụ = O(n)!',
+  },
+];
+
+const HS17C_CASE_TEXTS = {
+  distinct:
+    'Với mảng phân biệt (kể cả đã sắp xếp sẵn), Heap Sort vẫn mất <code>Θ(n log n)</code> vì luôn phải rút đỉnh và đẩy phần tử nhỏ từ đáy lên để <code>sift_down</code> lại.',
+  equal:
+    'Khi mọi phần tử bằng nhau (VD: <code>[5, 5, 5, 5]</code>), <code>sift_down</code> thoát ngay ở lệnh <code>break</code> đầu tiên (O(1)/lần) → tổng thời gian giảm xuống <code>Θ(n)</code>.',
+};
+
+const HS17C_RAM_SCALES = {
+  1: { n: '100', mW: '18%', mV: '~800 Bytes', qW: '10%', qV: '~500 Bytes' },
+  2: { n: '10,000', mW: '48%', mV: '~80 KB', qW: '22%', qV: '~1.2 KB' },
+  3: { n: '100,000', mW: '75%', mV: '~800 KB', qW: '34%', qV: '~1.6 KB (Worst: 800 KB)' },
+  4: { n: '1,000,000', mW: '100%', mV: '~8 MB', qW: '46%', qV: '~2 KB (Worst: 8 MB)' },
+};
+
+const HS17_NUMS = [3, 2, 1, 5, 6, 4];
+
+const HS17_LC_STEPS = [
+  {
+    currIdx: -1,
+    skipped: [],
+    doneIn: [0, 1],
+    heap: [2, 3],
+    line: 'init',
+    kicked: 'Khởi tạo 2 số đầu',
+    msg: 'Lấy <strong>[3, 2]</strong> và <code>heapify</code> → đỉnh gác cổng <code>min_heap[0] = 2</code>.',
+  },
+  {
+    currIdx: 2,
+    skipped: [2],
+    doneIn: [0, 1],
+    heap: [2, 3],
+    line: 'check',
+    kicked: '<span class="out">Bỏ qua 1</span> (1 ≤ 2)',
+    msg: 'Xét <strong>1</strong>: Nhỏ hơn gác cổng <strong>2</strong> → Bỏ qua, không cần đụng vào Heap.',
+  },
+  {
+    currIdx: 3,
+    skipped: [2],
+    doneIn: [0, 1, 3],
+    heap: [3, 5],
+    line: 'replace',
+    kicked: 'Đá <span class="out">2</span> • Nạp <span class="in">5</span>',
+    msg: 'Xét <strong>5</strong>: Lớn hơn <strong>2</strong> → <code>heapreplace</code> đá 2 ra, nạp 5 vào.',
+  },
+  {
+    currIdx: 4,
+    skipped: [2],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'replace',
+    kicked: 'Đá <span class="out">3</span> • Nạp <span class="in">6</span>',
+    msg: 'Xét <strong>6</strong>: Lớn hơn <strong>3</strong> → <code>heapreplace</code> đá 3 ra, nạp 6 vào.',
+  },
+  {
+    currIdx: 5,
+    skipped: [2, 5],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'check',
+    kicked: '<span class="out">Bỏ qua 4</span> (4 ≤ 5)',
+    msg: 'Xét <strong>4</strong>: Nhỏ hơn gác cổng <strong>5</strong> → Bỏ qua.',
+  },
+  {
+    currIdx: -1,
+    skipped: [2, 5],
+    doneIn: [0, 1, 3, 4],
+    heap: [5, 6],
+    line: 'return',
+    winner: true,
+    kicked: 'Đáp án: <span class="in">5</span>',
+    msg: 'Hoàn tất! Trả về <code>min_heap[0] = 5</code> chính là <strong>số lớn thứ 2</strong>.',
+  },
+];
+
 export default function SlideRenderer({ slide, onNextSlide }) {
   const [javaTab, setJavaTab] = useState('full');
+  const [hs16Focus, setHs16Focus] = useState(null);
+  const [hs16StepIdx, setHs16StepIdx] = useState(0);
+  const [hs17PyramidLvl, setHs17PyramidLvl] = useState(3);
+  const [hs17BestCase, setHs17BestCase] = useState('distinct');
+  const [hs17RamScale, setHs17RamScale] = useState(2);
+  const [hs17IsDos, setHs17IsDos] = useState(false);
+  const [hs17LcIdx, setHs17LcIdx] = useState(0);
+
+  useEffect(() => {
+    if (slide.id !== 16 && slide.id !== 18) return undefined;
+    const onKeyDown = (e) => {
+      if (['INPUT', 'TEXTAREA'].includes(e.target?.tagName)) return;
+      if (slide.id === 16) {
+        if (e.key === '1') setHs16Focus((prev) => (prev === 'iter' ? null : 'iter'));
+        else if (e.key === '2') setHs16Focus((prev) => (prev === 'build' ? null : 'build'));
+        else if (e.key === '3') setHs16Focus((prev) => (prev === 'extract' ? null : 'extract'));
+        else if (e.key === '0' || e.key === 'Escape') setHs16Focus(null);
+      } else if (slide.id === 18) {
+        if (e.key.toLowerCase() === 'd') setHs17IsDos((prev) => !prev);
+        else if (e.key.toLowerCase() === 'k') {
+          setHs17LcIdx((prev) => (prev + 1) % HS17_LC_STEPS.length);
+        }
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [slide.id]);
 
   const renderSlideBody = () => {
     switch (slide.id) {
@@ -1069,202 +1205,551 @@ export default function SlideRenderer({ slide, onNextSlide }) {
       case 15:
         return <HeapsortSimulator />;
 
-      case 16:
-        return (
-          <div className="bento-grid flex-1 min-h-0">
-            <div className="bento-col col-7">
-              <motion.div variants={itemVariants} className="flex-1 min-h-0 flex">
-                <CodeBlock title="heapsort_iterative.py" lang="python" code={HEAPSORT_PYTHON_CODE} />
-              </motion.div>
-              <motion.div variants={itemVariants} className="bento-card bento-card-auto">
-                <div className="flex-row justify-between items-center flex-wrap gap-2">
-                  <span className="badge-pill badge-mint">Kết quả Console</span>
-                  <code className="mono" style={{ fontSize: 'var(--fs-code)', color: '#FFD60A' }}>
-                    heap_sort([4, 10, 3, 5, 1]) → Output: [1, 3, 4, 5, 10]
-                  </code>
-                </div>
-              </motion.div>
-            </div>
+      case 16: {
+        const s = HS16_STEPS[hs16StepIdx] || HS16_STEPS[0];
+        const toggleFocus = (group) => setHs16Focus((prev) => (prev === group ? null : group));
+        const handleNextHs16Step = () => {
+          const nextIdx = (hs16StepIdx + 1) % HS16_STEPS.length;
+          setHs16StepIdx(nextIdx);
+          setHs16Focus(HS16_STEPS[nextIdx].focus || null);
+        };
 
-            <div className="bento-col col-5">
-              <motion.div
-                variants={itemVariants}
-                className="bento-card bento-card-accent flex-1 justify-between"
+        return (
+          <div className="hs16-grid">
+            <motion.div variants={itemVariants} className="hs16-code-window">
+              <div className="hs16-code-topbar">
+                <div className="hs16-dots">
+                  <span className="hs16-dot r" />
+                  <span className="hs16-dot y" />
+                  <span className="hs16-dot g" />
+                </div>
+                <span>heapsort_iterative.py</span>
+                <span className="hs16-lang-badge">PYTHON</span>
+              </div>
+
+              <div className={`hs16-code-body${hs16Focus ? ` has-focus focus-${hs16Focus}` : ''}`}>
+                <div className="hs16-code-line">
+                  <span className="hs16-kw">def</span> <span className="hs16-fn">sift_down</span>(arr, n, i):
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'    '}
+                  <span className="hs16-kw">while True</span>:{'  '}
+                  <span className="hs16-cm"># Khử đệ quy -&gt; O(1) RAM</span>
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}largest = i
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}left, right = <span className="hs16-num">2</span> * i + <span className="hs16-num">1</span>,{' '}
+                  <span className="hs16-num">2</span> * i + <span className="hs16-num">2</span>
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}
+                  <span className="hs16-kw">if</span> left &lt; n <span className="hs16-kw">and</span> arr[left] &gt; arr[largest]:
+                  largest = left
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}
+                  <span className="hs16-kw">if</span> right &lt; n <span className="hs16-kw">and</span> arr[right] &gt; arr[largest]:
+                  largest = right
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}
+                  <span className="hs16-kw">if</span> largest == i: <span className="hs16-kw">break</span>
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}arr[i], arr[largest] = arr[largest], arr[i]
+                </div>
+                <div className="hs16-code-line" data-group="iter">
+                  {'        '}i = largest{'  '}
+                  <span className="hs16-cm"># Trượt trực tiếp xuống nút con</span>
+                </div>
+                <div className="hs16-code-line"> </div>
+                <div className="hs16-code-line">
+                  <span className="hs16-kw">def</span> <span className="hs16-fn">heap_sort</span>(arr):
+                </div>
+                <div className="hs16-code-line">
+                  {'    '}n = <span className="hs16-fn">len</span>(arr)
+                </div>
+                <div className="hs16-code-line" data-group="build">
+                  {'    '}
+                  <span className="hs16-kw">for</span> i <span className="hs16-kw">in</span> <span className="hs16-fn">range</span>
+                  (n // <span className="hs16-num">2</span> - <span className="hs16-num">1</span>, -<span className="hs16-num">1</span>
+                  , -<span className="hs16-num">1</span>):
+                </div>
+                <div className="hs16-code-line" data-group="build">
+                  {'        '}
+                  <span className="hs16-fn">sift_down</span>(arr, n, i)
+                </div>
+                <div className="hs16-code-line"> </div>
+                <div className="hs16-code-line" data-group="extract">
+                  {'    '}
+                  <span className="hs16-kw">for</span> i <span className="hs16-kw">in</span> <span className="hs16-fn">range</span>
+                  (n - <span className="hs16-num">1</span>, <span className="hs16-num">0</span>, -<span className="hs16-num">1</span>
+                  ):
+                </div>
+                <div className="hs16-code-line" data-group="extract">
+                  {'        '}arr[<span className="hs16-num">0</span>], arr[i] = arr[i], arr[<span className="hs16-num">0</span>]
+                </div>
+                <div className="hs16-code-line" data-group="extract">
+                  {'        '}
+                  <span className="hs16-fn">sift_down</span>(arr, i, <span className="hs16-num">0</span>)
+                </div>
+              </div>
+
+              <div className="hs16-console-bar">
+                <div className="hs16-console-left">
+                  <span className="hs16-step-label">{s.label}</span>
+                  <div className="hs16-arr-wrap">
+                    {s.heap.map((val, idx) => (
+                      <span
+                        key={`h-${idx}`}
+                        className={`hs16-cell${idx === 0 && s.rootHighlight ? ' root' : ''}`}
+                      >
+                        {val}
+                      </span>
+                    ))}
+                    {s.heap.length > 0 && s.sorted.length > 0 && (
+                      <span className="hs16-divider">|</span>
+                    )}
+                    {s.sorted.map((val, idx) => (
+                      <span key={`s-${idx}`} className="hs16-cell sorted">
+                        {val}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <button type="button" className="hs16-step-btn" onClick={handleNextHs16Step}>
+                  {hs16StepIdx === HS16_STEPS.length - 1 ? 'Chạy lại ↺' : 'Bước tiếp theo ▸'}
+                </button>
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="hs16-cards">
+              <div
+                className={`hs16-card${hs16Focus === 'iter' ? ' active' : ''}`}
+                data-target="iter"
+                onClick={() => toggleFocus('iter')}
               >
-                <div>
-                  <span className="badge-pill badge-amber">Điểm nhấn kỹ thuật: while True</span>
-                  <h3 className="bento-title mt-2">Khử đệ quy triệt tiêu Stack Overflow</h3>
-                </div>
-                <p className="bento-body mt-2">
-                  Thay vì gọi đệ quy <code>sift_down</code> tốn khung hàm trên Call Stack, vòng lặp{' '}
-                  <code>while True</code> trượt trực tiếp từ nút cha <code>i</code> xuống con{' '}
-                  <code>largest</code>, đạt chuẩn <strong>O(1) RAM phụ tuyệt đối</strong>.
+                <span className="hs16-hotkey-hint">Phím 1</span>
+                <span className="hs16-badge gold">Điểm nhấn kỹ thuật: while True</span>
+                <h3>Khử đệ quy triệt tiêu Stack Overflow</h3>
+                <p>
+                  Thay vì gọi đệ quy <code>sift_down</code> tốn Call Stack, vòng lặp trượt trực tiếp{' '}
+                  <code>i = largest</code> xuống nút con, đạt chuẩn <strong>O(1) RAM phụ</strong> tuyệt đối.
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants} className="bento-card flex-1 justify-between">
-                <h3 className="bento-title">
-                  Cấu trúc 2 vòng lặp trong <code>heap_sort()</code>
-                </h3>
-                <p className="bento-body mt-2">
-                  • <strong>Vòng 1 (Build Max-Heap):</strong> Duyệt ngược từ nút cha cuối <code>n // 2 - 1</code> về{' '}
-                  <code>0</code> (các nút từ <code>n // 2</code> trở đi là lá).
-                  <br />• <strong>Vòng 2 (Extract):</strong> Đổi đỉnh <code>arr[0]</code> với cuối Heap{' '}
-                  <code>arr[i]</code> và gọi <code>sift_down(arr, i, 0)</code>.
-                </p>
-              </motion.div>
-            </div>
-          </div>
-        );
-
-      case 17:
-        return (
-          <>
-            <div className="bento-grid bento-grid-auto">
-              <motion.div variants={itemVariants} className="bento-card col-4">
-                <span className="badge-pill badge-mint">Build Max-Heap</span>
-                <div className="hero-stat mt-2">O(n)</div>
-                <p className="bento-body mt-1">Một nửa số nút là lá có chiều cao 0.</p>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="bento-card col-4">
-                <span className="badge-pill badge-amber">Worst &amp; Average</span>
-                <div className="hero-stat mt-2">O(n log n)</div>
-                <p className="bento-body mt-1">
-                  Rút gốc lặp <code>n - 1</code> lần × <code>O(log n)</code>.
-                </p>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="bento-card bento-card-accent col-4">
-                <span className="badge-pill badge-amber">Không gian Tuyệt đối</span>
-                <div className="hero-stat-accent mt-2">O(1) RAM</div>
-                <p className="bento-body mt-1">Không mảng phụ, không Call Stack.</p>
-              </motion.div>
-            </div>
-
-            <div className="bento-grid flex-1 min-h-0">
-              <motion.div variants={itemVariants} className="bento-card col-8">
-                <h3 className="bento-title">Độ phức tạp Thời gian (Time Complexity)</h3>
-                <table className="data-table data-table-compact mt-1">
-                  <thead>
-                    <tr>
-                      <th>Thành phần / Trường hợp</th>
-                      <th>Độ phức tạp</th>
-                      <th>Phân tích chi tiết</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="font-bold cell-nowrap">Build Max-Heap</td>
-                      <td className="mono font-bold cell-nowrap" style={{ color: '#30D158' }}>
-                        O(n)
-                      </td>
-                      <td>Nhờ chuỗi hội tụ chiều cao cây: một nửa số nút là lá có chiều cao 0.</td>
-                    </tr>
-                    <tr>
-                      <td className="font-bold cell-nowrap">Rút gốc (Extract)</td>
-                      <td className="mono font-bold cell-nowrap" style={{ color: '#FFD60A' }}>
-                        O(n log n)
-                      </td>
-                      <td>
-                        Lặp <code>n - 1</code> lần, mỗi lần <code>sift_down</code> tối đa hết chiều cao cây{' '}
-                        <code>O(log n)</code>.
-                      </td>
-                    </tr>
-                    <tr className="row-highlight">
-                      <td className="font-bold cell-nowrap">Worst &amp; Average</td>
-                      <td className="mono font-bold cell-nowrap" style={{ color: '#FF9F0A' }}>
-                        O(n log n)
-                      </td>
-                      <td>
-                        Xấu nhất khi phần tử nhỏ ở đáy đưa lên đỉnh phải trượt hết chiều cao <code>log₂ n</code>.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="font-bold cell-nowrap">Best Case</td>
-                      <td className="mono font-bold cell-nowrap" style={{ color: '#64D2FF' }}>
-                        Θ(n log n) / Θ(n)*
-                      </td>
-                      <td>
-                        <code>Θ(n log n)</code> với phần tử phân biệt; đạt <code>Θ(n)</code> khi{' '}
-                        <strong>mọi phần tử bằng nhau</strong> (VD: <code>[5, 5, 5, 5]</code>) vì{' '}
-                        <code>sift_down</code> thoát ngay ở <code>break</code> đầu tiên.
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </motion.div>
-
-              <motion.div
-                variants={itemVariants}
-                className="bento-card bento-card-accent col-4 justify-between"
+              <div
+                className={`hs16-card${hs16Focus === 'build' ? ' active' : ''}`}
+                data-target="build"
+                onClick={() => toggleFocus('build')}
               >
-                <div>
-                  <span className="badge-pill badge-amber">Nhà vô địch tiết kiệm RAM</span>
-                  <h3 className="bento-title mt-2">Sắp xếp tại chỗ thuần túy</h3>
-                  <p className="bento-body mt-2">
-                    Sắp xếp hoàn toàn tại chỗ (<em>In-place</em>) trên mảng gốc, chỉ dùng vài biến chỉ số cục bộ (
-                    <code>i, left, right, largest</code>).
-                  </p>
-                </div>
-                <div className="bento-subtile mt-3">
-                  <p className="bento-body">
-                    Không tốn <code>O(n)</code> RAM như Merge Sort, cũng không tốn <code>O(log n)</code> hay{' '}
-                    <code>O(n)</code> Call Stack như QuickSort.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </>
-        );
-
-      case 18:
-        return (
-          <div className="bento-grid flex-1 min-h-0">
-            <div className="bento-col col-6">
-              <motion.div variants={itemVariants} className="bento-card bento-card-accent flex-1">
-                <div className="flex-row justify-between items-center gap-2">
-                  <span className="badge-pill badge-amber">1. Linux Kernel &amp; Hệ thống nhúng</span>
-                  <span className="mono bento-caption" style={{ color: '#FFD60A' }}>
-                    lib/sort.c
-                  </span>
-                </div>
-                <div className="hero-stat-accent mt-2">8–16 KB Stack</div>
-                <h3 className="bento-title mt-2">
-                  <code>linux/lib/sort.c</code> chọn Heap Sort
-                </h3>
-                <p className="bento-body mt-2">
-                  • <strong>Kernel Stack cực nhỏ:</strong> Chỉ vỏn vẹn <strong>8 KB – 16 KB</strong>.
-                  <br />• <strong>An toàn tuyệt đối:</strong> QuickSort đệ quy dễ gây tràn Stack dẫn tới{' '}
-                  <strong>Kernel Panic</strong> hoặc bị tấn công DoS <code>O(n²)</code>.
-                  <br />• Heap Sort với <strong>O(1) RAM</strong> và cam kết <strong>O(n log n)</strong> là chốt chặn an toàn tuyệt đối.
+                <span className="hs16-hotkey-hint">Phím 2</span>
+                <span className="hs16-badge blue">Vòng lặp 1 — O(n)</span>
+                <h3>Build Max-Heap từ dưới lên</h3>
+                <p>
+                  Chỉ duyệt ngược từ nút cha cuối cùng <code>n // 2 - 1</code> về <code>0</code> (bỏ qua toàn bộ nút lá từ{' '}
+                  <code>n // 2</code> trở đi).
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants} className="bento-card flex-1">
-                <div className="flex-row justify-between items-center gap-2">
-                  <span className="badge-pill badge-blue">2. Priority Queue • LeetCode 215</span>
-                  <span className="mono font-bold" style={{ color: '#5AC8FA', fontSize: '1.15rem' }}>
-                    O(n log k)
-                  </span>
-                </div>
-                <h3 className="bento-title mt-2">Kth Largest Element in an Array</h3>
-                <p className="bento-body mt-2">
-                  Duy trì một <strong>Min-Heap kích thước k</strong> để lọc ra <code>k</code> phần tử lớn nhất trong thời gian{' '}
-                  <strong>O(n log k)</strong> thay vì phải sort toàn bộ mảng <code>O(n log n)</code>.
+              <div
+                className={`hs16-card${hs16Focus === 'extract' ? ' active' : ''}`}
+                data-target="extract"
+                onClick={() => toggleFocus('extract')}
+              >
+                <span className="hs16-hotkey-hint">Phím 3</span>
+                <span className="hs16-badge green">Vòng lặp 2 — O(n log n)</span>
+                <h3>Rút đỉnh (Extract) &amp; Thu hẹp Heap</h3>
+                <p>
+                  Hoán đổi đỉnh lớn nhất <code>arr[0]</code> về cuối mảng <code>arr[i]</code>, sau đó gọi{' '}
+                  <code>sift_down(arr, i, 0)</code> để khôi phục Heap trên phần còn lại.
                 </p>
-              </motion.div>
-            </div>
-
-            <motion.div variants={itemVariants} className="col-6 h-full min-h-0">
-              <CodeBlock
-                title="leetcode_215_kth_largest.py"
-                lang="python"
-                code={LEETCODE_215_CODE}
-              />
+              </div>
             </motion.div>
           </div>
         );
+      }
+
+      case 17: {
+        const activeNote =
+          (HS17C_PYRAMID_LEVELS[hs17PyramidLvl] || HS17C_PYRAMID_LEVELS[3]).note;
+        const ramScale = HS17C_RAM_SCALES[hs17RamScale] || HS17C_RAM_SCALES[2];
+
+        return (
+          <div className="hs17c-wrap">
+            <motion.div variants={itemVariants} className="hs17c-kpi-grid">
+              <div className="hs17c-kpi-card">
+                <span className="hs17c-badge green">Build Max-Heap</span>
+                <div className="hs17c-kpi-val">O(n)</div>
+                <div className="hs17c-kpi-sub">Một nửa số nút là lá có chiều cao 0.</div>
+              </div>
+              <div className="hs17c-kpi-card">
+                <span className="hs17c-badge gold">Worst &amp; Average</span>
+                <div className="hs17c-kpi-val">O(n log n)</div>
+                <div className="hs17c-kpi-sub">
+                  Rút gốc lặp <code>n - 1</code> lần × <code>O(log n)</code>.
+                </div>
+              </div>
+              <div className="hs17c-kpi-card">
+                <span className="hs17c-badge gold">Không gian Tuyệt đối</span>
+                <div className="hs17c-kpi-val gold">O(1) RAM</div>
+                <div className="hs17c-kpi-sub">Không mảng phụ, không Call Stack.</div>
+              </div>
+            </motion.div>
+
+            <div className="hs17c-main-grid">
+              <motion.div variants={itemVariants} className="hs17c-panel">
+                <div className="hs17c-panel-title">
+                  <span>Tại sao Build Max-Heap chỉ tốn O(n)?</span>
+                  <span className="hs17c-badge green" style={{ margin: 0 }}>
+                    Di chuột vào từng tầng
+                  </span>
+                </div>
+
+                <div className="hs17c-pyramid-box">
+                  <div className="hs17c-pyramid-head">
+                    <span>Số lượng nút ở mỗi tầng</span>
+                    <span>Số bước trượt tối đa</span>
+                  </div>
+                  <div className="hs17c-pyramid">
+                    {HS17C_PYRAMID_LEVELS.map((lvl, idx) => (
+                      <div
+                        key={lvl.cls}
+                        className={`hs17c-p-level ${lvl.cls}${idx === hs17PyramidLvl ? ' active' : ''}`}
+                        onMouseEnter={() => setHs17PyramidLvl(idx)}
+                        onClick={() => setHs17PyramidLvl(idx)}
+                      >
+                        <span>{lvl.label}</span>
+                        <span className="hs17c-p-steps">{lvl.steps}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div
+                    className="hs17c-p-note"
+                    dangerouslySetInnerHTML={{ __html: activeNote }}
+                  />
+                </div>
+
+                <div className="hs17c-case-box">
+                  <div className="hs17c-case-top">
+                    <span style={{ fontSize: '13px', fontWeight: 700 }}>
+                      Trường hợp tốt nhất (Best Case):
+                    </span>
+                    <div className="hs17c-case-tabs">
+                      <button
+                        type="button"
+                        className={`hs17c-tab-btn${hs17BestCase === 'distinct' ? ' active' : ''}`}
+                        onClick={() => setHs17BestCase('distinct')}
+                      >
+                        Phần tử phân biệt
+                      </button>
+                      <button
+                        type="button"
+                        className={`hs17c-tab-btn${hs17BestCase === 'equal' ? ' active' : ''}`}
+                        onClick={() => setHs17BestCase('equal')}
+                      >
+                        Bằng nhau [5,5,5,5]
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="hs17c-case-detail"
+                    dangerouslySetInnerHTML={{ __html: HS17C_CASE_TEXTS[hs17BestCase] }}
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="hs17c-panel">
+                <div>
+                  <div className="hs17c-panel-title">
+                    <span>So sánh RAM phụ (In-place)</span>
+                    <span className="hs17c-badge gold" style={{ margin: 0 }}>
+                      Nhà vô địch RAM
+                    </span>
+                  </div>
+
+                  <div className="hs17c-slider-row">
+                    <label>
+                      Kích thước mảng: <strong>{ramScale.n}</strong> phần tử
+                    </label>
+                    <input
+                      type="range"
+                      min="1"
+                      max="4"
+                      step="1"
+                      value={hs17RamScale}
+                      onChange={(e) => setHs17RamScale(Number(e.target.value))}
+                    />
+                  </div>
+
+                  <div className="hs17c-ram-bars">
+                    <div>
+                      <div className="hs17c-ram-item-head">
+                        <span>
+                          <strong>Merge Sort</strong> — Mảng phụ O(n)
+                        </span>
+                        <span className="hs17c-ram-val" style={{ color: '#fca5a5' }}>
+                          {ramScale.mV}
+                        </span>
+                      </div>
+                      <div className="hs17c-track">
+                        <div className="hs17c-fill merge" style={{ width: ramScale.mW }} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="hs17c-ram-item-head">
+                        <span>
+                          <strong>QuickSort</strong> — Call Stack O(log n) → O(n)
+                        </span>
+                        <span className="hs17c-ram-val" style={{ color: '#f5c542' }}>
+                          {ramScale.qV}
+                        </span>
+                      </div>
+                      <div className="hs17c-track">
+                        <div className="hs17c-fill quick" style={{ width: ramScale.qW }} />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="hs17c-ram-item-head">
+                        <span>
+                          <strong>Heap Sort</strong> — Khử đệ quy O(1)
+                        </span>
+                        <span className="hs17c-ram-val" style={{ color: '#4ade80' }}>
+                          32 Bytes (Cố định)
+                        </span>
+                      </div>
+                      <div className="hs17c-track">
+                        <div className="hs17c-fill heap" style={{ width: '4%' }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hs17c-vars-box">
+                  <div>
+                    <strong>Sắp xếp tại chỗ thuần túy:</strong> Dù mảng tăng lên hàng triệu phần tử, RAM phụ vẫn chỉ đúng 4 biến cục bộ:
+                  </div>
+                  <div className="hs17c-vars-pills">
+                    <span className="hs17c-vpill">i</span>
+                    <span className="hs17c-vpill">left</span>
+                    <span className="hs17c-vpill">right</span>
+                    <span className="hs17c-vpill">largest</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        );
+      }
+
+      case 18: {
+        const s = HS17_LC_STEPS[hs17LcIdx] || HS17_LC_STEPS[0];
+        return (
+          <div className="hs17-grid">
+            <motion.div variants={itemVariants} className="hs17-left-col">
+              <div className="hs17-card">
+                <div>
+                  <div className="hs17-card-top">
+                    <span className="hs17-badge gold">1. Linux Kernel &amp; Hệ thống nhúng</span>
+                    <span className="hs17-meta-tag">lib/sort.c</span>
+                  </div>
+                  <div className="hs17-big-stat">8–16 KB Stack</div>
+                  <div className="hs17-sub-title">
+                    Tại sao <code>linux/lib/sort.c</code> chọn Heap Sort?
+                  </div>
+                </div>
+
+                <div className="hs17-meter-box">
+                  <div className="hs17-meter-row">
+                    <div className="hs17-meter-label">
+                      <span>
+                        <strong>QuickSort</strong> (Đệ quy)
+                      </span>
+                      <span className={`hs17-status-pill ${hs17IsDos ? 'panic' : 'warn'}`}>
+                        {hs17IsDos ? '> 16 KB — KERNEL PANIC!' : '~4 KB (Bình thường)'}
+                      </span>
+                    </div>
+                    <div className="hs17-track">
+                      <div className="hs17-limit-tag">Giới hạn 16 KB</div>
+                      <div className="hs17-limit-line" />
+                      <div className={`hs17-bar qs${hs17IsDos ? ' overflow' : ''}`} />
+                    </div>
+                  </div>
+
+                  <div className="hs17-meter-row">
+                    <div className="hs17-meter-label">
+                      <span>
+                        <strong>Heap Sort</strong> (Khử đệ quy)
+                      </span>
+                      <span className="hs17-status-pill safe">
+                        {hs17IsDos ? 'O(1) RAM — Miễn nhiễm' : 'O(1) RAM — An toàn'}
+                      </span>
+                    </div>
+                    <div className="hs17-track">
+                      <div className="hs17-limit-line" />
+                      <div className="hs17-bar hs" />
+                    </div>
+                  </div>
+
+                  <div className="hs17-dos-controls">
+                    <span className="hs17-dos-note">
+                      {hs17IsDos
+                        ? 'Đầu vào xấu: QuickSort đệ quy làm sập hệ thống!'
+                        : 'Trạng thái: Đầu vào ngẫu nhiên'}
+                    </span>
+                    <button
+                      type="button"
+                      className={`hs17-btn danger${hs17IsDos ? ' active' : ''}`}
+                      onClick={() => setHs17IsDos((prev) => !prev)}
+                    >
+                      {hs17IsDos ? '↺ Khôi phục trạng thái [D]' : '⚡ Mô phỏng DoS O(n²) [D]'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="hs17-card hs17-lc-summary">
+                <div>
+                  <div className="hs17-card-top">
+                    <span className="hs17-badge blue">2. Priority Queue • LeetCode 215</span>
+                    <span className="hs17-meta-tag">O(n log k)</span>
+                  </div>
+                  <h3>Kth Largest Element in an Array</h3>
+                  <p>
+                    Giữ một <strong>Hộp Min-Heap cố định k phần tử</strong>. Đỉnh{' '}
+                    <code>min_heap[0]</code> đóng vai trò <strong>&quot;người gác cổng&quot;</strong> — chỉ số nào lớn hơn nó mới được đá nó ra để vào Top-K.
+                  </p>
+                </div>
+                <div className="hs17-compare-pills">
+                  <span className="hs17-cpill bad">Sort cả mảng: O(n log n)</span>
+                  <span className="hs17-cpill good">Min-Heap k phần tử: O(n log k)</span>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div variants={itemVariants} className="hs17-right-panel">
+              <div className="hs16-code-topbar">
+                <div className="hs16-dots">
+                  <span className="hs16-dot r" />
+                  <span className="hs16-dot y" />
+                  <span className="hs16-dot g" />
+                </div>
+                <span>leetcode_215_kth_largest.py</span>
+                <span className="hs16-lang-badge">PYTHON</span>
+              </div>
+
+              <div className="hs17-code-body">
+                <div className="hs17-code-line">
+                  <span className="hs16-kw">import</span> heapq
+                </div>
+                <div className="hs17-code-line">
+                  <span className="hs16-kw">def</span> <span className="hs16-fn">findKthLargest</span>(nums: list[int], k: int) -&gt; int:
+                </div>
+                <div className={`hs17-code-line${s.line === 'init' ? ' hl' : ''}`}>
+                  {'    '}min_heap = nums[:k]
+                </div>
+                <div className={`hs17-code-line${s.line === 'init' ? ' hl' : ''}`}>
+                  {'    '}heapq.<span className="hs16-fn">heapify</span>(min_heap){'            '}
+                  <span className="hs16-cm"># Build Heap O(k)</span>
+                </div>
+                <div className={`hs17-code-line${s.line === 'check' ? ' hl' : ''}`}>
+                  {'    '}
+                  <span className="hs16-kw">for</span> num <span className="hs16-kw">in</span> nums[k:]:
+                </div>
+                <div className={`hs17-code-line${s.line === 'check' ? ' hl' : ''}`}>
+                  {'        '}
+                  <span className="hs16-kw">if</span> num &gt; min_heap[0]:{'          '}
+                  <span className="hs16-cm"># So với &quot;gác cổng&quot;</span>
+                </div>
+                <div className={`hs17-code-line${s.line === 'replace' ? ' hl' : ''}`}>
+                  {'            '}heapq.<span className="hs16-fn">heapreplace</span>(min_heap, num){'  '}
+                  <span className="hs16-cm"># Đá đỉnh &amp; nạp mới</span>
+                </div>
+                <div className={`hs17-code-line${s.line === 'return' ? ' hl' : ''}`}>
+                  {'    '}
+                  <span className="hs16-kw">return</span> min_heap[0]
+                </div>
+              </div>
+
+              <div className="hs17-sim-area">
+                <div className="hs17-sim-header">
+                  <span className="hs17-sim-title">
+                    Mô phỏng trực quan: k = 2 (Tìm số lớn thứ 2)
+                  </span>
+                  <span className="hs17-meta-tag">
+                    Bước {hs17LcIdx + 1} / {HS17_LC_STEPS.length}
+                  </span>
+                </div>
+
+                <div className="hs17-stream-row">
+                  <span className="hs17-row-label">Mảng nums:</span>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    {HS17_NUMS.map((n, i) => {
+                      let cls = 'hs17-num-cell';
+                      if (i === s.currIdx) cls += ' current';
+                      else if (s.skipped.includes(i)) cls += ' skipped';
+                      else if (s.doneIn.includes(i)) cls += ' done-in';
+                      return (
+                        <div key={i} className={cls}>
+                          {n}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="hs17-heap-stage">
+                  <span className="hs17-row-label" style={{ minWidth: '78px' }}>
+                    Min-Heap
+                    <br />
+                    <small style={{ color: '#38bdf8' }}>(size = 2)</small>
+                  </span>
+                  <div className="hs17-heap-slots">
+                    {s.heap.map((val, idx) => {
+                      let cls = 'hs17-heap-slot';
+                      let tag = `min_heap[${idx}]`;
+                      if (idx === 0) {
+                        cls += s.winner ? ' winner' : ' gatekeeper';
+                        tag = s.winner ? '★ Đáp án (Top-2)' : 'Gác cổng [0]';
+                      }
+                      return (
+                        <div key={idx} className={cls}>
+                          <div className="hs17-slot-val">{val}</div>
+                          <span className="hs17-slot-tag">{tag}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div
+                    className="hs17-kicked-info"
+                    dangerouslySetInnerHTML={{ __html: s.kicked }}
+                  />
+                </div>
+
+                <div className="hs17-sim-footer">
+                  <div
+                    className="hs17-sim-msg"
+                    dangerouslySetInnerHTML={{ __html: s.msg }}
+                  />
+                  <button
+                    type="button"
+                    className="hs17-btn"
+                    onClick={() => setHs17LcIdx((prev) => (prev + 1) % HS17_LC_STEPS.length)}
+                  >
+                    {hs17LcIdx === HS17_LC_STEPS.length - 1
+                      ? 'Chạy lại ↺ [K]'
+                      : 'Bước tiếp theo ▸ [K]'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        );
+      }
 
       case 19:
         return <SummaryView />;
