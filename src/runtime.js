@@ -163,16 +163,16 @@ function renderSlide1() {
         </div>
         <h1 class="hero-title mt-3">
           KHOẢNG CÁCH GIỮA SÁCH GIÁO KHOA VÀ HỆ THỐNG THỰC TẾ
-          <span style="display:block; font-size:0.56em; color:#A1A1A6; -webkit-text-fill-color:#A1A1A6; margin-top:6px;">
+          <span style="display:block; font-size:0.56em; color:#6B5B7B; -webkit-text-fill-color:#6B5B7B; margin-top:6px;">
             (PRODUCTION SORTING ALGORITHMS)
           </span>
         </h1>
         <p class="bento-body mt-3" style="max-width:960px;">
-          Phân tích, Mô phỏng &amp; Ứng dụng của <strong style="color:#30D158">Timsort</strong>,
-          <strong style="color:#BF5AF2">Introsort</strong> và <strong style="color:#FFD60A">Heap Sort</strong>
+          Phân tích, Mô phỏng &amp; Ứng dụng của <strong style="color:#DB2777">Timsort</strong>,
+          <strong style="color:#7C3AED">Introsort</strong> và <strong style="color:#EA580C">Heap Sort</strong>
         </p>
         <div class="bento-subtile flex-row justify-between flex-wrap gap-3 mt-3">
-          <span class="bento-body" style="color:#A1A1A6;">
+          <span class="bento-body" style="color:#6B5B7B;">
             Sử dụng phím <code>→</code> / <code>Space</code> để chuyển slide • Bấm <code>S</code> để mở Speaker Notes
           </span>
           <button type="button" class="sim-btn primary" data-action="next-slide">
@@ -183,12 +183,12 @@ function renderSlide1() {
     </div>
 
     <div class="bento-grid flex-1 min-h-0">
-      <div class="bento-card col-4 bento-item" style="--stagger:1; border-color:rgba(48,209,88,0.35);">
+      <div class="bento-card col-4 bento-item" style="--stagger:1; border-color:rgba(219,39,119,0.32);">
         <div class="flex-row justify-between gap-2">
           <span class="badge-pill badge-mint">Timsort (Tim Peters, 2002)</span>
-          <span class="mono bento-caption" style="color:#30D158">Stable</span>
+          <span class="mono bento-caption" style="color:#DB2777">Stable</span>
         </div>
-        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#30D158,#64D2FF);-webkit-background-clip:text;background-clip:text;">
+        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#DB2777,#F43F5E);-webkit-background-clip:text;background-clip:text;">
           O(n) Best
         </div>
         <h3 class="bento-title mt-2">Merge Sort + Insertion Sort</h3>
@@ -198,12 +198,12 @@ function renderSlide1() {
         </p>
       </div>
 
-      <div class="bento-card col-4 bento-item" style="--stagger:2; border-color:rgba(191,90,242,0.38);">
+      <div class="bento-card col-4 bento-item" style="--stagger:2; border-color:rgba(124,58,237,0.34);">
         <div class="flex-row justify-between gap-2">
           <span class="badge-pill badge-purple">Introsort (David R. Musser, 1997)</span>
-          <span class="mono bento-caption" style="color:#BF5AF2">In-place</span>
+          <span class="mono bento-caption" style="color:#7C3AED">In-place</span>
         </div>
-        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#BF5AF2,#5E5CE6);-webkit-background-clip:text;background-clip:text;">
+        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#7C3AED,#A855F7);-webkit-background-clip:text;background-clip:text;">
           Θ(n log n)
         </div>
         <h3 class="bento-title mt-2">Quick + Heap + Insertion</h3>
@@ -213,12 +213,12 @@ function renderSlide1() {
         </p>
       </div>
 
-      <div class="bento-card col-4 bento-item" style="--stagger:3; border-color:rgba(255,159,10,0.38);">
+      <div class="bento-card col-4 bento-item" style="--stagger:3; border-color:rgba(234,88,12,0.34);">
         <div class="flex-row justify-between gap-2">
           <span class="badge-pill badge-amber">Heap Sort (Binary Heap)</span>
-          <span class="mono bento-caption" style="color:#FFD60A">No Stack</span>
+          <span class="mono bento-caption" style="color:#EA580C">No Stack</span>
         </div>
-        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#FF9F0A,#FFD60A);-webkit-background-clip:text;background-clip:text;">
+        <div class="hero-stat mt-3" style="background:linear-gradient(135deg,#EA580C,#F97316);-webkit-background-clip:text;background-clip:text;">
           O(1) RAM
         </div>
         <h3 class="bento-title mt-2">Sắp xếp vun đống tại chỗ</h3>
@@ -264,7 +264,7 @@ function renderSlide2() {
     </div>
 
     <div class="bento-grid flex-1 min-h-0">
-      <div class="bento-card col-4 bento-item" style="--stagger:2; border-color:rgba(255,69,58,0.38);">
+      <div class="bento-card col-4 bento-item" style="--stagger:2; border-color:rgba(225,29,72,0.32);">
         <span class="badge-pill badge-rose">Góc khuất #1 • Nguy cơ bảo mật</span>
         <h3 class="bento-title mt-2">Nguy cơ của Quick Sort</h3>
         <p class="bento-body mt-2">
@@ -273,7 +273,7 @@ function renderSlide2() {
         </p>
       </div>
 
-      <div class="bento-card col-4 bento-item" style="--stagger:3; border-color:rgba(255,159,10,0.38);">
+      <div class="bento-card col-4 bento-item" style="--stagger:3; border-color:rgba(234,88,12,0.34);">
         <span class="badge-pill badge-amber">Góc khuất #2 • Áp lực bộ nhớ</span>
         <h3 class="bento-title mt-2">Gánh nặng của Merge Sort</h3>
         <p class="bento-body mt-2">
@@ -282,8 +282,8 @@ function renderSlide2() {
         </p>
       </div>
 
-      <div class="bento-card col-4 bento-item" style="--stagger:4; border-color:rgba(90,200,250,0.36);">
-        <span class="badge-pill badge-blue">Góc khuất #3 • Dữ liệu đời thực</span>
+      <div class="bento-card col-4 bento-item" style="--stagger:4; border-color:rgba(124,58,237,0.34);">
+        <span class="badge-pill badge-purple">Góc khuất #3 • Dữ liệu đời thực</span>
         <h3 class="bento-title mt-2">Đặc thù dữ liệu Production</h3>
         <p class="bento-body mt-2">
           Dữ liệu thực tế hiếm khi ngẫu nhiên hoàn toàn mà thường có sẵn các đoạn đã được sắp xếp cục bộ
@@ -299,9 +299,9 @@ function renderSlide2() {
           <span class="badge-pill badge-accent">Tối ưu Phần cứng &amp; Thực tế</span>
         </div>
         <p class="bento-body mt-2">
-          <strong style="color:#30D158">Timsort</strong> (khai thác natural runs + ổn định),
-          <strong style="color:#BF5AF2">Introsort</strong> (tốc độ RAM + lưới an toàn Heapsort) và
-          <strong style="color:#FFD60A">Heap Sort</strong> (chuẩn <code>O(1)</code> RAM tuyệt đối).
+          <strong style="color:#DB2777">Timsort</strong> (khai thác natural runs + ổn định),
+          <strong style="color:#7C3AED">Introsort</strong> (tốc độ RAM + lưới an toàn Heapsort) và
+          <strong style="color:#EA580C">Heap Sort</strong> (chuẩn <code>O(1)</code> RAM tuyệt đối).
         </p>
       </div>
     </div>
@@ -331,7 +331,7 @@ function renderSlide3() {
           </p>
         </div>
 
-        <div class="bento-card flex-1 bento-item" style="--stagger:2; border-color:rgba(48,209,88,0.35);">
+        <div class="bento-card flex-1 bento-item" style="--stagger:2; border-color:rgba(219,39,119,0.32);">
           <span class="badge-pill badge-mint">Stable Sort (Tính ổn định)</span>
           <p class="bento-body mt-2">
             Các phần tử có khóa bằng nhau (VD: bản ghi nhân viên cùng điểm, đơn hàng cùng ngày)
@@ -743,7 +743,7 @@ function renderSlide5() {
 
         <div class="bento-card bento-card-auto bento-item" style="--stagger:3">
           <span class="badge-pill badge-mint">Kết quả Console</span>
-          <pre class="mono mt-2" style="font-size:var(--fs-code); color:#30D158; background:#0D0D0F; padding:8px 12px; border-radius:14px; border:1px solid rgba(48,209,88,0.28); line-height:1.45;">Input : [3, 5, 7, 2, 4, 6, 9, 1, 8, 10]
+          <pre class="mono mt-2" style="font-size:var(--fs-code); color:#BE185D; background:#FFF5F9; padding:8px 12px; border-radius:14px; border:1px solid rgba(219,39,119,0.26); line-height:1.45;">Input : [3, 5, 7, 2, 4, 6, 9, 1, 8, 10]
 Output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</pre>
         </div>
 
@@ -795,17 +795,17 @@ function renderSlide6() {
           <tbody>
             <tr class="row-highlight">
               <td class="font-bold">Tốt nhất (Best)</td>
-              <td class="mono font-bold" style="color:#30D158">O(n)</td>
+              <td class="mono font-bold" style="color:#DB2777">O(n)</td>
               <td>Mảng đã tăng dần, chỉ quét 1 lượt phát hiện 1 run duy nhất, không cần merge (VD: danh sách giao dịch theo thời gian).</td>
             </tr>
             <tr>
               <td class="font-bold">Trung bình (Avg)</td>
-              <td class="mono font-bold" style="color:#64D2FF">O(n log n)</td>
+              <td class="mono font-bold" style="color:#7C3AED">O(n log n)</td>
               <td>Dữ liệu ngẫu nhiên hoặc bán sắp xếp, gộp qua khoảng <code>~log n</code> tầng; các run dài giúp giảm mạnh số lần gộp.</td>
             </tr>
             <tr>
               <td class="font-bold">Xấu nhất (Worst)</td>
-              <td class="mono font-bold" style="color:#FFD60A">O(n log n)</td>
+              <td class="mono font-bold" style="color:#EA580C">O(n log n)</td>
               <td>Dữ liệu đảo lộn tạo nhiều run ngắn, nhưng không bao giờ suy biến thành <code>O(n²)</code> nhờ quy tắc quản lý run.</td>
             </tr>
           </tbody>
@@ -907,7 +907,7 @@ function renderSlide8() {
       <div class="bento-card col-8 bento-item" style="--stagger:0">
         <div class="flex-row justify-between flex-wrap gap-2">
           <span class="badge-pill badge-purple">David R. Musser (1997) — Bảo vệ std::sort của C++ STL</span>
-          <span class="mono bento-caption" style="color:#DF9EFF">Ví dụ: [19, 7, 15, 12, 16, 18, 4, 11, 13] → [4..19]</span>
+          <span class="mono bento-caption" style="color:#7C3AED">Ví dụ: [19, 7, 15, 12, 16, 18, 4, 11, 13] → [4..19]</span>
         </div>
         <p class="bento-body mt-2">
           <strong>Đặc tả bài toán:</strong> Sắp xếp mảng dựa trên phép so sánh tại chỗ (<em>In-place comparison sort</em>) — vừa đạt tốc độ thực thi trung bình nhanh như Quicksort, vừa khóa chặt thời gian xấu nhất ở mức <strong>O(n log n)</strong>.
@@ -926,13 +926,13 @@ function renderSlide8() {
         <h3 class="bento-title">Tại sao không dùng 1 thuật toán đơn lẻ?</h3>
         <div class="flex-col gap-2 mt-2 flex-1 justify-between">
           <div class="bento-subtile">
-            <p class="bento-body"><strong style="color:#FF6961">1. Chỉ dùng Quicksort:</strong> Trung bình rất nhanh nhưng suy biến <code>O(n²)</code> và tràn stack <code>O(n)</code> khi chọn chốt xấu.</p>
+            <p class="bento-body"><strong style="color:#E11D48">1. Chỉ dùng Quicksort:</strong> Trung bình rất nhanh nhưng suy biến <code>O(n²)</code> và tràn stack <code>O(n)</code> khi chọn chốt xấu.</p>
           </div>
           <div class="bento-subtile">
-            <p class="bento-body"><strong style="color:#FFD60A">2. Chỉ dùng Heapsort:</strong> Luôn <code>O(n log n)</code> và <code>O(1)</code> RAM, nhưng nhảy bộ nhớ liên tục gây <strong>Cache Miss</strong>, chậm hơn Quicksort 2–3 lần.</p>
+            <p class="bento-body"><strong style="color:#EA580C">2. Chỉ dùng Heapsort:</strong> Luôn <code>O(n log n)</code> và <code>O(1)</code> RAM, nhưng nhảy bộ nhớ liên tục gây <strong>Cache Miss</strong>, chậm hơn Quicksort 2–3 lần.</p>
           </div>
           <div class="bento-subtile">
-            <p class="bento-body"><strong style="color:#64D2FF">3. Không có Insertion Sort:</strong> Quicksort gọi đệ quy tới đoạn 1–2 phần tử → lãng phí tới <strong>75% tổng số lời gọi hàm</strong> ở đáy cây đệ quy.</p>
+            <p class="bento-body"><strong style="color:#7C3AED">3. Không có Insertion Sort:</strong> Quicksort gọi đệ quy tới đoạn 1–2 phần tử → lãng phí tới <strong>75% tổng số lời gọi hàm</strong> ở đáy cây đệ quy.</p>
           </div>
         </div>
       </div>
@@ -940,14 +940,14 @@ function renderSlide8() {
       <div class="bento-card col-6 bento-item justify-between" style="--stagger:3">
         <h3 class="bento-title">3 Trụ cột của Introsort</h3>
         <div class="flex-col gap-2 mt-2 flex-1 justify-between">
-          <div class="bento-subtile" style="border-color:rgba(94,92,230,0.45);">
-            <p class="bento-body"><strong style="color:#5AC8FA">1. Quicksort (Chủ lực):</strong> Khi <code>size &gt; 16</code> và <code>depth &gt; 0</code>. Dùng chốt <em>Median-of-Three</em>, duyệt tuần tự thân thiện L1/L2 CPU Cache.</p>
+          <div class="bento-subtile" style="border-color:rgba(124,58,237,0.34);">
+            <p class="bento-body"><strong style="color:#7C3AED">1. Quicksort (Chủ lực):</strong> Khi <code>size &gt; 16</code> và <code>depth &gt; 0</code>. Dùng chốt <em>Median-of-Three</em>, duyệt tuần tự thân thiện L1/L2 CPU Cache.</p>
           </div>
-          <div class="bento-subtile" style="border-color:rgba(191,90,242,0.5);">
-            <p class="bento-body"><strong style="color:#BF5AF2">2. Heapsort (Lưới an toàn):</strong> Khi <code>size &gt; 16</code> và <code>depth == 0</code>. Vun đống tại chỗ ngay trên đoạn con bị lệch, khóa chặt cận trên <code>O(n log n)</code>.</p>
+          <div class="bento-subtile" style="border-color:rgba(234,88,12,0.36);">
+            <p class="bento-body"><strong style="color:#EA580C">2. Heapsort (Lưới an toàn):</strong> Khi <code>size &gt; 16</code> và <code>depth == 0</code>. Vun đống tại chỗ ngay trên đoạn con bị lệch, khóa chặt cận trên <code>O(n log n)</code>.</p>
           </div>
-          <div class="bento-subtile" style="border-color:rgba(48,209,88,0.45);">
-            <p class="bento-body"><strong style="color:#30D158">3. Insertion Sort (Đoạn nhỏ):</strong> Khi <code>size &lt;= 16</code>. Triệt tiêu chi phí gọi hàm đệ quy (<em>recursion overhead</em>) ở đáy cây.</p>
+          <div class="bento-subtile" style="border-color:rgba(219,39,119,0.34);">
+            <p class="bento-body"><strong style="color:#DB2777">3. Insertion Sort (Đoạn nhỏ):</strong> Khi <code>size &lt;= 16</code>. Triệt tiêu chi phí gọi hàm đệ quy (<em>recursion overhead</em>) ở đáy cây.</p>
           </div>
         </div>
       </div>
@@ -989,53 +989,53 @@ function renderSlide9() {
           <svg viewBox="0 0 980 370" style="width:100%; height:100%; max-height:100%;">
             <defs>
               <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#A1A1A6" />
+                <path d="M0,0 L0,6 L8,3 z" fill="#6B5B7B" />
               </marker>
               <marker id="arrow-mint" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#30D158" />
+                <path d="M0,0 L0,6 L8,3 z" fill="#DB2777" />
               </marker>
               <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                <path d="M0,0 L0,6 L8,3 z" fill="#BF5AF2" />
+                <path d="M0,0 L0,6 L8,3 z" fill="#EA580C" />
               </marker>
             </defs>
 
-            <rect x="20" y="16" width="310" height="66" rx="16" fill="#0D0D0F" stroke="#5E5CE6" stroke-width="2" />
-            <text x="175" y="43" text-anchor="middle" fill="#F5F5F7" font-size="14" font-weight="700">Bắt đầu _introsort_util(low, high, depth)</text>
-            <text x="175" y="65" text-anchor="middle" fill="#A1A1A6" font-size="13">Tính size = high - low + 1</text>
+            <rect x="20" y="16" width="310" height="66" rx="16" fill="#FFFFFF" stroke="#7C3AED" stroke-width="2" />
+            <text x="175" y="43" text-anchor="middle" fill="#1F1630" font-size="14" font-weight="700">Bắt đầu _introsort_util(low, high, depth)</text>
+            <text x="175" y="65" text-anchor="middle" fill="#6B5B7B" font-size="13">Tính size = high - low + 1</text>
 
-            <line x1="175" y1="82" x2="175" y2="112" stroke="#A1A1A6" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="175" y1="82" x2="175" y2="112" stroke="#6B5B7B" stroke-width="2" marker-end="url(#arrow)" />
 
-            <rect x="20" y="114" width="310" height="66" rx="16" fill="rgba(48,209,88,0.12)" stroke="#30D158" stroke-width="2" />
-            <text x="175" y="141" text-anchor="middle" fill="#30D158" font-size="14" font-weight="700">Bước 1: Kiểm tra đoạn nhỏ</text>
-            <text x="175" y="163" text-anchor="middle" fill="#F5F5F7" font-size="13">size &lt;= 16 (THRESHOLD) ?</text>
+            <rect x="20" y="114" width="310" height="66" rx="16" fill="#FFF5F9" stroke="#DB2777" stroke-width="2" />
+            <text x="175" y="141" text-anchor="middle" fill="#BE185D" font-size="14" font-weight="700">Bước 1: Kiểm tra đoạn nhỏ</text>
+            <text x="175" y="163" text-anchor="middle" fill="#1F1630" font-size="13">size &lt;= 16 (THRESHOLD) ?</text>
 
-            <line x1="330" y1="147" x2="432" y2="147" stroke="#30D158" stroke-width="2" marker-end="url(#arrow-mint)" />
-            <text x="381" y="137" text-anchor="middle" fill="#30D158" font-size="12" font-weight="700">ĐÚNG</text>
+            <line x1="330" y1="147" x2="432" y2="147" stroke="#DB2777" stroke-width="2" marker-end="url(#arrow-mint)" />
+            <text x="381" y="137" text-anchor="middle" fill="#DB2777" font-size="12" font-weight="700">ĐÚNG</text>
 
-            <rect x="436" y="114" width="524" height="66" rx="16" fill="rgba(48,209,88,0.18)" stroke="#30D158" stroke-width="2" />
-            <text x="698" y="141" text-anchor="middle" fill="#F5F5F7" font-size="14" font-weight="700">Insertion Sort đoạn [low..high] &amp; RETURN</text>
-            <text x="698" y="163" text-anchor="middle" fill="#A7F3D0" font-size="13">Chèn trực tiếp, triệt tiêu chi phí gọi hàm đệ quy ở đáy cây</text>
+            <rect x="436" y="114" width="524" height="66" rx="16" fill="#FCE7F3" stroke="#DB2777" stroke-width="2" />
+            <text x="698" y="141" text-anchor="middle" fill="#831843" font-size="14" font-weight="700">Insertion Sort đoạn [low..high] &amp; RETURN</text>
+            <text x="698" y="163" text-anchor="middle" fill="#BE185D" font-size="13">Chèn trực tiếp, triệt tiêu chi phí gọi hàm đệ quy ở đáy cây</text>
 
-            <line x1="175" y1="180" x2="175" y2="210" stroke="#A1A1A6" stroke-width="2" marker-end="url(#arrow)" />
-            <text x="195" y="199" fill="#A1A1A6" font-size="12" font-weight="700">SAI</text>
+            <line x1="175" y1="180" x2="175" y2="210" stroke="#6B5B7B" stroke-width="2" marker-end="url(#arrow)" />
+            <text x="195" y="199" fill="#6B5B7B" font-size="12" font-weight="700">SAI</text>
 
-            <rect x="20" y="212" width="310" height="66" rx="16" fill="rgba(191,90,242,0.14)" stroke="#BF5AF2" stroke-width="2" />
-            <text x="175" y="239" text-anchor="middle" fill="#BF5AF2" font-size="14" font-weight="700">Bước 2: Kiểm tra ngân sách độ sâu</text>
-            <text x="175" y="261" text-anchor="middle" fill="#F5F5F7" font-size="13">depth_limit == 0 ?</text>
+            <rect x="20" y="212" width="310" height="66" rx="16" fill="#FFF7F0" stroke="#EA580C" stroke-width="2" />
+            <text x="175" y="239" text-anchor="middle" fill="#C2410C" font-size="14" font-weight="700">Bước 2: Kiểm tra ngân sách độ sâu</text>
+            <text x="175" y="261" text-anchor="middle" fill="#1F1630" font-size="13">depth_limit == 0 ?</text>
 
-            <line x1="330" y1="245" x2="432" y2="245" stroke="#BF5AF2" stroke-width="2" marker-end="url(#arrow-purple)" />
-            <text x="381" y="235" text-anchor="middle" fill="#BF5AF2" font-size="12" font-weight="700">ĐÚNG</text>
+            <line x1="330" y1="245" x2="432" y2="245" stroke="#EA580C" stroke-width="2" marker-end="url(#arrow-purple)" />
+            <text x="381" y="235" text-anchor="middle" fill="#EA580C" font-size="12" font-weight="700">ĐÚNG</text>
 
-            <rect x="436" y="212" width="524" height="66" rx="16" fill="rgba(191,90,242,0.22)" stroke="#BF5AF2" stroke-width="2" />
-            <text x="698" y="239" text-anchor="middle" fill="#F5F5F7" font-size="14" font-weight="700">Heapsort đoạn con [low..high] &amp; RETURN</text>
-            <text x="698" y="261" text-anchor="middle" fill="#E9D5FF" font-size="13">Vun đống tại chỗ bằng offset = low, khóa chặt cận O(n log n)</text>
+            <rect x="436" y="212" width="524" height="66" rx="16" fill="#FFEDD5" stroke="#EA580C" stroke-width="2" />
+            <text x="698" y="239" text-anchor="middle" fill="#9A3412" font-size="14" font-weight="700">Heapsort đoạn con [low..high] &amp; RETURN</text>
+            <text x="698" y="261" text-anchor="middle" fill="#C2410C" font-size="13">Vun đống tại chỗ bằng offset = low, khóa chặt cận O(n log n)</text>
 
-            <line x1="175" y1="278" x2="175" y2="304" stroke="#A1A1A6" stroke-width="2" marker-end="url(#arrow)" />
-            <text x="195" y="295" fill="#A1A1A6" font-size="12" font-weight="700">SAI</text>
+            <line x1="175" y1="278" x2="175" y2="304" stroke="#6B5B7B" stroke-width="2" marker-end="url(#arrow)" />
+            <text x="195" y="295" fill="#6B5B7B" font-size="12" font-weight="700">SAI</text>
 
-            <rect x="20" y="306" width="940" height="54" rx="16" fill="rgba(41,151,255,0.16)" stroke="#2997FF" stroke-width="2" />
-            <text x="490" y="329" text-anchor="middle" fill="#F5F5F7" font-size="14" font-weight="700">Bước 3 (Phân hoạch chuẩn Quicksort): p = partition_median_of_three(arr, low, high)</text>
-            <text x="490" y="349" text-anchor="middle" fill="#5AC8FA" font-size="13">Đệ quy nửa phải [p + 1 .. high] với (depth_limit - 1)  •  Khử đệ quy đuôi nửa trái: high = p - 1</text>
+            <rect x="20" y="306" width="940" height="54" rx="16" fill="#F3E8FF" stroke="#7C3AED" stroke-width="2" />
+            <text x="490" y="329" text-anchor="middle" fill="#4C1D95" font-size="14" font-weight="700">Bước 3 (Phân hoạch chuẩn Quicksort): p = partition_median_of_three(arr, low, high)</text>
+            <text x="490" y="349" text-anchor="middle" fill="#6D28D9" font-size="13">Đệ quy nửa phải [p + 1 .. high] với (depth_limit - 1)  •  Khử đệ quy đuôi nửa trái: high = p - 1</text>
           </svg>
         </div>
       </div>
@@ -1106,21 +1106,21 @@ function renderSlide10() {
                 <span id="intro-active-range" class="intro-range-pill">Đang xét: toàn mảng [0..8]</span>
               </div>
               <div class="intro-inline-key">
-                <span class="intro-key-item"><span class="intro-key-dot" style="background:#a855f7"></span>Nửa trái</span>
-                <span class="intro-key-item"><span class="intro-key-dot" style="background:#f43f5e"></span>Pivot</span>
-                <span class="intro-key-item"><span class="intro-key-dot" style="background:#0ea5e9"></span>Nửa phải</span>
-                <span class="intro-key-item"><span class="intro-key-dot" style="background:#f97316"></span>Heapsort</span>
-                <span class="intro-key-item"><span class="intro-key-dot" style="background:#22c55e"></span>Đã chốt ✓</span>
+                <span class="intro-key-item"><span class="intro-key-dot" style="background:#7c3aed"></span>Nửa trái</span>
+                <span class="intro-key-item"><span class="intro-key-dot" style="background:#ec4899"></span>Pivot</span>
+                <span class="intro-key-item"><span class="intro-key-dot" style="background:#f472b6"></span>Nửa phải</span>
+                <span class="intro-key-item"><span class="intro-key-dot" style="background:#ea580c"></span>Heapsort</span>
+                <span class="intro-key-item"><span class="intro-key-dot" style="background:#db2777"></span>Đã chốt ✓</span>
               </div>
             </div>
 
             <div class="intro-tiles-stage">
               <div id="intro-array-track" class="intro-array-track">
                 <div id="intro-group-left" class="intro-group-bar intro-group-left">
-                  <span class="intro-group-label" style="left:8px; color:#d8b4fe;">Nửa trái</span>
+                  <span class="intro-group-label" style="left:8px; color:#7c3aed;">Nửa trái</span>
                 </div>
                 <div id="intro-group-right" class="intro-group-bar intro-group-right">
-                  <span class="intro-group-label" style="right:8px; color:#7dd3fc;">Nửa phải</span>
+                  <span class="intro-group-label" style="right:8px; color:#db2777;">Nửa phải</span>
                 </div>
                 <div id="intro-group-active" class="intro-group-bar">
                   <span id="intro-group-active-label" class="intro-group-label" style="left:8px;">Đang xử lý</span>
@@ -1136,7 +1136,7 @@ function renderSlide10() {
               <div class="flex-row gap-2 flex-wrap">
                 <span id="intro-step-badge" class="intro-step-badge">Bước 0</span>
                 <span id="intro-meta-range" class="intro-meta-range">[0..8] (size=9)</span>
-                <span style="color:#52525b">•</span>
+                <span style="color:#8b7b9b">•</span>
                 <span id="intro-meta-depth" class="intro-meta-depth">depth=6</span>
               </div>
               <span id="intro-algo-badge" class="intro-algo-badge badge-init">Khởi tạo</span>
@@ -1160,9 +1160,9 @@ function renderSlide10() {
               <span class="intro-center-sub">Độ sâu đếm ngược từ trên xuống</span>
             </div>
             <div class="intro-algo-legend">
-              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#a855f7"></span>Quicksort</span>
-              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#22c55e"></span>Insertion Sort</span>
-              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#f97316"></span>Heapsort (Depth = 0)</span>
+              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#7c3aed"></span>Quicksort</span>
+              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#db2777"></span>Insertion Sort</span>
+              <span class="intro-key-item"><span class="intro-legend-dot" style="background:#ea580c"></span>Heapsort (Depth = 0)</span>
             </div>
           </div>
 
@@ -1170,7 +1170,7 @@ function renderSlide10() {
             <div id="intro-tree-main" class="intro-tree-main">
               <div id="intro-depth-ruler" class="intro-depth-ruler" aria-label="Thước đo độ sâu Depth">
                 <div class="intro-depth-track">
-                  <div id="intro-depth-fill" style="height:12%; background:linear-gradient(180deg, #a855f7, #818cf8);"></div>
+                  <div id="intro-depth-fill" style="height:12%; background:linear-gradient(180deg, #9333ea, #ec4899);"></div>
                 </div>
                 <div id="intro-depth-pointer"></div>
                 <div id="intro-depth-ticks" class="intro-depth-ticks"></div>
@@ -1280,7 +1280,7 @@ function initIntroHeapStage() {
     line.setAttribute('y1', INTROSORT_HEAP_COORDS[p].y);
     line.setAttribute('x2', INTROSORT_HEAP_COORDS[c].x);
     line.setAttribute('y2', INTROSORT_HEAP_COORDS[c].y);
-    line.setAttribute('stroke', '#f97316');
+    line.setAttribute('stroke', '#ea580c');
     line.setAttribute('stroke-width', '2');
     line.setAttribute('opacity', '0.65');
     line.style.transition = 'stroke 360ms ease, opacity 360ms ease';
@@ -1375,7 +1375,7 @@ function updateIntroArrayTiles(stepData, triggerArc = true) {
     positionIntroGroupBar(groupRight, null, false);
     if (groupActiveLabel) {
       groupActiveLabel.textContent = 'Insertion Sort';
-      groupActiveLabel.style.color = '#86efac';
+      groupActiveLabel.style.color = '#be185d';
     }
     positionIntroGroupBar(groupActive, stepData.range, true, 'intro-group-insertion');
   } else if (stepData.algoType === 'heap') {
@@ -1384,7 +1384,7 @@ function updateIntroArrayTiles(stepData, triggerArc = true) {
     const isDone = stepData.step === 4;
     if (groupActiveLabel) {
       groupActiveLabel.textContent = isDone ? 'Heapsort Hoàn tất' : 'Max-Heap [0..5]';
-      groupActiveLabel.style.color = isDone ? '#86efac' : '#fdba74';
+      groupActiveLabel.style.color = isDone ? '#be185d' : '#c2410c';
     }
     positionIntroGroupBar(
       groupActive,
@@ -1432,13 +1432,13 @@ function updateIntroArrayTiles(stepData, triggerArc = true) {
     if (isPivot) {
       tileCls = 'tile-pivot';
       tagText = `Pivot p=${idx}`;
-      tagColor = '#fda4af';
+      tagColor = '#be185d';
       item.outer.style.zIndex = '35';
     } else if (isHeapBuild) {
       tileCls = idx === 0 ? 'tile-heap-max' : 'tile-heap';
       if (idx === 0) {
         tagText = 'Max';
-        tagColor = '#fdba74';
+        tagColor = '#c2410c';
       }
     } else if (isLeft) {
       tileCls = 'tile-left';
@@ -1535,7 +1535,7 @@ function rebuildIntroSvgEdges(scenario) {
     const bgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     bgPath.setAttribute('d', d);
     bgPath.setAttribute('fill', 'none');
-    bgPath.setAttribute('stroke', '#272c3d');
+    bgPath.setAttribute('stroke', 'rgba(124, 58, 237, 0.22)');
     bgPath.setAttribute('stroke-width', '1.4');
     bgPath.setAttribute('stroke-dasharray', '4 4');
     bgPath.setAttribute('opacity', '0.55');
@@ -1592,13 +1592,13 @@ function buildIntroTreeScene(scenario) {
     tick.className = 'intro-depth-tick';
     if (row.isDanger) {
       tick.innerHTML = `
-        <span style="font-size:11px; font-weight:800; color:#fb7185;">${row.label}</span>
-        <span style="font-size:9px; font-weight:600; color:rgba(251,113,133,0.8);">${row.sub}</span>
+        <span style="font-size:11px; font-weight:800; color:#e11d48;">${row.label}</span>
+        <span style="font-size:9px; font-weight:600; color:rgba(225,29,72,0.8);">${row.sub}</span>
       `;
     } else {
       tick.innerHTML = `
-        <span style="font-size:11px; font-weight:700; color:#d4d4d8;">${row.label}</span>
-        <span style="font-size:9px; color:#71717a;">${row.sub}</span>
+        <span style="font-size:11px; font-weight:700; color:#3a2d4d;">${row.label}</span>
+        <span style="font-size:9px; color:#8b7b9b;">${row.sub}</span>
       `;
     }
     ticksLayer.appendChild(tick);
@@ -1695,19 +1695,19 @@ function updateIntroTreeVisualStates(scenario, stepData) {
     depthFill.style.height = `${pct}%`;
 
     if (stepData.depth === 0) {
-      depthFill.style.background = 'linear-gradient(180deg, #a855f7 0%, #f59e0b 55%, #ef4444 100%)';
-      depthPointer.style.backgroundColor = '#ef4444';
-      depthPointer.style.boxShadow = '0 0 16px rgba(239, 68, 68, 0.9)';
+      depthFill.style.background = 'linear-gradient(180deg, #9333ea 0%, #f97316 55%, #e11d48 100%)';
+      depthPointer.style.backgroundColor = '#e11d48';
+      depthPointer.style.boxShadow = '0 0 14px rgba(225, 29, 72, 0.75)';
       depthPointer.classList.add('intro-danger-ripple');
     } else if (stepData.depth <= 4 && scenario.id === 'tab1') {
-      depthFill.style.background = 'linear-gradient(180deg, #a855f7 0%, #f59e0b 100%)';
-      depthPointer.style.backgroundColor = '#f59e0b';
-      depthPointer.style.boxShadow = '0 0 14px rgba(245, 158, 11, 0.8)';
+      depthFill.style.background = 'linear-gradient(180deg, #9333ea 0%, #ea580c 100%)';
+      depthPointer.style.backgroundColor = '#ea580c';
+      depthPointer.style.boxShadow = '0 0 12px rgba(234, 88, 12, 0.65)';
       depthPointer.classList.remove('intro-danger-ripple');
     } else {
-      depthFill.style.background = 'linear-gradient(180deg, #a855f7 0%, #6366f1 100%)';
-      depthPointer.style.backgroundColor = '#a855f7';
-      depthPointer.style.boxShadow = '0 0 14px rgba(168, 85, 247, 0.85)';
+      depthFill.style.background = 'linear-gradient(180deg, #9333ea 0%, #ec4899 100%)';
+      depthPointer.style.backgroundColor = '#7c3aed';
+      depthPointer.style.boxShadow = '0 0 12px rgba(124, 58, 237, 0.7)';
       depthPointer.classList.remove('intro-danger-ripple');
     }
   }
@@ -1752,14 +1752,14 @@ function updateIntroTreeVisualStates(scenario, stepData) {
         activeRing.style.opacity = '1';
 
         if (activeNodeAlgo === 'heap') {
-          activeRing.style.border = '2px solid #fb923c';
-          activeRing.style.boxShadow = '0 0 22px rgba(249, 115, 22, 0.55)';
+          activeRing.style.border = '2px solid #ea580c';
+          activeRing.style.boxShadow = '0 0 18px rgba(234, 88, 12, 0.35)';
         } else if (activeNodeAlgo === 'insertion') {
-          activeRing.style.border = '2px solid #4ade80';
-          activeRing.style.boxShadow = '0 0 20px rgba(34, 197, 94, 0.45)';
+          activeRing.style.border = '2px solid #db2777';
+          activeRing.style.boxShadow = '0 0 18px rgba(219, 39, 119, 0.35)';
         } else {
-          activeRing.style.border = '2px solid #c084fc';
-          activeRing.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.5)';
+          activeRing.style.border = '2px solid #7c3aed';
+          activeRing.style.boxShadow = '0 0 18px rgba(124, 58, 237, 0.35)';
         }
       }
     } else {
@@ -1770,17 +1770,17 @@ function updateIntroTreeVisualStates(scenario, stepData) {
   state.introTreeEdgeEls.forEach(({ edge, pathEl, labelEl, length }) => {
     const isRevealed = state.introStep >= edge.revealStep;
     const strokeColor = edge.isDanger
-      ? '#f97316'
+      ? '#ea580c'
       : edge.branch === 'left'
-        ? '#a855f7'
-        : '#38bdf8';
+        ? '#7c3aed'
+        : '#ec4899';
 
     pathEl.setAttribute('stroke', strokeColor);
     pathEl.style.strokeDashoffset = isRevealed ? '0' : `${length}`;
     pathEl.style.opacity = isRevealed ? '0.95' : '0';
 
-    labelEl.setAttribute('fill', isRevealed ? strokeColor : '#52525b');
-    labelEl.style.opacity = isRevealed ? '1' : '0.4';
+    labelEl.setAttribute('fill', isRevealed ? strokeColor : '#8b7b9b');
+    labelEl.style.opacity = isRevealed ? '1' : '0.45';
   });
 }
 
@@ -1827,7 +1827,7 @@ function updateIntroHeapPanel(scenario, stepData) {
     }
     if (noteEl) {
       noteEl.innerHTML =
-        'Gốc <strong style="color:#fdba74;">15</strong> lớn nhất nằm ở đỉnh A[0]. Các nhánh con (12 ≥ 7, 4 và 13 ≥ 11) đều thỏa tính chất Max-Heap.';
+        'Gốc <strong style="color:#c2410c;">15</strong> lớn nhất nằm ở đỉnh A[0]. Các nhánh con (12 ≥ 7, 4 và 13 ≥ 11) đều thỏa tính chất Max-Heap.';
     }
   } else {
     if (titleEl) {
@@ -1841,13 +1841,13 @@ function updateIntroHeapPanel(scenario, stepData) {
     }
     if (noteEl) {
       noteEl.innerHTML =
-        'Các nút lướt về đúng thứ tự tăng dần <strong style="color:#86efac;">[4, 7, 11, 12, 13, 15]</strong> với độ phức tạp đảm bảo O(n log n).';
+        'Các nút lướt về đúng thứ tự tăng dần <strong style="color:#be185d;">[4, 7, 11, 12, 13, 15]</strong> với độ phức tạp đảm bảo O(n log n).';
     }
   }
 
   state.introHeapEdgeEls.forEach((line) => {
-    line.setAttribute('stroke', isBuildStep ? '#f97316' : '#22c55e');
-    line.setAttribute('opacity', isBuildStep ? '0.68' : '0.4');
+    line.setAttribute('stroke', isBuildStep ? '#ea580c' : '#db2777');
+    line.setAttribute('opacity', isBuildStep ? '0.68' : '0.45');
     line.setAttribute('stroke-dasharray', isBuildStep ? '' : '4 3');
   });
 
@@ -1859,15 +1859,15 @@ function updateIntroHeapPanel(scenario, stepData) {
     circle.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${isRoot && isBuildStep ? 1.12 : 1})`;
 
     if (isBuildStep) {
-      circle.style.backgroundColor = isRoot ? '#c2410c' : '#2a160c';
-      circle.style.borderColor = isRoot ? '#fdba74' : '#f97316';
-      circle.style.color = '#ffffff';
-      circle.style.boxShadow = isRoot ? '0 0 18px rgba(249, 115, 22, 0.7)' : 'none';
+      circle.style.backgroundColor = isRoot ? '#ea580c' : '#ffedd5';
+      circle.style.borderColor = isRoot ? '#c2410c' : '#f97316';
+      circle.style.color = isRoot ? '#ffffff' : '#9a3412';
+      circle.style.boxShadow = isRoot ? '0 4px 16px rgba(234, 88, 12, 0.35)' : 'none';
     } else {
-      circle.style.backgroundColor = '#0f291e';
-      circle.style.borderColor = '#22c55e';
-      circle.style.color = '#d1fae5';
-      circle.style.boxShadow = '0 0 12px rgba(34, 197, 94, 0.25)';
+      circle.style.backgroundColor = '#fce7f3';
+      circle.style.borderColor = '#db2777';
+      circle.style.color = '#831843';
+      circle.style.boxShadow = '0 4px 12px rgba(219, 39, 119, 0.22)';
     }
 
     const idxTag = circle.querySelector('.intro-heap-idx-tag');
@@ -2034,18 +2034,18 @@ function renderSlide11() {
           <div class="bento-subgrid-2 mt-2" style="height:auto;">
             <div class="bento-subtile">
               <div class="bento-caption">Heap chuẩn (từ 0)</div>
-              <div class="mono mt-1" style="font-size:var(--fs-code); color:#F5F5F7; line-height:1.5;">
+              <div class="mono mt-1" style="font-size:var(--fs-code); color:#1F1630; line-height:1.5;">
                 Cha: i &nbsp;|&nbsp; Trái: 2*i + 1<br/>Phải: 2*i + 2
               </div>
             </div>
-            <div class="bento-subtile" style="border-color:rgba(191,90,242,0.45);">
-              <div class="bento-caption" style="color:#BF5AF2;">Đoạn [low..high] (offset = low)</div>
-              <div class="mono mt-1" style="font-size:var(--fs-code); color:#F5F5F7; line-height:1.5;">
+            <div class="bento-subtile" style="border-color:rgba(124,58,237,0.36);">
+              <div class="bento-caption" style="color:#7C3AED;">Đoạn [low..high] (offset = low)</div>
+              <div class="mono mt-1" style="font-size:var(--fs-code); color:#1F1630; line-height:1.5;">
                 Cha: low + i &nbsp;|&nbsp; Trái: low + 2*i + 1<br/>Phải: low + 2*i + 2
               </div>
             </div>
           </div>
-          <p class="bento-body mt-2" style="color:#30D158;">
+          <p class="bento-body mt-2" style="color:#DB2777;">
             <strong>Lợi ích cốt lõi:</strong> Tuyệt đối không dùng list slicing (<code>arr[a:b]</code>), bảo toàn bộ nhớ phụ <strong>O(1)</strong>!
           </p>
         </div>
@@ -2083,18 +2083,18 @@ function renderSlide12() {
         <h3 class="bento-title">Chứng minh chặn trên Thời gian Θ(n log n)</h3>
         <div class="flex-col gap-2 mt-2 flex-1 justify-between">
           <div class="bento-subtile">
-            <p class="bento-body"><strong>• Tốt nhất:</strong> <code class="mono" style="color:#30D158">Θ(n log n)</code> — Phân hoạch chia đôi cân bằng ở mọi mức.</p>
+            <p class="bento-body"><strong>• Tốt nhất:</strong> <code class="mono" style="color:#DB2777">Θ(n log n)</code> — Phân hoạch chia đôi cân bằng ở mọi mức.</p>
           </div>
           <div class="bento-subtile">
-            <p class="bento-body"><strong>• Trung bình:</strong> <code class="mono" style="color:#64D2FF">Θ(n log n)</code> — Khoảng <code>≈ 1.188 n log₂(n)</code> phép so sánh nhờ Median-of-Three (thấp hơn <code>1.386 n log₂(n)</code> của Quicksort ngẫu nhiên).</p>
+            <p class="bento-body"><strong>• Trung bình:</strong> <code class="mono" style="color:#EA580C">Θ(n log n)</code> — Khoảng <code>≈ 1.188 n log₂(n)</code> phép so sánh nhờ Median-of-Three (thấp hơn <code>1.386 n log₂(n)</code> của Quicksort ngẫu nhiên).</p>
           </div>
-          <div class="bento-subtile" style="border-color:rgba(191,90,242,0.45);">
+          <div class="bento-subtile" style="border-color:rgba(124,58,237,0.36);">
             <p class="bento-body">
               <strong>• Xấu nhất (Median-of-3 Killer):</strong>
               1. Quicksort tối đa <code>2⌊log₂ n⌋</code> mức ⇒ <code>O(n log n)</code> •
               2. Heapsort các đoạn rời nhau <code>Σkᵢ ≤ n</code> ⇒ <code>O(n log n)</code> •
               3. Insertion Sort đoạn <code>≤ 16</code> ⇒ <code>O(n)</code>.
-              <strong style="color:#BF5AF2">⇒ Khóa chặt Θ(n log n).</strong>
+              <strong style="color:#7C3AED">⇒ Khóa chặt Θ(n log n).</strong>
             </p>
           </div>
         </div>
@@ -2102,14 +2102,14 @@ function renderSlide12() {
 
       <div class="bento-col col-5">
         <div class="bento-card flex-1 bento-item" style="--stagger:4">
-          <h3 class="bento-title" style="color:#30D158">1. Thao tác tại chỗ: Θ(1)</h3>
+          <h3 class="bento-title" style="color:#DB2777">1. Thao tác tại chỗ: Θ(1)</h3>
           <p class="bento-body mt-2">
             <code>partition_median_of_three</code>, <code>heapsort_subarray</code> và <code>insertion_sort</code> chỉ dùng vài biến chỉ số cục bộ. Không dùng list slicing hay mảng phụ.
           </p>
         </div>
 
         <div class="bento-card bento-card-accent flex-1 bento-item" style="--stagger:5">
-          <h3 class="bento-title" style="color:#5AC8FA">2. Ngăn xếp đệ quy: Θ(log n)</h3>
+          <h3 class="bento-title" style="color:#7C3AED">2. Ngăn xếp đệ quy: Θ(log n)</h3>
           <p class="bento-body mt-2">
             Khóa cứng tối đa <code>2⌊log₂ n⌋ + 1</code> khung hàm trên Call Stack ⇒ <strong>Θ(log n)</strong>, chống tràn Stack <code>O(n)</code> tuyệt đối so với Quicksort truyền thống.
           </p>
@@ -2175,7 +2175,7 @@ function renderSlide14() {
         </div>
         <div class="bento-subtile mt-3">
           <div class="bento-caption">Ví dụ minh họa</div>
-          <div class="mono font-bold mt-1" style="color:#FFD60A; font-size:var(--fs-table);">
+          <div class="mono font-bold mt-1" style="color:#EA580C; font-size:var(--fs-table);">
             Input : [4, 10, 3, 5, 1] → Output: [1, 3, 4, 5, 10]
           </div>
         </div>
@@ -2190,13 +2190,13 @@ function renderSlide14() {
           </p>
         </div>
         <div class="bento-subgrid-2 mt-3" style="height:auto;">
-          <div class="bento-subtile" style="border-color:rgba(255,159,10,0.4);">
+          <div class="bento-subtile" style="border-color:rgba(234,88,12,0.34);">
             <div class="bento-caption">Con trái của nút i</div>
-            <div class="mono font-bold mt-2" style="font-size:1.75rem; color:#FF9F0A;">left = 2*i + 1</div>
+            <div class="mono font-bold mt-2" style="font-size:1.75rem; color:#EA580C;">left = 2*i + 1</div>
           </div>
-          <div class="bento-subtile" style="border-color:rgba(255,214,10,0.4);">
+          <div class="bento-subtile" style="border-color:rgba(219,39,119,0.34);">
             <div class="bento-caption">Con phải của nút i</div>
-            <div class="mono font-bold mt-2" style="font-size:1.75rem; color:#FFD60A;">right = 2*i + 2</div>
+            <div class="mono font-bold mt-2" style="font-size:1.75rem; color:#DB2777;">right = 2*i + 2</div>
           </div>
         </div>
       </div>
@@ -2328,12 +2328,12 @@ function renderSlide15() {
 
           <div class="heap-tree-legend">
             <div class="heap-legend-dots">
-              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#f59e0b"></span>Heap</span>
-              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#38bdf8"></span>So sánh</span>
-              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#f97316"></span>Hoán đổi</span>
-              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#10b981"></span>Đã khóa</span>
+              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#f97316"></span>Heap</span>
+              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#7c3aed"></span>So sánh</span>
+              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#ea580c"></span>Hoán đổi</span>
+              <span class="heap-legend-item"><span class="heap-legend-dot" style="background:#db2777"></span>Đã khóa</span>
             </div>
-            <span style="font-size:0.65rem; color:#71717a;">Di chuột vào nút để soi mảng</span>
+            <span style="font-size:0.65rem; color:#8b7b9b;">Di chuột vào nút để soi mảng</span>
           </div>
         </section>
 
@@ -2346,8 +2346,8 @@ function renderSlide15() {
 
             <div class="heap-array-stage">
               <div class="heap-region-labels">
-                <span id="heap-label-heap" style="color:#fbbf24; transition:opacity 0.3s ease;">◀ VÙNG HEAP</span>
-                <span id="heap-label-sorted" style="color:#34d399; opacity:0.35; transition:opacity 0.3s ease;">VÙNG ĐÃ XẾP ▶</span>
+                <span id="heap-label-heap" style="color:#ea580c; transition:opacity 0.3s ease;">◀ VÙNG HEAP</span>
+                <span id="heap-label-sorted" style="color:#db2777; opacity:0.45; transition:opacity 0.3s ease;">VÙNG ĐÃ XẾP ▶</span>
               </div>
 
               <div class="heap-arcs-wrap">
@@ -2378,11 +2378,11 @@ function renderSlide15() {
               <div class="heap-stats-group">
                 <div class="heap-stat-pill">
                   <span>So sánh:</span>
-                  <span id="heap-stat-cmp" class="font-bold" style="color:#38bdf8; font-variant-numeric:tabular-nums;">0</span>
+                  <span id="heap-stat-cmp" class="font-bold" style="color:#7c3aed; font-variant-numeric:tabular-nums;">0</span>
                 </div>
                 <div class="heap-stat-pill">
                   <span>Hoán đổi:</span>
-                  <span id="heap-stat-swaps" class="font-bold" style="color:#f97316; font-variant-numeric:tabular-nums;">0</span>
+                  <span id="heap-stat-swaps" class="font-bold" style="color:#ea580c; font-variant-numeric:tabular-nums;">0</span>
                 </div>
               </div>
             </div>
@@ -2397,12 +2397,12 @@ function renderSlide15() {
       <section class="heap-timeline-bar bento-item" style="--stagger:2">
         <div class="heap-timeline-header">
           <div class="heap-timeline-meta">
-            <span class="font-bold" style="color:#ffffff;">Thanh tiến độ 2 Pha</span>
-            <span class="heap-legend-item" style="color:#fcd34d; font-size:0.7rem;">
-              <span class="heap-legend-dot" style="background:#fbbf24; width:7px; height:7px;"></span>Pha 1: Build Max-Heap
+            <span class="font-bold" style="color:#1f1630;">Thanh tiến độ 2 Pha</span>
+            <span class="heap-legend-item" style="color:#c2410c; font-size:0.7rem;">
+              <span class="heap-legend-dot" style="background:#ea580c; width:7px; height:7px;"></span>Pha 1: Build Max-Heap
             </span>
-            <span class="heap-legend-item" style="color:#6ee7b7; font-size:0.7rem;">
-              <span class="heap-legend-dot" style="background:#34d399; width:7px; height:7px;"></span>Pha 2: Rút gốc &amp; Vun lại
+            <span class="heap-legend-item" style="color:#be185d; font-size:0.7rem;">
+              <span class="heap-legend-dot" style="background:#db2777; width:7px; height:7px;"></span>Pha 2: Rút gốc &amp; Vun lại
             </span>
           </div>
           <div class="heap-kbd-hint">
@@ -2440,7 +2440,7 @@ function buildHeapPersistentTree(initialItems) {
     line.setAttribute('y1', p.y);
     line.setAttribute('x2', c.x);
     line.setAttribute('y2', c.y);
-    line.setAttribute('stroke', '#92400e');
+    line.setAttribute('stroke', '#fdba74');
     line.setAttribute('stroke-width', '2.5');
     line.setAttribute('stroke-linecap', 'round');
     line.setAttribute('class', 'heap-tree-edge');
@@ -2618,7 +2618,7 @@ function renderHeapFormulaArcs(frame, slotW, gap) {
       const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('d', `M ${pX} ${h - 2} Q ${midX} ${peakY}, ${cX} ${h - 2}`);
       path.setAttribute('fill', 'none');
-      path.setAttribute('stroke', '#38bdf8');
+      path.setAttribute('stroke', '#7c3aed');
       path.setAttribute('stroke-width', '2');
       path.setAttribute('stroke-linecap', 'round');
       path.setAttribute('class', 'heap-formula-arc');
@@ -2634,7 +2634,7 @@ function renderHeapFormulaArcs(frame, slotW, gap) {
         dot.setAttribute('cx', dotX);
         dot.setAttribute('cy', h - 2);
         dot.setAttribute('r', '2.6');
-        dot.setAttribute('fill', '#38bdf8');
+        dot.setAttribute('fill', '#7c3aed');
         svg.appendChild(dot);
       });
 
@@ -2645,7 +2645,7 @@ function renderHeapFormulaArcs(frame, slotW, gap) {
       text.setAttribute('font-size', '10');
       text.setAttribute('font-weight', '700');
       text.setAttribute('font-family', 'JetBrains Mono, monospace');
-      text.setAttribute('fill', '#7dd3fc');
+      text.setAttribute('fill', '#6d28d9');
       text.textContent = child.formula;
       svg.appendChild(text);
     });
@@ -2658,7 +2658,7 @@ function renderHeapFormulaArcs(frame, slotW, gap) {
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', `M ${xA} ${h - 2} Q ${midX} 5, ${xB} ${h - 2}`);
     path.setAttribute('fill', 'none');
-    path.setAttribute('stroke', '#f97316');
+    path.setAttribute('stroke', '#ea580c');
     path.setAttribute('stroke-width', '2.2');
     path.setAttribute('stroke-linecap', 'round');
     path.setAttribute('class', 'heap-formula-arc');
@@ -2675,7 +2675,7 @@ function renderHeapFormulaArcs(frame, slotW, gap) {
     text.setAttribute('text-anchor', 'middle');
     text.setAttribute('font-size', '10');
     text.setAttribute('font-weight', '700');
-    text.setAttribute('fill', '#fdba74');
+    text.setAttribute('fill', '#c2410c');
     text.textContent = '⇄ Hoán đổi';
     svg.appendChild(text);
   }
@@ -2699,13 +2699,13 @@ function buildHeapTimeline() {
     if (frame.phase === 'build' && lastPhase !== 'build') {
       const sep = document.createElement('span');
       sep.className = 'heap-timeline-sep';
-      sep.style.color = '#fbbf24';
+      sep.style.color = '#c2410c';
       sep.textContent = 'Pha 1';
       row.appendChild(sep);
     } else if (frame.phase === 'extract' && lastPhase !== 'extract') {
       const sep = document.createElement('span');
       sep.className = 'heap-timeline-sep';
-      sep.style.color = '#34d399';
+      sep.style.color = '#be185d';
       sep.textContent = 'Pha 2';
       row.appendChild(sep);
     }
@@ -2871,33 +2871,33 @@ function renderHeapFrame(triggerArc = true) {
       }
 
       if (isLocked) {
-        nodeObj.inner.style.backgroundColor = '#0a241b';
-        nodeObj.inner.style.borderColor = '#10b981';
-        nodeObj.inner.style.color = '#a7f3d0';
+        nodeObj.inner.style.backgroundColor = '#fce7f3';
+        nodeObj.inner.style.borderColor = '#db2777';
+        nodeObj.inner.style.color = '#831843';
         nodeObj.inner.style.boxShadow = isJustLocked
-          ? '0 0 24px rgba(16, 185, 129, 0.7)'
-          : '0 0 10px rgba(16, 185, 129, 0.25)';
+          ? '0 0 18px rgba(219, 39, 119, 0.38)'
+          : '0 4px 10px rgba(219, 39, 119, 0.16)';
         nodeObj.lockEl.style.opacity = '1';
         nodeObj.lockEl.style.transform = 'scale(1)';
       } else if (isSwapping) {
-        nodeObj.inner.style.backgroundColor = '#3a1709';
-        nodeObj.inner.style.borderColor = '#f97316';
+        nodeObj.inner.style.backgroundColor = '#ea580c';
+        nodeObj.inner.style.borderColor = '#c2410c';
         nodeObj.inner.style.color = '#ffffff';
-        nodeObj.inner.style.boxShadow = '0 0 24px rgba(249, 115, 22, 0.75)';
+        nodeObj.inner.style.boxShadow = '0 6px 18px rgba(234, 88, 12, 0.42)';
         nodeObj.lockEl.style.opacity = '0';
         nodeObj.lockEl.style.transform = 'scale(0.5)';
       } else if (isComparing) {
-        nodeObj.inner.style.backgroundColor = '#0b2236';
-        nodeObj.inner.style.borderColor = '#38bdf8';
-        nodeObj.inner.style.color = '#e0f2fe';
-        nodeObj.inner.style.boxShadow = '0 0 22px rgba(56, 189, 248, 0.65)';
+        nodeObj.inner.style.backgroundColor = '#f3e8ff';
+        nodeObj.inner.style.borderColor = '#7c3aed';
+        nodeObj.inner.style.color = '#4c1d95';
+        nodeObj.inner.style.boxShadow = '0 6px 16px rgba(124, 58, 237, 0.28)';
         nodeObj.lockEl.style.opacity = '0';
         nodeObj.lockEl.style.transform = 'scale(0.5)';
       } else {
-        nodeObj.inner.style.backgroundColor = '#1d1609';
-        nodeObj.inner.style.borderColor = '#f59e0b';
-        nodeObj.inner.style.color = '#fef3c7';
-        nodeObj.inner.style.boxShadow = '0 0 12px rgba(245, 158, 11, 0.22)';
+        nodeObj.inner.style.backgroundColor = '#fff7ed';
+        nodeObj.inner.style.borderColor = '#f97316';
+        nodeObj.inner.style.color = '#9a3412';
+        nodeObj.inner.style.boxShadow = '0 4px 10px rgba(249, 115, 22, 0.14)';
         nodeObj.lockEl.style.opacity = '0';
         nodeObj.lockEl.style.transform = 'scale(0.5)';
       }
@@ -2920,38 +2920,38 @@ function renderHeapFrame(triggerArc = true) {
       let roleVariant = '';
 
       if (isLocked) {
-        tileObj.inner.style.backgroundColor = '#0b251c';
-        tileObj.inner.style.borderColor = '#10b981';
-        tileObj.inner.style.color = '#a7f3d0';
+        tileObj.inner.style.backgroundColor = '#fce7f3';
+        tileObj.inner.style.borderColor = '#db2777';
+        tileObj.inner.style.color = '#831843';
         tileObj.inner.style.boxShadow = isJustLocked
-          ? '0 0 22px rgba(16, 185, 129, 0.65)'
-          : '0 0 10px rgba(16, 185, 129, 0.18)';
+          ? '0 6px 18px rgba(219, 39, 119, 0.34)'
+          : '0 3px 8px rgba(219, 39, 119, 0.14)';
         tileObj.lockEl.style.opacity = '1';
         if (isJustLocked) {
           roleText = 'Khóa';
           roleVariant = 'role-lock';
         }
       } else if (isSwapping) {
-        tileObj.inner.style.backgroundColor = '#3a1709';
-        tileObj.inner.style.borderColor = '#f97316';
+        tileObj.inner.style.backgroundColor = '#ea580c';
+        tileObj.inner.style.borderColor = '#c2410c';
         tileObj.inner.style.color = '#ffffff';
-        tileObj.inner.style.boxShadow = '0 0 22px rgba(249, 115, 22, 0.65)';
+        tileObj.inner.style.boxShadow = '0 6px 18px rgba(234, 88, 12, 0.36)';
         tileObj.lockEl.style.opacity = '0';
         roleText = idx === 0 ? 'Gốc' : 'Đổi';
         roleVariant = 'role-swap';
       } else if (isComparing) {
-        tileObj.inner.style.backgroundColor = '#0b2236';
-        tileObj.inner.style.borderColor = '#38bdf8';
-        tileObj.inner.style.color = '#e0f2fe';
-        tileObj.inner.style.boxShadow = '0 0 20px rgba(56, 189, 248, 0.55)';
+        tileObj.inner.style.backgroundColor = '#f3e8ff';
+        tileObj.inner.style.borderColor = '#7c3aed';
+        tileObj.inner.style.color = '#4c1d95';
+        tileObj.inner.style.boxShadow = '0 6px 16px rgba(124, 58, 237, 0.25)';
         tileObj.lockEl.style.opacity = '0';
         roleText = compareRoleMap.get(idx);
         roleVariant = 'role-cmp';
       } else {
-        tileObj.inner.style.backgroundColor = '#1b150a';
-        tileObj.inner.style.borderColor = '#f59e0b';
-        tileObj.inner.style.color = '#fef3c7';
-        tileObj.inner.style.boxShadow = '0 0 10px rgba(245, 158, 11, 0.15)';
+        tileObj.inner.style.backgroundColor = '#fff7ed';
+        tileObj.inner.style.borderColor = '#f97316';
+        tileObj.inner.style.color = '#9a3412';
+        tileObj.inner.style.boxShadow = '0 3px 8px rgba(249, 115, 22, 0.12)';
         tileObj.lockEl.style.opacity = '0';
         if (idx === 0 && frame.heapSize > 0) {
           roleText = 'Gốc';
@@ -2979,22 +2979,22 @@ function renderHeapFrame(triggerArc = true) {
     const isSwapEdge = swapSet.has(parent) && swapSet.has(child);
 
     if (isChildLocked) {
-      lineEl.setAttribute('stroke', '#10b981');
+      lineEl.setAttribute('stroke', '#ec4899');
       lineEl.setAttribute('stroke-width', '1.6');
       lineEl.setAttribute('stroke-dasharray', '5 5');
-      lineEl.setAttribute('opacity', '0.26');
+      lineEl.setAttribute('opacity', '0.35');
     } else if (isSwapEdge) {
-      lineEl.setAttribute('stroke', '#f97316');
+      lineEl.setAttribute('stroke', '#ea580c');
       lineEl.setAttribute('stroke-width', '3.6');
       lineEl.removeAttribute('stroke-dasharray');
       lineEl.setAttribute('opacity', '1');
     } else if (isCompareEdge) {
-      lineEl.setAttribute('stroke', '#38bdf8');
+      lineEl.setAttribute('stroke', '#7c3aed');
       lineEl.setAttribute('stroke-width', '3.5');
       lineEl.removeAttribute('stroke-dasharray');
       lineEl.setAttribute('opacity', '1');
     } else {
-      lineEl.setAttribute('stroke', '#b45309');
+      lineEl.setAttribute('stroke', '#fb923c');
       lineEl.setAttribute('stroke-width', '2.3');
       lineEl.removeAttribute('stroke-dasharray');
       lineEl.setAttribute('opacity', '0.78');
@@ -3633,7 +3633,7 @@ function renderSlide17() {
               <div>
                 <div class="hs17c-ram-item-head">
                   <span><strong>Merge Sort</strong> — Mảng phụ O(n)</span>
-                  <span class="hs17c-ram-val" style="color:#fca5a5" id="hs17c-merge-val">${ramScale.mV}</span>
+                  <span class="hs17c-ram-val" style="color:#e11d48" id="hs17c-merge-val">${ramScale.mV}</span>
                 </div>
                 <div class="hs17c-track"><div class="hs17c-fill merge" id="hs17c-merge-bar" style="width:${ramScale.mW}"></div></div>
               </div>
@@ -3641,7 +3641,7 @@ function renderSlide17() {
               <div>
                 <div class="hs17c-ram-item-head">
                   <span><strong>QuickSort</strong> — Call Stack O(log n) → O(n)</span>
-                  <span class="hs17c-ram-val" style="color:#f5c542" id="hs17c-quick-val">${ramScale.qV}</span>
+                  <span class="hs17c-ram-val" style="color:#7c3aed" id="hs17c-quick-val">${ramScale.qV}</span>
                 </div>
                 <div class="hs17c-track"><div class="hs17c-fill quick" id="hs17c-quick-bar" style="width:${ramScale.qW}"></div></div>
               </div>
@@ -3649,7 +3649,7 @@ function renderSlide17() {
               <div>
                 <div class="hs17c-ram-item-head">
                   <span><strong>Heap Sort</strong> — Khử đệ quy O(1)</span>
-                  <span class="hs17c-ram-val" style="color:#4ade80" id="hs17c-heap-val">32 Bytes (Cố định)</span>
+                  <span class="hs17c-ram-val" style="color:#be185d" id="hs17c-heap-val">32 Bytes (Cố định)</span>
                 </div>
                 <div class="hs17c-track"><div class="hs17c-fill heap" id="hs17c-heap-bar" style="width:4%"></div></div>
               </div>
@@ -3778,7 +3778,7 @@ function renderSlide18() {
           </div>
 
           <div class="hs17-heap-stage">
-            <span class="hs17-row-label" style="min-width:78px;">Min-Heap<br><small style="color:#38bdf8">(size = 2)</small></span>
+            <span class="hs17-row-label" style="min-width:78px;">Min-Heap<br><small style="color:#7c3aed">(size = 2)</small></span>
             <div class="hs17-heap-slots" id="hs17-heap-slots">${renderHs17HeapSlotsHtml(s)}</div>
             <div class="hs17-kicked-info" id="hs17-kicked-info">${s.kicked}</div>
           </div>
@@ -3799,7 +3799,7 @@ function renderSlide19() {
       <div class="bento-card summary-expanded-card col-12 bento-item" style="--stagger:0">
         <div class="flex-row justify-between items-center flex-wrap gap-2">
           <h3 class="bento-title">So sánh 5 Thuật toán Sắp xếp Cốt lõi</h3>
-          <span class="badge-pill badge-blue">Đánh đổi Production: Thời gian • Bộ nhớ • Tính ổn định • Cache</span>
+          <span class="badge-pill badge-purple">Đánh đổi Production: Thời gian • Bộ nhớ • Tính ổn định • Cache</span>
         </div>
 
         <div class="comparison-table-wrap">
@@ -3818,18 +3818,18 @@ function renderSlide19() {
             </thead>
             <tbody>
               ${COMPARISON_ROWS.map((r) => {
-                const bestStyle = r.best === 'Θ(n)' ? 'color:#30D158;font-weight:700;' : '';
-                const worstStyle = r.worst === 'Θ(n²)' ? 'color:#FF6961;font-weight:700;' : '';
+                const bestStyle = r.best === 'Θ(n)' ? 'color:#DB2777;font-weight:700;' : '';
+                const worstStyle = r.worst === 'Θ(n²)' ? 'color:#E11D48;font-weight:700;' : '';
                 const spaceStyle =
                   r.space === 'O(1)'
-                    ? 'color:#FFD60A;font-weight:700;'
+                    ? 'color:#EA580C;font-weight:700;'
                     : r.space === 'Θ(log n)'
-                      ? 'color:#DF9EFF;font-weight:700;'
+                      ? 'color:#7C3AED;font-weight:700;'
                       : '';
                 const stableHtml =
                   r.stable === 'Có'
-                    ? '<span style="color:#30D158;font-weight:700">Có</span>'
-                    : '<span style="color:#A1A1A6;">Không</span>';
+                    ? '<span style="color:#DB2777;font-weight:700">Có</span>'
+                    : '<span style="color:#8B7B9B;">Không</span>';
 
                 return `
                   <tr class="row-theme-${r.theme}">

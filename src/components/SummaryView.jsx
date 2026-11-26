@@ -38,13 +38,13 @@ export default function SummaryView() {
             </thead>
             <tbody>
               {COMPARISON_ROWS.map((r) => {
-                const bestStyle = r.best === 'Θ(n)' ? { color: '#30D158', fontWeight: 700 } : undefined;
-                const worstStyle = r.worst === 'Θ(n²)' ? { color: '#FF6961', fontWeight: 700 } : undefined;
+                const bestStyle = r.best === 'Θ(n)' ? { color: '#DB2777', fontWeight: 700 } : undefined;
+                const worstStyle = r.worst === 'Θ(n²)' ? { color: '#E11D48', fontWeight: 700 } : undefined;
                 const spaceStyle =
                   r.space === 'O(1)'
-                    ? { color: '#FFD60A', fontWeight: 700 }
+                    ? { color: '#EA580C', fontWeight: 700 }
                     : r.space === 'Θ(log n)'
-                      ? { color: '#DF9EFF', fontWeight: 700 }
+                      ? { color: '#7C3AED', fontWeight: 700 }
                       : undefined;
 
                 return (
@@ -65,9 +65,9 @@ export default function SummaryView() {
                     </td>
                     <td className="cell-nowrap">
                       {r.stable === 'Có' ? (
-                        <span style={{ color: '#30D158', fontWeight: 700 }}>Có</span>
+                        <span style={{ color: '#DB2777', fontWeight: 700 }}>Có</span>
                       ) : (
-                        <span style={{ color: '#A1A1A6' }}>Không</span>
+                        <span style={{ color: '#8B7B9B' }}>Không</span>
                       )}
                     </td>
                     <td>{r.tradeoff}</td>

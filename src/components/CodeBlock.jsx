@@ -11,7 +11,7 @@ export default function CodeBlock({ title, lang = 'python', code }) {
   );
 
   return (
-    <div className="code-window bg-[#0D0D0F] border border-white/10 rounded-3xl overflow-hidden flex flex-col flex-1 min-h-0">
+    <div className="code-window rounded-3xl overflow-hidden flex flex-col flex-1 min-h-0">
       <div className="code-header">
         <div className="code-dots">
           <span style={{ background: '#FF5F57' }} />

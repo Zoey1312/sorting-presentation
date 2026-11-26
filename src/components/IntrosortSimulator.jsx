@@ -103,16 +103,16 @@ export default function IntrosortSimulator() {
         height: `${nodeRect.height + pad * 2}px`,
         border:
           activeNodeDef.algoType === 'heap'
-            ? '2px solid #fb923c'
+            ? '2px solid #ea580c'
             : activeNodeDef.algoType === 'insertion'
-              ? '2px solid #4ade80'
-              : '2px solid #c084fc',
+              ? '2px solid #db2777'
+              : '2px solid #7c3aed',
         boxShadow:
           activeNodeDef.algoType === 'heap'
-            ? '0 0 22px rgba(249, 115, 22, 0.55)'
+            ? '0 0 18px rgba(234, 88, 12, 0.35)'
             : activeNodeDef.algoType === 'insertion'
-              ? '0 0 20px rgba(34, 197, 94, 0.45)'
-              : '0 0 20px rgba(168, 85, 247, 0.5)',
+              ? '0 0 18px rgba(219, 39, 119, 0.35)'
+              : '0 0 18px rgba(124, 58, 237, 0.35)',
       });
     } else {
       setActiveRingStyle({ opacity: 0 });
@@ -331,11 +331,11 @@ export default function IntrosortSimulator() {
                 </span>
               </div>
               <div className="intro-inline-key">
-                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#a855f7' }} />Nửa trái</span>
-                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#f43f5e' }} />Pivot</span>
-                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#0ea5e9' }} />Nửa phải</span>
-                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#f97316' }} />Heapsort</span>
-                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#22c55e' }} />Đã chốt ✓</span>
+                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#7c3aed' }} />Nửa trái</span>
+                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#ec4899' }} />Pivot</span>
+                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#f472b6' }} />Nửa phải</span>
+                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#ea580c' }} />Heapsort</span>
+                <span className="intro-key-item"><span className="intro-key-dot" style={{ background: '#db2777' }} />Đã chốt ✓</span>
               </div>
             </div>
 
@@ -345,13 +345,13 @@ export default function IntrosortSimulator() {
                   className="intro-group-bar intro-group-left"
                   style={groupStyle(stepData.algoType === 'quick' ? stepData.leftRange : null)}
                 >
-                  <span className="intro-group-label" style={{ left: 8, color: '#d8b4fe' }}>Nửa trái</span>
+                  <span className="intro-group-label" style={{ left: 8, color: '#7c3aed' }}>Nửa trái</span>
                 </div>
                 <div
                   className="intro-group-bar intro-group-right"
                   style={groupStyle(stepData.algoType === 'quick' ? stepData.rightRange : null)}
                 >
-                  <span className="intro-group-label" style={{ right: 8, color: '#7dd3fc' }}>Nửa phải</span>
+                  <span className="intro-group-label" style={{ right: 8, color: '#db2777' }}>Nửa phải</span>
                 </div>
                 {(stepData.algoType === 'insertion' || stepData.algoType === 'heap') && (
                   <div
@@ -366,7 +366,7 @@ export default function IntrosortSimulator() {
                       className="intro-group-label"
                       style={{
                         left: 8,
-                        color: stepData.algoType === 'heap' && stepData.step === 3 ? '#fdba74' : '#86efac',
+                        color: stepData.algoType === 'heap' && stepData.step === 3 ? '#c2410c' : '#be185d',
                       }}
                     >
                       {stepData.algoType === 'insertion'
@@ -396,12 +396,12 @@ export default function IntrosortSimulator() {
                     if (isPivot) {
                       tileCls = 'tile-pivot';
                       tagText = `Pivot p=${idx}`;
-                      tagColor = '#fda4af';
+                      tagColor = '#be185d';
                     } else if (isHeapBuild) {
                       tileCls = idx === 0 ? 'tile-heap-max' : 'tile-heap';
                       if (idx === 0) {
                         tagText = 'Max';
-                        tagColor = '#fdba74';
+                        tagColor = '#c2410c';
                       }
                     } else if (isLeft) tileCls = 'tile-left';
                     else if (isRight) tileCls = 'tile-right';
@@ -460,7 +460,7 @@ export default function IntrosortSimulator() {
               <div className="flex-row gap-2 flex-wrap">
                 <span className="intro-step-badge">Bước {stepData.step}</span>
                 <span className="intro-meta-range">[{stepData.range[0]}..{stepData.range[1]}] (size={stepData.size})</span>
-                <span style={{ color: '#52525b' }}>•</span>
+                <span style={{ color: '#8b7b9b' }}>•</span>
                 <span className={`intro-meta-depth ${stepData.depth === 0 ? 'is-zero' : ''}`}>
                   depth={stepData.depth}
                 </span>
@@ -488,9 +488,9 @@ export default function IntrosortSimulator() {
               <span className="intro-center-sub">Độ sâu đếm ngược từ trên xuống</span>
             </div>
             <div className="intro-algo-legend">
-              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#a855f7' }} />Quicksort</span>
-              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#22c55e' }} />Insertion Sort</span>
-              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#f97316' }} />Heapsort (Depth = 0)</span>
+              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#7c3aed' }} />Quicksort</span>
+              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#db2777' }} />Insertion Sort</span>
+              <span className="intro-key-item"><span className="intro-legend-dot" style={{ background: '#ea580c' }} />Heapsort (Depth = 0)</span>
             </div>
           </div>
 
@@ -504,10 +504,10 @@ export default function IntrosortSimulator() {
                       height: `${depthPct}%`,
                       background:
                         stepData.depth === 0
-                          ? 'linear-gradient(180deg, #a855f7 0%, #f59e0b 55%, #ef4444 100%)'
+                          ? 'linear-gradient(180deg, #9333ea 0%, #f97316 55%, #e11d48 100%)'
                           : stepData.depth <= 4 && activeTab === 'tab1'
-                            ? 'linear-gradient(180deg, #a855f7 0%, #f59e0b 100%)'
-                            : 'linear-gradient(180deg, #a855f7 0%, #6366f1 100%)',
+                            ? 'linear-gradient(180deg, #9333ea 0%, #ea580c 100%)'
+                            : 'linear-gradient(180deg, #9333ea 0%, #ec4899 100%)',
                     }}
                   />
                 </div>
@@ -518,25 +518,25 @@ export default function IntrosortSimulator() {
                     transform: `translate3d(0, ${pointerY}px, 0)`,
                     backgroundColor:
                       stepData.depth === 0
-                        ? '#ef4444'
+                        ? '#e11d48'
                         : stepData.depth <= 4 && activeTab === 'tab1'
-                          ? '#f59e0b'
-                          : '#a855f7',
+                          ? '#ea580c'
+                          : '#7c3aed',
                     boxShadow:
                       stepData.depth === 0
-                        ? '0 0 16px rgba(239, 68, 68, 0.9)'
+                        ? '0 0 14px rgba(225, 29, 72, 0.75)'
                         : stepData.depth <= 4 && activeTab === 'tab1'
-                          ? '0 0 14px rgba(245, 158, 11, 0.8)'
-                          : '0 0 14px rgba(168, 85, 247, 0.85)',
+                          ? '0 0 12px rgba(234, 88, 12, 0.65)'
+                          : '0 0 12px rgba(124, 58, 237, 0.7)',
                   }}
                 />
                 <div className="intro-depth-ticks">
                   {scenario.depthRows.map((row, rIdx) => (
                     <div key={row.depth} className="intro-depth-tick" style={{ top: `${scenario.rowCentersPct[rIdx]}%` }}>
-                      <span style={{ fontSize: 11, fontWeight: row.isDanger ? 800 : 700, color: row.isDanger ? '#fb7185' : '#d4d4d8' }}>
+                      <span style={{ fontSize: 11, fontWeight: row.isDanger ? 800 : 700, color: row.isDanger ? '#e11d48' : '#3a2d4d' }}>
                         {row.label}
                       </span>
-                      <span style={{ fontSize: 9, color: row.isDanger ? 'rgba(251,113,133,0.8)' : '#71717a' }}>
+                      <span style={{ fontSize: 9, color: row.isDanger ? 'rgba(225,29,72,0.8)' : '#8b7b9b' }}>
                         {row.sub}
                       </span>
                     </div>
@@ -567,13 +567,13 @@ export default function IntrosortSimulator() {
                   {edgesGeometry.map(({ edge, d, labelX, labelY }) => {
                     const isRevealed = currentStep >= edge.revealStep;
                     const strokeColor = edge.isDanger
-                      ? '#f97316'
+                      ? '#ea580c'
                       : edge.branch === 'left'
-                        ? '#a855f7'
-                        : '#38bdf8';
+                        ? '#7c3aed'
+                        : '#ec4899';
                     return (
                       <g key={`${edge.from}-${edge.to}`}>
-                        <path d={d} fill="none" stroke="#272c3d" strokeWidth="1.4" strokeDasharray="4 4" opacity="0.55" />
+                        <path d={d} fill="none" stroke="rgba(124, 58, 237, 0.22)" strokeWidth="1.4" strokeDasharray="4 4" opacity="0.55" />
                         <path
                           d={d}
                           fill="none"
@@ -589,8 +589,8 @@ export default function IntrosortSimulator() {
                           textAnchor="middle"
                           fontSize="10"
                           fontWeight="600"
-                          fill={isRevealed ? strokeColor : '#52525b'}
-                          opacity={isRevealed ? 1 : 0.4}
+                          fill={isRevealed ? strokeColor : '#8b7b9b'}
+                          opacity={isRevealed ? 1 : 0.45}
                           className="intro-edge-label"
                         >
                           {edge.label}
@@ -698,9 +698,9 @@ export default function IntrosortSimulator() {
                           y1={INTROSORT_HEAP_COORDS[p].y}
                           x2={INTROSORT_HEAP_COORDS[c].x}
                           y2={INTROSORT_HEAP_COORDS[c].y}
-                          stroke={isBuildHeap ? '#f97316' : '#22c55e'}
+                          stroke={isBuildHeap ? '#ea580c' : '#db2777'}
                           strokeWidth="2"
-                          opacity={isBuildHeap ? 0.68 : 0.4}
+                          opacity={isBuildHeap ? 0.68 : 0.45}
                           strokeDasharray={isBuildHeap ? undefined : '4 3'}
                         />
                       ))}
@@ -716,14 +716,14 @@ export default function IntrosortSimulator() {
                             className="intro-heap-circle"
                             style={{
                               transform: `translate3d(${x}px, ${y}px, 0) scale(${isRoot && isBuildHeap ? 1.12 : 1})`,
-                              backgroundColor: isBuildHeap ? (isRoot ? '#c2410c' : '#2a160c') : '#0f291e',
-                              borderColor: isBuildHeap ? (isRoot ? '#fdba74' : '#f97316') : '#22c55e',
-                              color: isBuildHeap ? '#ffffff' : '#d1fae5',
+                              backgroundColor: isBuildHeap ? (isRoot ? '#ea580c' : '#ffedd5') : '#fce7f3',
+                              borderColor: isBuildHeap ? (isRoot ? '#c2410c' : '#f97316') : '#db2777',
+                              color: isBuildHeap ? (isRoot ? '#ffffff' : '#9a3412') : '#831843',
                               boxShadow: isBuildHeap
                                 ? isRoot
-                                  ? '0 0 18px rgba(249, 115, 22, 0.7)'
+                                  ? '0 4px 16px rgba(234, 88, 12, 0.35)'
                                   : 'none'
-                                : '0 0 12px rgba(34, 197, 94, 0.25)',
+                                : '0 4px 12px rgba(219, 39, 119, 0.22)',
                             }}
                           >
                             <span>{val}</span>
@@ -738,11 +738,11 @@ export default function IntrosortSimulator() {
                 <div className="intro-heap-note">
                   {isBuildHeap ? (
                     <>
-                      Gốc <strong style={{ color: '#fdba74' }}>15</strong> lớn nhất nằm ở đỉnh A[0]. Các nhánh con (12 ≥ 7, 4 và 13 ≥ 11) đều thỏa tính chất Max-Heap.
+                      Gốc <strong style={{ color: '#c2410c' }}>15</strong> lớn nhất nằm ở đỉnh A[0]. Các nhánh con (12 ≥ 7, 4 và 13 ≥ 11) đều thỏa tính chất Max-Heap.
                     </>
                   ) : (
                     <>
-                      Các nút lướt về đúng thứ tự tăng dần <strong style={{ color: '#86efac' }}>[4, 7, 11, 12, 13, 15]</strong> với độ phức tạp đảm bảo O(n log n).
+                      Các nút lướt về đúng thứ tự tăng dần <strong style={{ color: '#be185d' }}>[4, 7, 11, 12, 13, 15]</strong> với độ phức tạp đảm bảo O(n log n).
                     </>
                   )}
                 </div>

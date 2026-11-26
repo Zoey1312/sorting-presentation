@@ -270,7 +270,7 @@ export default function HeapsortSimulator() {
                     y1={p.y}
                     x2={c.x}
                     y2={c.y}
-                    stroke={isChildLocked ? '#10b981' : isSwapEdge ? '#f97316' : isCompareEdge ? '#38bdf8' : '#b45309'}
+                    stroke={isChildLocked ? '#ec4899' : isSwapEdge ? '#ea580c' : isCompareEdge ? '#7c3aed' : '#fb923c'}
                     strokeWidth={isChildLocked ? 1.6 : isSwapEdge ? 3.6 : isCompareEdge ? 3.5 : 2.3}
                     strokeDasharray={isChildLocked ? '5 5' : undefined}
                     opacity={isChildLocked ? 0.26 : isSwapEdge || isCompareEdge ? 1 : 0.78}
@@ -332,29 +332,29 @@ export default function HeapsortSimulator() {
                         } ${isHovered ? 'heap-hover-node' : ''}`}
                         style={{
                           backgroundColor: isLocked
-                            ? '#0a241b'
+                            ? '#fce7f3'
                             : isSwapping
-                              ? '#3a1709'
+                              ? '#ea580c'
                               : isComparing
-                                ? '#0b2236'
-                                : '#1d1609',
+                                ? '#f3e8ff'
+                                : '#fff7ed',
                           borderColor: isLocked
-                            ? '#10b981'
+                            ? '#db2777'
                             : isSwapping
-                              ? '#f97316'
+                              ? '#c2410c'
                               : isComparing
-                                ? '#38bdf8'
-                                : '#f59e0b',
-                          color: isLocked ? '#a7f3d0' : isSwapping ? '#ffffff' : isComparing ? '#e0f2fe' : '#fef3c7',
+                                ? '#7c3aed'
+                                : '#f97316',
+                          color: isLocked ? '#831843' : isSwapping ? '#ffffff' : isComparing ? '#4c1d95' : '#9a3412',
                           boxShadow: isLocked
                             ? isJustLocked
-                              ? '0 0 24px rgba(16, 185, 129, 0.7)'
-                              : '0 0 10px rgba(16, 185, 129, 0.25)'
+                              ? '0 0 18px rgba(219, 39, 119, 0.38)'
+                              : '0 4px 10px rgba(219, 39, 119, 0.16)'
                             : isSwapping
-                              ? '0 0 24px rgba(249, 115, 22, 0.75)'
+                              ? '0 6px 18px rgba(234, 88, 12, 0.42)'
                               : isComparing
-                                ? '0 0 22px rgba(56, 189, 248, 0.65)'
-                                : '0 0 12px rgba(245, 158, 11, 0.22)',
+                                ? '0 6px 16px rgba(124, 58, 237, 0.28)'
+                                : '0 4px 10px rgba(249, 115, 22, 0.14)',
                         }}
                       >
                         <span>{item.val}</span>
@@ -377,12 +377,12 @@ export default function HeapsortSimulator() {
 
           <div className="heap-tree-legend">
             <div className="heap-legend-dots">
-              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#f59e0b' }} />Heap</span>
-              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#38bdf8' }} />So sánh</span>
-              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#f97316' }} />Hoán đổi</span>
-              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#10b981' }} />Đã khóa</span>
+              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#f97316' }} />Heap</span>
+              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#7c3aed' }} />So sánh</span>
+              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#ea580c' }} />Hoán đổi</span>
+              <span className="heap-legend-item"><span className="heap-legend-dot" style={{ background: '#db2777' }} />Đã khóa</span>
             </div>
-            <span style={{ fontSize: '0.65rem', color: '#71717a' }}>Di chuột vào nút để soi mảng</span>
+            <span style={{ fontSize: '0.65rem', color: '#8b7b9b' }}>Di chuột vào nút để soi mảng</span>
           </div>
         </section>
 
@@ -395,10 +395,10 @@ export default function HeapsortSimulator() {
 
             <div className="heap-array-stage">
               <div className="heap-region-labels">
-                <span style={{ color: '#fbbf24', opacity: frame.heapSize > 0 ? 1 : 0.25, transition: 'opacity 0.3s ease' }}>
+                <span style={{ color: '#ea580c', opacity: frame.heapSize > 0 ? 1 : 0.25, transition: 'opacity 0.3s ease' }}>
                   ◀ VÙNG HEAP
                 </span>
-                <span style={{ color: '#34d399', opacity: sortedCount > 0 ? 1 : 0.3, transition: 'opacity 0.3s ease' }}>
+                <span style={{ color: '#db2777', opacity: sortedCount > 0 ? 1 : 0.45, transition: 'opacity 0.3s ease' }}>
                   VÙNG ĐÃ XẾP ▶
                 </span>
               </div>
@@ -416,12 +416,12 @@ export default function HeapsortSimulator() {
                           <path
                             d={`M ${pX} 38 Q ${midX} ${peakY}, ${cX} 38`}
                             fill="none"
-                            stroke="#38bdf8"
+                            stroke="#7c3aed"
                             strokeWidth="2"
                             strokeLinecap="round"
                           />
-                          <circle cx={pX} cy={38} r="2.6" fill="#38bdf8" />
-                          <circle cx={cX} cy={38} r="2.6" fill="#38bdf8" />
+                          <circle cx={pX} cy={38} r="2.6" fill="#7c3aed" />
+                          <circle cx={cX} cy={38} r="2.6" fill="#7c3aed" />
                           <text
                             x={midX + (cIdx === 1 ? 16 : -6)}
                             y={peakY + 8}
@@ -429,7 +429,7 @@ export default function HeapsortSimulator() {
                             fontSize="10"
                             fontWeight="700"
                             fontFamily="JetBrains Mono, monospace"
-                            fill="#7dd3fc"
+                            fill="#6d28d9"
                           >
                             {child.formula}
                           </text>
@@ -444,8 +444,8 @@ export default function HeapsortSimulator() {
                         const midX = (xA + xB) / 2;
                         return (
                           <>
-                            <path d={`M ${xA} 38 Q ${midX} 5, ${xB} 38`} fill="none" stroke="#f97316" strokeWidth="2.2" strokeLinecap="round" />
-                            <text x={midX} y={13} textAnchor="middle" fontSize="10" fontWeight="700" fill="#fdba74">
+                            <path d={`M ${xA} 38 Q ${midX} 5, ${xB} 38`} fill="none" stroke="#ea580c" strokeWidth="2.2" strokeLinecap="round" />
+                            <text x={midX} y={13} textAnchor="middle" fontSize="10" fontWeight="700" fill="#c2410c">
                               ⇄ Hoán đổi
                             </text>
                           </>
@@ -536,29 +536,29 @@ export default function HeapsortSimulator() {
                           } ${isHovered ? 'heap-hover-tile' : ''}`}
                           style={{
                             backgroundColor: isLocked
-                              ? '#0b251c'
+                              ? '#fce7f3'
                               : isSwapping
-                                ? '#3a1709'
+                                ? '#ea580c'
                                 : isComparing
-                                  ? '#0b2236'
-                                  : '#1b150a',
+                                  ? '#f3e8ff'
+                                  : '#fff7ed',
                             borderColor: isLocked
-                              ? '#10b981'
+                              ? '#db2777'
                               : isSwapping
-                                ? '#f97316'
+                                ? '#c2410c'
                                 : isComparing
-                                  ? '#38bdf8'
-                                  : '#f59e0b',
-                            color: isLocked ? '#a7f3d0' : isSwapping ? '#ffffff' : isComparing ? '#e0f2fe' : '#fef3c7',
+                                  ? '#7c3aed'
+                                  : '#f97316',
+                            color: isLocked ? '#831843' : isSwapping ? '#ffffff' : isComparing ? '#4c1d95' : '#9a3412',
                             boxShadow: isLocked
                               ? isJustLocked
-                                ? '0 0 22px rgba(16, 185, 129, 0.65)'
-                                : '0 0 10px rgba(16, 185, 129, 0.18)'
+                                ? '0 6px 18px rgba(219, 39, 119, 0.34)'
+                                : '0 3px 8px rgba(219, 39, 119, 0.14)'
                               : isSwapping
-                                ? '0 0 22px rgba(249, 115, 22, 0.65)'
+                                ? '0 6px 18px rgba(234, 88, 12, 0.36)'
                                 : isComparing
-                                  ? '0 0 20px rgba(56, 189, 248, 0.55)'
-                                  : '0 0 10px rgba(245, 158, 11, 0.15)',
+                                  ? '0 6px 16px rgba(124, 58, 237, 0.25)'
+                                  : '0 3px 8px rgba(249, 115, 22, 0.12)',
                           }}
                         >
                           <span className={`heap-tile-role ${roleText ? `is-visible ${roleVariant}` : ''}`}>{roleText}</span>
@@ -600,13 +600,13 @@ export default function HeapsortSimulator() {
               <div className="heap-stats-group">
                 <div className="heap-stat-pill">
                   <span>So sánh:</span>
-                  <span className="font-bold" style={{ color: '#38bdf8', fontVariantNumeric: 'tabular-nums' }}>
+                  <span className="font-bold" style={{ color: '#7c3aed', fontVariantNumeric: 'tabular-nums' }}>
                     {frame.comparisons}
                   </span>
                 </div>
                 <div className="heap-stat-pill">
                   <span>Hoán đổi:</span>
-                  <span className="font-bold" style={{ color: '#f97316', fontVariantNumeric: 'tabular-nums' }}>
+                  <span className="font-bold" style={{ color: '#ea580c', fontVariantNumeric: 'tabular-nums' }}>
                     {frame.swaps}
                   </span>
                 </div>
@@ -625,12 +625,12 @@ export default function HeapsortSimulator() {
       <section className="heap-timeline-bar">
         <div className="heap-timeline-header">
           <div className="heap-timeline-meta">
-            <span className="font-bold" style={{ color: '#ffffff' }}>Thanh tiến độ 2 Pha</span>
-            <span className="heap-legend-item" style={{ color: '#fcd34d', fontSize: '0.7rem' }}>
-              <span className="heap-legend-dot" style={{ background: '#fbbf24', width: 7, height: 7 }} />Pha 1: Build Max-Heap
+            <span className="font-bold" style={{ color: '#1f1630' }}>Thanh tiến độ 2 Pha</span>
+            <span className="heap-legend-item" style={{ color: '#c2410c', fontSize: '0.7rem' }}>
+              <span className="heap-legend-dot" style={{ background: '#ea580c', width: 7, height: 7 }} />Pha 1: Build Max-Heap
             </span>
-            <span className="heap-legend-item" style={{ color: '#6ee7b7', fontSize: '0.7rem' }}>
-              <span className="heap-legend-dot" style={{ background: '#34d399', width: 7, height: 7 }} />Pha 2: Rút gốc &amp; Vun lại
+            <span className="heap-legend-item" style={{ color: '#be185d', fontSize: '0.7rem' }}>
+              <span className="heap-legend-dot" style={{ background: '#db2777', width: 7, height: 7 }} />Pha 2: Rút gốc &amp; Vun lại
             </span>
           </div>
           <div className="heap-kbd-hint">
@@ -656,8 +656,8 @@ export default function HeapsortSimulator() {
 
             return (
               <React.Fragment key={idx}>
-                {showSep1 && <span className="heap-timeline-sep" style={{ color: '#fbbf24' }}>Pha 1</span>}
-                {showSep2 && <span className="heap-timeline-sep" style={{ color: '#34d399' }}>Pha 2</span>}
+                {showSep1 && <span className="heap-timeline-sep" style={{ color: '#c2410c' }}>Pha 1</span>}
+                {showSep2 && <span className="heap-timeline-sep" style={{ color: '#be185d' }}>Pha 2</span>}
                 <button type="button" className={`heap-timeline-pill ${pillClass}`} onClick={() => jumpToStep(idx)}>
                   {idx}. {f.pillLabel}
                 </button>

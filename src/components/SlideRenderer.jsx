@@ -228,8 +228,8 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                     style={{
                       display: 'block',
                       fontSize: '0.56em',
-                      color: '#A1A1A6',
-                      WebkitTextFillColor: '#A1A1A6',
+                      color: '#6B5B7B',
+                      WebkitTextFillColor: '#6B5B7B',
                       marginTop: '6px',
                     }}
                   >
@@ -238,12 +238,12 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 </h1>
                 <p className="bento-body mt-3" style={{ maxWidth: '960px' }}>
                   Phân tích, Mô phỏng &amp; Ứng dụng của{' '}
-                  <strong style={{ color: '#30D158' }}>Timsort</strong>,{' '}
-                  <strong style={{ color: '#BF5AF2' }}>Introsort</strong> và{' '}
-                  <strong style={{ color: '#FFD60A' }}>Heap Sort</strong>
+                  <strong style={{ color: '#DB2777' }}>Timsort</strong>,{' '}
+                  <strong style={{ color: '#7C3AED' }}>Introsort</strong> và{' '}
+                  <strong style={{ color: '#EA580C' }}>Heap Sort</strong>
                 </p>
                 <div className="bento-subtile flex-row justify-between flex-wrap gap-3 mt-3">
-                  <span className="bento-body" style={{ color: '#A1A1A6' }}>
+                  <span className="bento-body" style={{ color: '#6B5B7B' }}>
                     Sử dụng phím <code>→</code> / <code>Space</code> để chuyển slide • Bấm{' '}
                     <code>S</code> để mở Speaker Notes
                   </span>
@@ -258,18 +258,18 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(48,209,88,0.35)' }}
+                style={{ borderColor: 'rgba(219,39,119,0.32)' }}
               >
                 <div className="flex-row justify-between gap-2">
                   <span className="badge-pill badge-mint">Timsort (Tim Peters, 2002)</span>
-                  <span className="mono bento-caption" style={{ color: '#30D158' }}>
+                  <span className="mono bento-caption" style={{ color: '#DB2777' }}>
                     Stable
                   </span>
                 </div>
                 <div
                   className="hero-stat mt-3"
                   style={{
-                    background: 'linear-gradient(135deg,#30D158,#64D2FF)',
+                    background: 'linear-gradient(135deg,#DB2777,#F43F5E)',
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                   }}
@@ -287,18 +287,18 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(191,90,242,0.38)' }}
+                style={{ borderColor: 'rgba(124,58,237,0.34)' }}
               >
                 <div className="flex-row justify-between gap-2">
                   <span className="badge-pill badge-purple">Introsort (David R. Musser, 1997)</span>
-                  <span className="mono bento-caption" style={{ color: '#BF5AF2' }}>
+                  <span className="mono bento-caption" style={{ color: '#7C3AED' }}>
                     In-place
                   </span>
                 </div>
                 <div
                   className="hero-stat mt-3"
                   style={{
-                    background: 'linear-gradient(135deg,#BF5AF2,#5E5CE6)',
+                    background: 'linear-gradient(135deg,#7C3AED,#A855F7)',
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                   }}
@@ -315,18 +315,18 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(255,159,10,0.38)' }}
+                style={{ borderColor: 'rgba(234,88,12,0.34)' }}
               >
                 <div className="flex-row justify-between gap-2">
                   <span className="badge-pill badge-amber">Heap Sort (Binary Heap)</span>
-                  <span className="mono bento-caption" style={{ color: '#FFD60A' }}>
+                  <span className="mono bento-caption" style={{ color: '#EA580C' }}>
                     No Stack
                   </span>
                 </div>
                 <div
                   className="hero-stat mt-3"
                   style={{
-                    background: 'linear-gradient(135deg,#FF9F0A,#FFD60A)',
+                    background: 'linear-gradient(135deg,#EA580C,#F97316)',
                     WebkitBackgroundClip: 'text',
                     backgroundClip: 'text',
                   }}
@@ -381,7 +381,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(255,69,58,0.38)' }}
+                style={{ borderColor: 'rgba(225,29,72,0.32)' }}
               >
                 <span className="badge-pill badge-rose">Góc khuất #1 • Nguy cơ bảo mật</span>
                 <h3 className="bento-title mt-2">Nguy cơ của Quick Sort</h3>
@@ -394,7 +394,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(255,159,10,0.38)' }}
+                style={{ borderColor: 'rgba(234,88,12,0.34)' }}
               >
                 <span className="badge-pill badge-amber">Góc khuất #2 • Áp lực bộ nhớ</span>
                 <h3 className="bento-title mt-2">Gánh nặng của Merge Sort</h3>
@@ -407,9 +407,9 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card col-4"
-                style={{ borderColor: 'rgba(90,200,250,0.36)' }}
+                style={{ borderColor: 'rgba(124,58,237,0.34)' }}
               >
-                <span className="badge-pill badge-blue">Góc khuất #3 • Dữ liệu đời thực</span>
+                <span className="badge-pill badge-purple">Góc khuất #3 • Dữ liệu đời thực</span>
                 <h3 className="bento-title mt-2">Đặc thù dữ liệu Production</h3>
                 <p className="bento-body mt-2">
                   Dữ liệu thực tế hiếm khi ngẫu nhiên hoàn toàn mà thường có sẵn các đoạn đã được sắp xếp cục bộ
@@ -430,9 +430,9 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <span className="badge-pill badge-accent">Tối ưu Phần cứng &amp; Thực tế</span>
                 </div>
                 <p className="bento-body mt-2">
-                  <strong style={{ color: '#30D158' }}>Timsort</strong> (khai thác natural runs + ổn định),{' '}
-                  <strong style={{ color: '#BF5AF2' }}>Introsort</strong> (tốc độ RAM + lưới an toàn Heapsort) và{' '}
-                  <strong style={{ color: '#FFD60A' }}>Heap Sort</strong> (chuẩn <code>O(1)</code> RAM tuyệt đối).
+                  <strong style={{ color: '#DB2777' }}>Timsort</strong> (khai thác natural runs + ổn định),{' '}
+                  <strong style={{ color: '#7C3AED' }}>Introsort</strong> (tốc độ RAM + lưới an toàn Heapsort) và{' '}
+                  <strong style={{ color: '#EA580C' }}>Heap Sort</strong> (chuẩn <code>O(1)</code> RAM tuyệt đối).
                 </p>
               </motion.div>
             </div>
@@ -467,7 +467,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div
                 variants={itemVariants}
                 className="bento-card flex-1"
-                style={{ borderColor: 'rgba(48,209,88,0.35)' }}
+                style={{ borderColor: 'rgba(219,39,119,0.32)' }}
               >
                 <span className="badge-pill badge-mint">Stable Sort (Tính ổn định)</span>
                 <p className="bento-body mt-2">
@@ -564,11 +564,11 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                     className="mono mt-2"
                     style={{
                       fontSize: 'var(--fs-code)',
-                      color: '#30D158',
-                      background: '#0D0D0F',
+                      color: '#BE185D',
+                      background: '#FFF5F9',
                       padding: '8px 12px',
                       borderRadius: '14px',
-                      border: '1px solid rgba(48,209,88,0.28)',
+                      border: '1px solid rgba(219,39,119,0.26)',
                       lineHeight: 1.45,
                     }}
                   >
@@ -629,7 +629,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <tbody>
                     <tr className="row-highlight">
                       <td className="font-bold">Tốt nhất (Best)</td>
-                      <td className="mono font-bold" style={{ color: '#30D158' }}>
+                      <td className="mono font-bold" style={{ color: '#DB2777' }}>
                         O(n)
                       </td>
                       <td>
@@ -638,7 +638,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                     </tr>
                     <tr>
                       <td className="font-bold">Trung bình (Avg)</td>
-                      <td className="mono font-bold" style={{ color: '#64D2FF' }}>
+                      <td className="mono font-bold" style={{ color: '#7C3AED' }}>
                         O(n log n)
                       </td>
                       <td>
@@ -647,7 +647,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                     </tr>
                     <tr>
                       <td className="font-bold">Xấu nhất (Worst)</td>
-                      <td className="mono font-bold" style={{ color: '#FFD60A' }}>
+                      <td className="mono font-bold" style={{ color: '#EA580C' }}>
                         O(n log n)
                       </td>
                       <td>
@@ -745,7 +745,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <span className="badge-pill badge-purple">
                     David R. Musser (1997) — Bảo vệ std::sort của C++ STL
                   </span>
-                  <span className="mono bento-caption" style={{ color: '#DF9EFF' }}>
+                  <span className="mono bento-caption" style={{ color: '#7C3AED' }}>
                     Ví dụ: [19, 7, 15, 12, 16, 18, 4, 11, 13] → [4..19]
                   </span>
                 </div>
@@ -771,19 +771,19 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 <div className="flex-col gap-2 mt-2 flex-1 justify-between">
                   <div className="bento-subtile">
                     <p className="bento-body">
-                      <strong style={{ color: '#FF6961' }}>1. Chỉ dùng Quicksort:</strong> Trung bình rất nhanh nhưng suy biến{' '}
+                      <strong style={{ color: '#E11D48' }}>1. Chỉ dùng Quicksort:</strong> Trung bình rất nhanh nhưng suy biến{' '}
                       <code>O(n²)</code> và tràn stack <code>O(n)</code> khi chọn chốt xấu.
                     </p>
                   </div>
                   <div className="bento-subtile">
                     <p className="bento-body">
-                      <strong style={{ color: '#FFD60A' }}>2. Chỉ dùng Heapsort:</strong> Luôn <code>O(n log n)</code> và{' '}
+                      <strong style={{ color: '#EA580C' }}>2. Chỉ dùng Heapsort:</strong> Luôn <code>O(n log n)</code> và{' '}
                       <code>O(1)</code> RAM, nhưng nhảy bộ nhớ liên tục gây <strong>Cache Miss</strong>, chậm hơn Quicksort 2–3 lần.
                     </p>
                   </div>
                   <div className="bento-subtile">
                     <p className="bento-body">
-                      <strong style={{ color: '#64D2FF' }}>3. Không có Insertion Sort:</strong> Quicksort gọi đệ quy tới đoạn 1–2 phần tử → lãng phí tới{' '}
+                      <strong style={{ color: '#7C3AED' }}>3. Không có Insertion Sort:</strong> Quicksort gọi đệ quy tới đoạn 1–2 phần tử → lãng phí tới{' '}
                       <strong>75% tổng số lời gọi hàm</strong> ở đáy cây đệ quy.
                     </p>
                   </div>
@@ -793,22 +793,22 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div variants={itemVariants} className="bento-card col-6 justify-between">
                 <h3 className="bento-title">3 Trụ cột của Introsort</h3>
                 <div className="flex-col gap-2 mt-2 flex-1 justify-between">
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(94,92,230,0.45)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(124,58,237,0.34)' }}>
                     <p className="bento-body">
-                      <strong style={{ color: '#5AC8FA' }}>1. Quicksort (Chủ lực):</strong> Khi{' '}
+                      <strong style={{ color: '#7C3AED' }}>1. Quicksort (Chủ lực):</strong> Khi{' '}
                       <code>size &gt; 16</code> và <code>depth &gt; 0</code>. Dùng chốt <em>Median-of-Three</em>, duyệt tuần tự thân thiện L1/L2 CPU Cache.
                     </p>
                   </div>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(191,90,242,0.5)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(234,88,12,0.36)' }}>
                     <p className="bento-body">
-                      <strong style={{ color: '#BF5AF2' }}>2. Heapsort (Lưới an toàn):</strong> Khi{' '}
+                      <strong style={{ color: '#EA580C' }}>2. Heapsort (Lưới an toàn):</strong> Khi{' '}
                       <code>size &gt; 16</code> và <code>depth == 0</code>. Vun đống tại chỗ ngay trên đoạn con bị lệch, khóa chặt cận trên{' '}
                       <code>O(n log n)</code>.
                     </p>
                   </div>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(48,209,88,0.45)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(219,39,119,0.34)' }}>
                     <p className="bento-body">
-                      <strong style={{ color: '#30D158' }}>3. Insertion Sort (Đoạn nhỏ):</strong> Khi{' '}
+                      <strong style={{ color: '#DB2777' }}>3. Insertion Sort (Đoạn nhỏ):</strong> Khi{' '}
                       <code>size &lt;= 16</code>. Triệt tiêu chi phí gọi hàm đệ quy (<em>recursion overhead</em>) ở đáy cây.
                     </p>
                   </div>
@@ -857,83 +857,83 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 <svg viewBox="0 0 980 370" style={{ width: '100%', height: '100%', maxHeight: '100%' }}>
                   <defs>
                     <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L8,3 z" fill="#A1A1A6" />
+                      <path d="M0,0 L0,6 L8,3 z" fill="#6B5B7B" />
                     </marker>
                     <marker id="arrow-mint" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L8,3 z" fill="#30D158" />
+                      <path d="M0,0 L0,6 L8,3 z" fill="#DB2777" />
                     </marker>
                     <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
-                      <path d="M0,0 L0,6 L8,3 z" fill="#BF5AF2" />
+                      <path d="M0,0 L0,6 L8,3 z" fill="#EA580C" />
                     </marker>
                   </defs>
 
-                  <rect x="20" y="16" width="310" height="66" rx="16" fill="#0D0D0F" stroke="#5E5CE6" strokeWidth="2" />
-                  <text x="175" y="43" textAnchor="middle" fill="#F5F5F7" fontSize="14" fontWeight="700">
+                  <rect x="20" y="16" width="310" height="66" rx="16" fill="#FFFFFF" stroke="#7C3AED" strokeWidth="2" />
+                  <text x="175" y="43" textAnchor="middle" fill="#1F1630" fontSize="14" fontWeight="700">
                     Bắt đầu _introsort_util(low, high, depth)
                   </text>
-                  <text x="175" y="65" textAnchor="middle" fill="#A1A1A6" fontSize="13">
+                  <text x="175" y="65" textAnchor="middle" fill="#6B5B7B" fontSize="13">
                     Tính size = high - low + 1
                   </text>
 
-                  <line x1="175" y1="82" x2="175" y2="112" stroke="#A1A1A6" strokeWidth="2" markerEnd="url(#arrow)" />
+                  <line x1="175" y1="82" x2="175" y2="112" stroke="#6B5B7B" strokeWidth="2" markerEnd="url(#arrow)" />
 
-                  <rect x="20" y="114" width="310" height="66" rx="16" fill="rgba(48,209,88,0.12)" stroke="#30D158" strokeWidth="2" />
-                  <text x="175" y="141" textAnchor="middle" fill="#30D158" fontSize="14" fontWeight="700">
+                  <rect x="20" y="114" width="310" height="66" rx="16" fill="#FFF5F9" stroke="#DB2777" strokeWidth="2" />
+                  <text x="175" y="141" textAnchor="middle" fill="#BE185D" fontSize="14" fontWeight="700">
                     Bước 1: Kiểm tra đoạn nhỏ
                   </text>
-                  <text x="175" y="163" textAnchor="middle" fill="#F5F5F7" fontSize="13">
+                  <text x="175" y="163" textAnchor="middle" fill="#1F1630" fontSize="13">
                     size &lt;= 16 (THRESHOLD) ?
                   </text>
 
-                  <line x1="330" y1="147" x2="432" y2="147" stroke="#30D158" strokeWidth="2" markerEnd="url(#arrow-mint)" />
-                  <text x="381" y="137" textAnchor="middle" fill="#30D158" fontSize="12" fontWeight="700">
+                  <line x1="330" y1="147" x2="432" y2="147" stroke="#DB2777" strokeWidth="2" markerEnd="url(#arrow-mint)" />
+                  <text x="381" y="137" textAnchor="middle" fill="#DB2777" fontSize="12" fontWeight="700">
                     ĐÚNG
                   </text>
 
-                  <rect x="436" y="114" width="524" height="66" rx="16" fill="rgba(48,209,88,0.18)" stroke="#30D158" strokeWidth="2" />
-                  <text x="698" y="141" textAnchor="middle" fill="#F5F5F7" fontSize="14" fontWeight="700">
+                  <rect x="436" y="114" width="524" height="66" rx="16" fill="#FCE7F3" stroke="#DB2777" strokeWidth="2" />
+                  <text x="698" y="141" textAnchor="middle" fill="#831843" fontSize="14" fontWeight="700">
                     Insertion Sort đoạn [low..high] &amp; RETURN
                   </text>
-                  <text x="698" y="163" textAnchor="middle" fill="#A7F3D0" fontSize="13">
+                  <text x="698" y="163" textAnchor="middle" fill="#BE185D" fontSize="13">
                     Chèn trực tiếp, triệt tiêu chi phí gọi hàm đệ quy ở đáy cây
                   </text>
 
-                  <line x1="175" y1="180" x2="175" y2="210" stroke="#A1A1A6" strokeWidth="2" markerEnd="url(#arrow)" />
-                  <text x="195" y="199" fill="#A1A1A6" fontSize="12" fontWeight="700">
+                  <line x1="175" y1="180" x2="175" y2="210" stroke="#6B5B7B" strokeWidth="2" markerEnd="url(#arrow)" />
+                  <text x="195" y="199" fill="#6B5B7B" fontSize="12" fontWeight="700">
                     SAI
                   </text>
 
-                  <rect x="20" y="212" width="310" height="66" rx="16" fill="rgba(191,90,242,0.14)" stroke="#BF5AF2" strokeWidth="2" />
-                  <text x="175" y="239" textAnchor="middle" fill="#BF5AF2" fontSize="14" fontWeight="700">
+                  <rect x="20" y="212" width="310" height="66" rx="16" fill="#FFF7F0" stroke="#EA580C" strokeWidth="2" />
+                  <text x="175" y="239" textAnchor="middle" fill="#C2410C" fontSize="14" fontWeight="700">
                     Bước 2: Kiểm tra ngân sách độ sâu
                   </text>
-                  <text x="175" y="261" textAnchor="middle" fill="#F5F5F7" fontSize="13">
+                  <text x="175" y="261" textAnchor="middle" fill="#1F1630" fontSize="13">
                     depth_limit == 0 ?
                   </text>
 
-                  <line x1="330" y1="245" x2="432" y2="245" stroke="#BF5AF2" strokeWidth="2" markerEnd="url(#arrow-purple)" />
-                  <text x="381" y="235" textAnchor="middle" fill="#BF5AF2" fontSize="12" fontWeight="700">
+                  <line x1="330" y1="245" x2="432" y2="245" stroke="#EA580C" strokeWidth="2" markerEnd="url(#arrow-purple)" />
+                  <text x="381" y="235" textAnchor="middle" fill="#EA580C" fontSize="12" fontWeight="700">
                     ĐÚNG
                   </text>
 
-                  <rect x="436" y="212" width="524" height="66" rx="16" fill="rgba(191,90,242,0.22)" stroke="#BF5AF2" strokeWidth="2" />
-                  <text x="698" y="239" textAnchor="middle" fill="#F5F5F7" fontSize="14" fontWeight="700">
+                  <rect x="436" y="212" width="524" height="66" rx="16" fill="#FFEDD5" stroke="#EA580C" strokeWidth="2" />
+                  <text x="698" y="239" textAnchor="middle" fill="#9A3412" fontSize="14" fontWeight="700">
                     Heapsort đoạn con [low..high] &amp; RETURN
                   </text>
-                  <text x="698" y="261" textAnchor="middle" fill="#E9D5FF" fontSize="13">
+                  <text x="698" y="261" textAnchor="middle" fill="#C2410C" fontSize="13">
                     Vun đống tại chỗ bằng offset = low, khóa chặt cận O(n log n)
                   </text>
 
-                  <line x1="175" y1="278" x2="175" y2="304" stroke="#A1A1A6" strokeWidth="2" markerEnd="url(#arrow)" />
-                  <text x="195" y="295" fill="#A1A1A6" fontSize="12" fontWeight="700">
+                  <line x1="175" y1="278" x2="175" y2="304" stroke="#6B5B7B" strokeWidth="2" markerEnd="url(#arrow)" />
+                  <text x="195" y="295" fill="#6B5B7B" fontSize="12" fontWeight="700">
                     SAI
                   </text>
 
-                  <rect x="20" y="306" width="940" height="54" rx="16" fill="rgba(41,151,255,0.16)" stroke="#2997FF" strokeWidth="2" />
-                  <text x="490" y="329" textAnchor="middle" fill="#F5F5F7" fontSize="14" fontWeight="700">
+                  <rect x="20" y="306" width="940" height="54" rx="16" fill="#F3E8FF" stroke="#7C3AED" strokeWidth="2" />
+                  <text x="490" y="329" textAnchor="middle" fill="#4C1D95" fontSize="14" fontWeight="700">
                     Bước 3 (Phân hoạch chuẩn Quicksort): p = partition_median_of_three(arr, low, high)
                   </text>
-                  <text x="490" y="349" textAnchor="middle" fill="#5AC8FA" fontSize="13">
+                  <text x="490" y="349" textAnchor="middle" fill="#6D28D9" fontSize="13">
                     Đệ quy nửa phải [p + 1 .. high] với (depth_limit - 1)  •  Khử đệ quy đuôi nửa trái: high = p - 1
                   </text>
                 </svg>
@@ -962,24 +962,24 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 <div className="bento-subgrid-2 mt-2" style={{ height: 'auto' }}>
                   <div className="bento-subtile">
                     <div className="bento-caption">Heap chuẩn (từ 0)</div>
-                    <div className="mono mt-1" style={{ fontSize: 'var(--fs-code)', color: '#F5F5F7', lineHeight: 1.5 }}>
+                    <div className="mono mt-1" style={{ fontSize: 'var(--fs-code)', color: '#1F1630', lineHeight: 1.5 }}>
                       Cha: i &nbsp;|&nbsp; Trái: 2*i + 1
                       <br />
                       Phải: 2*i + 2
                     </div>
                   </div>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(191,90,242,0.45)' }}>
-                    <div className="bento-caption" style={{ color: '#BF5AF2' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(124,58,237,0.36)' }}>
+                    <div className="bento-caption" style={{ color: '#7C3AED' }}>
                       Đoạn [low..high] (offset = low)
                     </div>
-                    <div className="mono mt-1" style={{ fontSize: 'var(--fs-code)', color: '#F5F5F7', lineHeight: 1.5 }}>
+                    <div className="mono mt-1" style={{ fontSize: 'var(--fs-code)', color: '#1F1630', lineHeight: 1.5 }}>
                       Cha: low + i &nbsp;|&nbsp; Trái: low + 2*i + 1
                       <br />
                       Phải: low + 2*i + 2
                     </div>
                   </div>
                 </div>
-                <p className="bento-body mt-2" style={{ color: '#30D158' }}>
+                <p className="bento-body mt-2" style={{ color: '#DB2777' }}>
                   <strong>Lợi ích cốt lõi:</strong> Tuyệt đối không dùng list slicing (<code>arr[a:b]</code>), bảo toàn bộ nhớ phụ{' '}
                   <strong>O(1)</strong>!
                 </p>
@@ -1030,7 +1030,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <div className="bento-subtile">
                     <p className="bento-body">
                       <strong>• Tốt nhất:</strong>{' '}
-                      <code className="mono" style={{ color: '#30D158' }}>
+                      <code className="mono" style={{ color: '#DB2777' }}>
                         Θ(n log n)
                       </code>{' '}
                       — Phân hoạch chia đôi cân bằng ở mọi mức.
@@ -1039,20 +1039,20 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <div className="bento-subtile">
                     <p className="bento-body">
                       <strong>• Trung bình:</strong>{' '}
-                      <code className="mono" style={{ color: '#64D2FF' }}>
+                      <code className="mono" style={{ color: '#EA580C' }}>
                         Θ(n log n)
                       </code>{' '}
                       — Khoảng <code>≈ 1.188 n log₂(n)</code> phép so sánh nhờ Median-of-Three (thấp hơn{' '}
                       <code>1.386 n log₂(n)</code> của Quicksort ngẫu nhiên).
                     </p>
                   </div>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(191,90,242,0.45)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(124,58,237,0.36)' }}>
                     <p className="bento-body">
                       <strong>• Xấu nhất (Median-of-3 Killer):</strong> 1. Quicksort tối đa{' '}
                       <code>2⌊log₂ n⌋</code> mức ⇒ <code>O(n log n)</code> • 2. Heapsort các đoạn rời nhau{' '}
                       <code>Σkᵢ ≤ n</code> ⇒ <code>O(n log n)</code> • 3. Insertion Sort đoạn{' '}
                       <code>≤ 16</code> ⇒ <code>O(n)</code>.{' '}
-                      <strong style={{ color: '#BF5AF2' }}>⇒ Khóa chặt Θ(n log n).</strong>
+                      <strong style={{ color: '#7C3AED' }}>⇒ Khóa chặt Θ(n log n).</strong>
                     </p>
                   </div>
                 </div>
@@ -1060,7 +1060,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
 
               <div className="bento-col col-5">
                 <motion.div variants={itemVariants} className="bento-card flex-1">
-                  <h3 className="bento-title" style={{ color: '#30D158' }}>
+                  <h3 className="bento-title" style={{ color: '#DB2777' }}>
                     1. Thao tác tại chỗ: Θ(1)
                   </h3>
                   <p className="bento-body mt-2">
@@ -1070,7 +1070,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="bento-card bento-card-accent flex-1">
-                  <h3 className="bento-title" style={{ color: '#5AC8FA' }}>
+                  <h3 className="bento-title" style={{ color: '#7C3AED' }}>
                     2. Ngăn xếp đệ quy: Θ(log n)
                   </h3>
                   <p className="bento-body mt-2">
@@ -1139,7 +1139,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <div className="bento-caption">Ví dụ minh họa</div>
                   <div
                     className="mono font-bold mt-1"
-                    style={{ color: '#FFD60A', fontSize: 'var(--fs-table)' }}
+                    style={{ color: '#EA580C', fontSize: 'var(--fs-table)' }}
                   >
                     Input : [4, 10, 3, 5, 1] → Output: [1, 3, 4, 5, 10]
                   </div>
@@ -1158,20 +1158,20 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   </p>
                 </div>
                 <div className="bento-subgrid-2 mt-3" style={{ height: 'auto' }}>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(255,159,10,0.4)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(234,88,12,0.34)' }}>
                     <div className="bento-caption">Con trái của nút i</div>
                     <div
                       className="mono font-bold mt-2"
-                      style={{ fontSize: '1.75rem', color: '#FF9F0A' }}
+                      style={{ fontSize: '1.75rem', color: '#EA580C' }}
                     >
                       left = 2*i + 1
                     </div>
                   </div>
-                  <div className="bento-subtile" style={{ borderColor: 'rgba(255,214,10,0.4)' }}>
+                  <div className="bento-subtile" style={{ borderColor: 'rgba(219,39,119,0.34)' }}>
                     <div className="bento-caption">Con phải của nút i</div>
                     <div
                       className="mono font-bold mt-2"
-                      style={{ fontSize: '1.75rem', color: '#FFD60A' }}
+                      style={{ fontSize: '1.75rem', color: '#DB2777' }}
                     >
                       right = 2*i + 2
                     </div>
@@ -1490,7 +1490,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                         <span>
                           <strong>Merge Sort</strong> — Mảng phụ O(n)
                         </span>
-                        <span className="hs17c-ram-val" style={{ color: '#fca5a5' }}>
+                        <span className="hs17c-ram-val" style={{ color: '#e11d48' }}>
                           {ramScale.mV}
                         </span>
                       </div>
@@ -1504,7 +1504,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                         <span>
                           <strong>QuickSort</strong> — Call Stack O(log n) → O(n)
                         </span>
-                        <span className="hs17c-ram-val" style={{ color: '#f5c542' }}>
+                        <span className="hs17c-ram-val" style={{ color: '#7c3aed' }}>
                           {ramScale.qV}
                         </span>
                       </div>
@@ -1518,7 +1518,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                         <span>
                           <strong>Heap Sort</strong> — Khử đệ quy O(1)
                         </span>
-                        <span className="hs17c-ram-val" style={{ color: '#4ade80' }}>
+                        <span className="hs17c-ram-val" style={{ color: '#be185d' }}>
                           32 Bytes (Cố định)
                         </span>
                       </div>
@@ -1706,7 +1706,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <span className="hs17-row-label" style={{ minWidth: '78px' }}>
                     Min-Heap
                     <br />
-                    <small style={{ color: '#38bdf8' }}>(size = 2)</small>
+                    <small style={{ color: '#7c3aed' }}>(size = 2)</small>
                   </span>
                   <div className="hs17-heap-slots">
                     {s.heap.map((val, idx) => {

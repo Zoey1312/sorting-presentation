@@ -62,7 +62,7 @@ export default function App() {
   const progress = ((slideIndex + 1) / totalSlides) * 100;
 
   return (
-    <div className={`app-shell theme-${currentSlide.theme} h-screen w-screen overflow-hidden flex flex-col bg-black`}>
+    <div className={`app-shell theme-${currentSlide.theme} h-screen w-screen overflow-hidden flex flex-col`}>
       <div className="ambient-glow" />
 
       <div className="top-island-wrap">
