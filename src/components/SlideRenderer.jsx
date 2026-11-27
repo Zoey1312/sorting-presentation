@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import {
-  TIMSORT_JAVA_TABS,
+  TIMSORT_PYTHON_TABS,
   INTROSORT_PYTHON_CODE,
   INTROSORT_OFFSET_CODE,
   HEAPSORT_PYTHON_CODE,
@@ -47,27 +47,29 @@ introsort(products, key=lambda p: p.price)
 # Xử lý tính Unstable bằng khóa tuple (latency_ms, arrival_seq)
 introsort(logs, key=lambda r: (r.latency_ms, r.arrival_seq))`;
 
-const SERVER_LOG_CODE = `class LogEntry {
-    final Instant timestamp;
-    final String message;
-    LogEntry(Instant timestamp, String message) {
-        this.timestamp = timestamp;
-        this.message = message;
-    }
-}
-// Ghép log từ nhiều máy chủ lệch nhẹ timestamp -> nhiều run gần tăng dần:
-logs.sort(Comparator.comparing(entry -> entry.timestamp));`;
+const SERVER_LOG_CODE = `class LogEntry:
+    def __init__(self, timestamp: float, message: str):
+        self.timestamp = timestamp
+        self.message = message
 
-const MERGE_RUNS_CODE = `// Liên hệ LeetCode 88 (Merge Sorted Array): Gộp 2 run đã sắp xếp trong O(m + n)
-static int[] mergeSortedArrays(int[] a, int[] b) {
-    int[] out = new int[a.length + b.length];
-    int i = 0, j = 0, k = 0;
-    while (i < a.length && j < b.length)
-        out[k++] = (a[i] <= b[j]) ? a[i++] : b[j++];
-    while (i < a.length) out[k++] = a[i++];
-    while (j < b.length) out[k++] = b[j++];
-    return out;
-}`;
+# Ghép log từ nhiều máy chủ lệch nhẹ timestamp -> nhiều run gần tăng dần
+# list.sort() dùng Timsort: vừa nhanh O(n), vừa giữ thứ tự log trùng timestamp
+logs.sort(key=lambda entry: entry.timestamp)`;
+
+const MERGE_RUNS_CODE = `# Liên hệ LeetCode 88 (Merge Sorted Array): Gộp 2 run đã sắp xếp trong O(m + n)
+def merge_sorted_runs(a: list[int], b: list[int]) -> list[int]:
+    out = []
+    i, j = 0, 0
+    while i < len(a) and j < len(b):
+        if a[i] <= b[j]:  # <= giữ tính ổn định (ưu tiên phần tử bên trái)
+            out.append(a[i])
+            i += 1
+        else:
+            out.append(b[j])
+            j += 1
+    out.extend(a[i:])
+    out.extend(b[j:])
+    return out`;
 
 const HS16_STEPS = [
   { label: 'Mảng gốc', heap: [4, 10, 3, 5, 1], sorted: [], rootHighlight: false, focus: null },
@@ -179,7 +181,7 @@ const HS17_LC_STEPS = [
 ];
 
 export default function SlideRenderer({ slide, onNextSlide }) {
-  const [javaTab, setJavaTab] = useState('full');
+  const [timsortTab, setTimsortTab] = useState('full');
   const [hs16Focus, setHs16Focus] = useState(null);
   const [hs16StepIdx, setHs16StepIdx] = useState(0);
   const [hs17PyramidLvl, setHs17PyramidLvl] = useState(3);
@@ -458,8 +460,8 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               <motion.div variants={itemVariants} className="bento-card bento-card-auto">
                 <h3 className="bento-title">Đặc tả Input / Output</h3>
                 <p className="bento-body mt-2">
-                  • <strong>Input:</strong> Mảng <code>n</code> phần tử (số, chuỗi, hoặc Object so sánh qua{' '}
-                  <code>Comparable</code> / <code>Comparator</code> trong Java).
+                  • <strong>Input:</strong> Danh sách <code>n</code> phần tử (số, chuỗi, hoặc Object qua hàm khóa{' '}
+                  <code>key=...</code> trong Python).
                   <br />• <strong>Ví dụ:</strong> <code>[5, 2, 3, 1, 4]</code> → <code>[1, 2, 3, 4, 5]</code>.
                 </p>
               </motion.div>
@@ -520,7 +522,8 @@ export default function SlideRenderer({ slide, onNextSlide }) {
         return <TimsortSimulator />;
 
       case 5: {
-        const activeTab = TIMSORT_JAVA_TABS.find((t) => t.id === javaTab) || TIMSORT_JAVA_TABS[0];
+        const activeTab =
+          TIMSORT_PYTHON_TABS.find((t) => t.id === timsortTab) || TIMSORT_PYTHON_TABS[0];
         return (
           <>
             <div className="bento-grid bento-grid-auto">
@@ -531,30 +534,30 @@ export default function SlideRenderer({ slide, onNextSlide }) {
               >
                 <div className="flex-row justify-between flex-wrap gap-2">
                   <div className="flex-row gap-2 flex-wrap">
-                    {TIMSORT_JAVA_TABS.map((t) => (
+                    {TIMSORT_PYTHON_TABS.map((t) => (
                       <button
                         key={t.id}
                         type="button"
-                        className={`tab-btn ${javaTab === t.id ? 'active' : ''}`}
-                        onClick={() => setJavaTab(t.id)}
+                        className={`tab-btn ${timsortTab === t.id ? 'active' : ''}`}
+                        onClick={() => setTimsortTab(t.id)}
                       >
                         {t.label}
                       </button>
                     ))}
                   </div>
-                  <span className="badge-pill badge-mint">Java 8+ • MIN_RUN = 4</span>
+                  <span className="badge-pill badge-mint">Python 3+ • MIN_RUN = 4</span>
                 </div>
               </motion.div>
             </div>
 
             <div className="bento-grid flex-1 min-h-0">
               <motion.div variants={itemVariants} className="col-7 h-full min-h-0">
-                <CodeBlock title="TimSortDemo.java" lang="java" code={activeTab.code} />
+                <CodeBlock title="timsort_demo.py" lang="python" code={activeTab.code} />
               </motion.div>
 
               <div className="bento-col col-5">
                 <motion.div variants={itemVariants} className="bento-card bento-card-auto">
-                  <h3 className="bento-title">Giải thích phương thức đang xem</h3>
+                  <h3 className="bento-title">Giải thích hàm đang xem</h3>
                   <p className="bento-body mt-2">{activeTab.description}</p>
                 </motion.div>
 
@@ -579,9 +582,9 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                 <motion.div variants={itemVariants} className="bento-card bento-card-accent flex-1">
                   <h3 className="bento-title">Lưu ý kỹ thuật &amp; Tính ổn định</h3>
                   <p className="bento-body mt-2">
-                    • Dùng <code>a[j] &gt; key</code> (thay vì <code>&gt;=</code>) trong{' '}
-                    <code>insertionSort</code> và <code>a[i] &lt;= a[j]</code> trong <code>merge</code> để giữ nguyên thứ tự các khóa bằng nhau.
-                    <br />• Bản sản xuất OpenJDK bổ sung đảo run giảm dần, bất biến merge stack và galloping mode.
+                    • Dùng <code>arr[j] &gt; key</code> (thay vì <code>&gt;=</code>) trong{' '}
+                    <code>insertion_sort</code> và <code>arr[i] &lt;= arr[j]</code> trong <code>merge</code> để giữ nguyên thứ tự các khóa bằng nhau.
+                    <br />• Bản sản xuất CPython (<code>listobject.c</code>) bổ sung đảo run giảm dần, bất biến merge stack và galloping mode.
                   </p>
                 </motion.div>
               </div>
@@ -664,14 +667,14 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   <p className="bento-body mt-2">
                     • Tốn <strong>O(n)</strong> bộ nhớ phụ trong trường hợp xấu nhất cho vùng đệm tạm (
                     <em>temporary buffer</em>) khi trộn hai run lớn và <code>run stack</code>.
-                    <br />• Bản Java minh họa dùng <code>runStart</code> và <code>runEnd</code> kích thước <code>n</code> để dễ quan sát cấu trúc.
+                    <br />• Bản Python minh họa lưu danh sách <code>runs</code> dạng <code>(start, end)</code> và danh sách đệm <code>temp</code> khi trộn để dễ quan sát cấu trúc.
                   </p>
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="bento-card bento-card-accent flex-1">
                   <h3 className="bento-title">Timsort vs Dual-Pivot Quicksort</h3>
                   <p className="bento-body mt-2">
-                    Chấp nhận tốn RAM <strong>O(n)</strong> (khác với Dual-Pivot Quicksort dùng cho kiểu nguyên thủy trong Java) để đổi lấy{' '}
+                    Chấp nhận tốn RAM <strong>O(n)</strong> (khác với Quicksort tại chỗ cho kiểu nguyên thủy) để đổi lấy{' '}
                     <strong>tính ổn định (Stability)</strong> và tốc độ cực cao trên dữ liệu thực tế gần có thứ tự.
                   </p>
                 </motion.div>
@@ -698,7 +701,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   </div>
                 </div>
                 <p className="bento-body mt-2">
-                  Thuật toán sắp xếp mặc định trong <strong>Python</strong> (<code>sort()</code>,{' '}
+                  Thuật toán sắp xếp mặc định trong <strong>Python</strong> (<code>list.sort()</code>,{' '}
                   <code>sorted()</code>), <strong>Java</strong> (<code>Arrays.sort(Object[])</code>,{' '}
                   <code>Collections.sort()</code>), <strong>Android</strong> và{' '}
                   <strong>V8 JavaScript Engine</strong> (Chrome, Node.js).
@@ -716,7 +719,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   </p>
                 </motion.div>
                 <motion.div variants={itemVariants} className="flex-1 min-h-0 flex">
-                  <CodeBlock title="ServerLogSort.java" lang="java" code={SERVER_LOG_CODE} />
+                  <CodeBlock title="server_log_sort.py" lang="python" code={SERVER_LOG_CODE} />
                 </motion.div>
               </div>
 
@@ -729,7 +732,7 @@ export default function SlideRenderer({ slide, onNextSlide }) {
                   </p>
                 </motion.div>
                 <motion.div variants={itemVariants} className="flex-1 min-h-0 flex">
-                  <CodeBlock title="MergeSortedRuns.java" lang="java" code={MERGE_RUNS_CODE} />
+                  <CodeBlock title="merge_sorted_runs.py" lang="python" code={MERGE_RUNS_CODE} />
                 </motion.div>
               </div>
             </div>

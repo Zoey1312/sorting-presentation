@@ -6,168 +6,154 @@ export const CHAPTERS = [
   { id: 'summary', label: 'Tổng hợp', range: [19, 19], firstSlide: 19, theme: 'summary' },
 ];
 
-export const TIMSORT_JAVA_TABS = [
+export const TIMSORT_PYTHON_TABS = [
   {
     id: 'full',
-    label: 'Toàn bộ TimSortDemo.java',
-    description: 'Mã nguồn đầy đủ biến thể Timsort rút gọn phục vụ học tập (Java 8+, MIN_RUN = 4).',
-    code: `import java.util.Arrays;
+    label: 'Toàn bộ timsort_demo.py',
+    description: 'Mã nguồn đầy đủ biến thể Timsort rút gọn phục vụ học tập (Python 3+, MIN_RUN = 4).',
+    code: `MIN_RUN = 4  # Minrun cố định để minh họa sư phạm
 
-public class TimSortDemo {
-    private static final int MIN_RUN = 4; // Minrun cố định để minh họa sư phạm
 
-    public static void timSort(int[] a) {
-        int n = a.length;
-        if (n < 2) return;
-        int[] runStart = new int[n];
-        int[] runEnd = new int[n];
-        int runCount = 0, start = 0;
+def insertion_sort(arr: list[int], left: int, right: int) -> None:
+    for i in range(left + 1, right + 1):
+        key = arr[i]
+        j = i - 1
+        while j >= left and arr[j] > key:  # Dùng > thay vì >= để giữ tính ổn định (Stable)
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key
 
-        // 1. Phát hiện run tăng dần và mở rộng đến MIN_RUN
-        while (start < n) {
-            int naturalEnd = start + 1;
-            while (naturalEnd < n && a[naturalEnd - 1] <= a[naturalEnd]) {
-                naturalEnd++;
-            }
-            int end = Math.min(n, Math.max(naturalEnd, start + MIN_RUN));
-            insertionSort(a, start, end - 1);
-            runStart[runCount] = start;
-            runEnd[runCount] = end - 1;
-            runCount++;
-            start = end;
-        }
 
-        // 2. Gộp các run kề nhau theo từng lượt
-        while (runCount > 1) {
-            int nextCount = 0;
-            for (int i = 0; i < runCount; i += 2) {
-                if (i + 1 < runCount) {
-                    int left = runStart[i], mid = runEnd[i], right = runEnd[i + 1];
-                    merge(a, left, mid, right);
-                    runStart[nextCount] = left;
-                    runEnd[nextCount] = right;
-                } else {
-                    runStart[nextCount] = runStart[i];
-                    runEnd[nextCount] = runEnd[i];
-                }
-                nextCount++;
-            }
-            runCount = nextCount;
-        }
-    }
+def merge(arr: list[int], left: int, mid: int, right: int) -> None:
+    temp = []
+    i, j = left, mid + 1
+    while i <= mid and j <= right:
+        if arr[i] <= arr[j]:  # <= ưu tiên phần tử nhánh trái khi bằng khóa (Stable)
+            temp.append(arr[i])
+            i += 1
+        else:
+            temp.append(arr[j])
+            j += 1
+    temp.extend(arr[i : mid + 1])
+    temp.extend(arr[j : right + 1])
+    arr[left : right + 1] = temp
 
-    private static void insertionSort(int[] a, int left, int right) {
-        for (int i = left + 1; i <= right; i++) {
-            int key = a[i], j = i - 1;
-            while (j >= left && a[j] > key) { // Dùng > thay vì >= để giữ tính ổn định (Stable)
-                a[j + 1] = a[j];
-                j--;
-            }
-            a[j + 1] = key;
-        }
-    }
 
-    private static void merge(int[] a, int left, int mid, int right) {
-        int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
-        while (i <= mid && j <= right) {
-            temp[k++] = (a[i] <= a[j]) ? a[i++] : a[j++];
-        }
-        while (i <= mid) temp[k++] = a[i++];
-        while (j <= right) temp[k++] = a[j++];
-        System.arraycopy(temp, 0, a, left, temp.length);
-    }
+def tim_sort(arr: list[int]) -> list[int]:
+    n = len(arr)
+    if n < 2:
+        return arr
 
-    public static void main(String[] args) {
-        int[] input = {3, 5, 7, 2, 4, 6, 9, 1, 8, 10};
-        System.out.println("Input : " + Arrays.toString(input));
-        timSort(input);
-        System.out.println("Output: " + Arrays.toString(input));
-    }
-}`,
+    runs: list[tuple[int, int]] = []
+    start = 0
+
+    # 1. Phát hiện run tăng dần tự nhiên và mở rộng đến MIN_RUN
+    while start < n:
+        natural_end = start + 1
+        while natural_end < n and arr[natural_end - 1] <= arr[natural_end]:
+            natural_end += 1
+        end = min(n, max(natural_end, start + MIN_RUN))
+        insertion_sort(arr, start, end - 1)
+        runs.append((start, end - 1))
+        start = end
+
+    # 2. Gộp các run kề nhau theo từng lượt
+    while len(runs) > 1:
+        next_runs: list[tuple[int, int]] = []
+        for i in range(0, len(runs), 2):
+            if i + 1 < len(runs):
+                left, mid = runs[i]
+                _, right = runs[i + 1]
+                merge(arr, left, mid, right)
+                next_runs.append((left, right))
+            else:
+                next_runs.append(runs[i])
+        runs = next_runs
+    return arr
+
+
+if __name__ == "__main__":
+    data = [3, 5, 7, 2, 4, 6, 9, 1, 8, 10]
+    print("Input :", data)
+    tim_sort(data)
+    print("Output:", data)`,
   },
   {
-    id: 'timSort',
-    label: '1. timSort()',
-    description: 'Quét mảng tạo run tự nhiên, mở rộng đến MIN_RUN, lưu ranh giới [runStart, runEnd] và gộp theo từng lượt.',
-    code: `public static void timSort(int[] a) {
-    int n = a.length;
-    if (n < 2) return;
-    int[] runStart = new int[n];
-    int[] runEnd = new int[n];
-    int runCount = 0, start = 0;
+    id: 'tim_sort',
+    label: '1. tim_sort()',
+    description: 'Quét mảng tạo run tự nhiên, mở rộng đến MIN_RUN, lưu ranh giới (start, end) vào danh sách runs và gộp theo từng lượt.',
+    code: `def tim_sort(arr: list[int]) -> list[int]:
+    n = len(arr)
+    if n < 2:
+        return arr
 
-    // 1. Phát hiện run tăng dần và mở rộng đến MIN_RUN
-    while (start < n) {
-        int naturalEnd = start + 1;
-        while (naturalEnd < n && a[naturalEnd - 1] <= a[naturalEnd]) {
-            naturalEnd++;
-        }
-        int end = Math.min(n, Math.max(naturalEnd, start + MIN_RUN));
-        insertionSort(a, start, end - 1);
-        runStart[runCount] = start;
-        runEnd[runCount] = end - 1;
-        runCount++;
-        start = end;
-    }
+    runs: list[tuple[int, int]] = []
+    start = 0
 
-    // 2. Gộp các run kề nhau theo từng lượt
-    while (runCount > 1) {
-        int nextCount = 0;
-        for (int i = 0; i < runCount; i += 2) {
-            if (i + 1 < runCount) {
-                int left = runStart[i], mid = runEnd[i], right = runEnd[i + 1];
-                merge(a, left, mid, right);
-                runStart[nextCount] = left;
-                runEnd[nextCount] = right;
-            } else {
-                runStart[nextCount] = runStart[i];
-                runEnd[nextCount] = runEnd[i];
-            }
-            nextCount++;
-        }
-        runCount = nextCount;
-    }
-}`,
+    # 1. Phát hiện run tăng dần tự nhiên và mở rộng đến MIN_RUN
+    while start < n:
+        natural_end = start + 1
+        while natural_end < n and arr[natural_end - 1] <= arr[natural_end]:
+            natural_end += 1
+        end = min(n, max(natural_end, start + MIN_RUN))
+        insertion_sort(arr, start, end - 1)
+        runs.append((start, end - 1))
+        start = end
+
+    # 2. Gộp các run kề nhau theo từng lượt
+    while len(runs) > 1:
+        next_runs: list[tuple[int, int]] = []
+        for i in range(0, len(runs), 2):
+            if i + 1 < len(runs):
+                left, mid = runs[i]
+                _, right = runs[i + 1]
+                merge(arr, left, mid, right)
+                next_runs.append((left, right))
+            else:
+                next_runs.append(runs[i])
+        runs = next_runs
+    return arr`,
   },
   {
-    id: 'insertionSort',
-    label: '2. insertionSort()',
-    description: 'Sắp xếp đoạn đóng [left, right]. Điều kiện a[j] > key (không dùng >=) giúp giữ nguyên thứ tự các phần tử bằng khóa.',
-    code: `// Insertion sort trên đoạn đóng [left, right].
-private static void insertionSort(int[] a, int left, int right) {
-    for (int i = left + 1; i <= right; i++) {
-        int key = a[i];
-        int j = i - 1;
-        // Dùng > thay vì >= để không đổi thứ tự các khóa bằng nhau (Stable).
-        while (j >= left && a[j] > key) {
-            a[j + 1] = a[j];
-            j--;
-        }
-        a[j + 1] = key;
-    }
-}`,
+    id: 'insertion_sort',
+    label: '2. insertion_sort()',
+    description: 'Sắp xếp đoạn đóng [left, right]. Điều kiện arr[j] > key (không dùng >=) giúp giữ nguyên thứ tự các phần tử bằng khóa.',
+    code: `# Insertion sort trên đoạn đóng [left, right]
+def insertion_sort(arr: list[int], left: int, right: int) -> None:
+    for i in range(left + 1, right + 1):
+        key = arr[i]
+        j = i - 1
+        # Dùng > thay vì >= để không đổi thứ tự các khóa bằng nhau (Stable)
+        while j >= left and arr[j] > key:
+            arr[j + 1] = arr[j]
+            j -= 1
+        arr[j + 1] = key`,
   },
   {
     id: 'merge',
     label: '3. merge()',
-    description: 'Cấp phát mảng tạm temp kích thước right - left + 1, trộn ổn định (<=) hai đoạn [left..mid] và [mid+1..right] rồi chép lại mảng gốc.',
-    code: `// Trộn hai đoạn đã sắp xếp: [left, mid] và [mid + 1, right].
-private static void merge(int[] a, int left, int mid, int right) {
-    int[] temp = new int[right - left + 1];
-    int i = left, j = mid + 1, k = 0;
+    description: 'Dùng danh sách đệm temp trộn ổn định (<=) hai đoạn [left..mid] và [mid+1..right] bằng 2 con trỏ rồi ghi lại vào mảng gốc.',
+    code: `# Trộn hai đoạn đã sắp xếp: [left, mid] và [mid + 1, right]
+def merge(arr: list[int], left: int, mid: int, right: int) -> None:
+    temp = []
+    i, j = left, mid + 1
 
-    while (i <= mid && j <= right) {
-        // <= đảm bảo phần tử bên trái được ưu tiên khi bằng khóa (Stable Sort)
-        temp[k++] = (a[i] <= a[j]) ? a[i++] : a[j++];
-    }
-    while (i <= mid) temp[k++] = a[i++];
-    while (j <= right) temp[k++] = a[j++];
+    while i <= mid and j <= right:
+        # <= đảm bảo phần tử nhánh trái được ưu tiên khi bằng khóa (Stable Sort)
+        if arr[i] <= arr[j]:
+            temp.append(arr[i])
+            i += 1
+        else:
+            temp.append(arr[j])
+            j += 1
 
-    System.arraycopy(temp, 0, a, left, temp.length);
-}`,
+    temp.extend(arr[i : mid + 1])
+    temp.extend(arr[j : right + 1])
+    arr[left : right + 1] = temp`,
   },
 ];
+
+export const TIMSORT_JAVA_TABS = TIMSORT_PYTHON_TABS;
 
 export const INTROSORT_PYTHON_CODE = `import math
 
@@ -411,11 +397,11 @@ export const SLIDES_DATA = [
     id: 5,
     chapter: 'timsort',
     theme: 'timsort',
-    title: 'Timsort — Cài đặt bằng Java (Java Implementation)',
-    subtitle: 'Biến thể TimSortDemo rút gọn gồm timSort(), insertionSort() và merge()',
+    title: 'Timsort — Cài đặt bằng Python (Python Implementation)',
+    subtitle: 'Biến thể minh họa rút gọn gồm tim_sort(), insertion_sort() và merge()',
     duration: '1.0 phút',
     speakerNotes:
-      'Đây là mã nguồn Java 8+ cài đặt 3 phương thức cốt lõi: timSort() quét run và gộp theo cặp từng lượt; insertionSort() sắp xếp đoạn đóng [left, right] sử dụng điều kiện a[j] > key (thay vì >=) để bảo toàn tính ổn định; và merge() dùng mảng phụ temp với điều kiện a[i] <= a[j] nhằm ưu tiên phần tử run trái khi bằng khóa. Lưu ý đây là mô hình giảng dạy (minrun = 4), bản sản xuất trong OpenJDK có thêm đảo run giảm dần, merge stack invariant và galloping mode.',
+      'Đây là mã nguồn Python 3+ cài đặt 3 hàm cốt lõi: tim_sort() quét run tự nhiên và gộp theo cặp từng lượt; insertion_sort() sắp xếp đoạn đóng [left, right] sử dụng điều kiện arr[j] > key (thay vì >=) để bảo toàn tính ổn định; và merge() dùng mảng đệm temp với điều kiện arr[i] <= arr[j] nhằm ưu tiên phần tử run trái khi bằng khóa. Lưu ý đây là mô hình giảng dạy (MIN_RUN = 4), bản sản xuất trong CPython (Objects/listobject.c) có thêm đảo run giảm dần, bất biến merge stack và galloping mode.',
   },
   {
     id: 6,
@@ -425,7 +411,7 @@ export const SLIDES_DATA = [
     subtitle: 'Đánh đổi O(n) RAM phụ để lấy Stability và tốc độ O(n) trên dữ liệu gần sắp xếp',
     duration: '1.0 phút',
     speakerNotes:
-      'Về thời gian: Best Case đạt O(n) khi mảng đã tăng dần sẵn (chỉ quét 1 lượt phát hiện 1 run duy nhất, không merge). Average Case và Worst Case đều khóa chặt ở O(n log n) nhờ cơ chế quản lý kích thước run. Về không gian: Tốn O(n) bộ nhớ phụ cho vùng đệm tạm khi merge và run stack. Trong Java, mảng kiểu nguyên thủy dùng Dual-Pivot Quicksort để tiết kiệm RAM, còn mảng đối tượng (Object[]) dùng Timsort vì tính ổn định là tối quan trọng.',
+      'Về thời gian: Best Case đạt O(n) khi mảng đã tăng dần sẵn (chỉ quét 1 lượt phát hiện 1 run duy nhất, không merge). Average Case và Worst Case đều khóa chặt ở O(n log n) nhờ cơ chế quản lý kích thước run. Về không gian: Tốn O(n) bộ nhớ phụ cho vùng đệm tạm khi merge và run stack. Trong Java, mảng kiểu nguyên thủy dùng Dual-Pivot Quicksort để tiết kiệm RAM, còn Python list và mảng đối tượng Java (Object[]) dùng Timsort vì tính ổn định là tối quan trọng.',
   },
   {
     id: 7,
@@ -435,7 +421,7 @@ export const SLIDES_DATA = [
     subtitle: 'Ngôn ngữ lập trình hiện đại, Hệ thống Server Logs & LeetCode 88',
     duration: '1.0 phút',
     speakerNotes:
-      'Timsort là mặc định trong Python (sort(), sorted()), Java (Arrays.sort(Object[]), Collections.sort()), Android và V8 JS Engine. Một bài toán thực tế điển hình là tổng hợp Server Logs từ nhiều máy chủ bị lệch nhẹ timestamp do độ trễ mạng: dữ liệu gồm nhiều run gần tăng dần, gọi logs.sort(Comparator.comparing(entry -> entry.timestamp)) vừa nhanh vừa giữ nguyên thứ tự các log trùng timestamp. Tư tưởng tận dụng run đã sắp xếp cũng liên hệ trực tiếp tới LeetCode 88 (Merge Sorted Array) dùng 2 con trỏ trong O(m + n).',
+      'Timsort là mặc định trong Python (list.sort(), sorted()), Java (Arrays.sort(Object[]), Collections.sort()), Android và V8 JS Engine. Một bài toán thực tế điển hình là tổng hợp Server Logs từ nhiều máy chủ bị lệch nhẹ timestamp do độ trễ mạng: dữ liệu gồm nhiều run gần tăng dần, gọi logs.sort(key=lambda entry: entry.timestamp) trong Python vừa nhanh vừa giữ nguyên thứ tự các log trùng timestamp. Tư tưởng tận dụng run đã sắp xếp cũng liên hệ trực tiếp tới LeetCode 88 (Merge Sorted Array) dùng 2 con trỏ trong O(m + n).',
   },
   {
     id: 8,
